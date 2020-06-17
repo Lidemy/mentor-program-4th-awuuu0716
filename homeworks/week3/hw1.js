@@ -14,6 +14,4 @@ rl.on('line', (line) => {
   lines.push(line);
 });
 
-rl.on('close', () => {
-  solve(lines);
-});
+rl.on('close', () => solve(lines));
