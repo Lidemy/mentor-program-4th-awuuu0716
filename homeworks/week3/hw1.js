@@ -13,5 +13,4 @@ const solve = (input) => {
 rl.on('line', (line) => {
   lines.push(line);
 });
-
 rl.on('close', () => solve(lines));
