@@ -20,8 +20,7 @@ const solve = (input) => {
       const nextBagValue = itemValue + bag[i][j - itemWeight];
       if (itemWeight > j) {
         tempBag[j] = bag[i][j];
-      }
-      if (itemWeight < j) {
+      } else if (itemWeight < j || itemWeight === j) {
         if (bag[i][j] < nextBagValue) {
           tempBag[j] = nextBagValue;
         } else {
