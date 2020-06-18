@@ -26,8 +26,7 @@ const solve = (input) => {
     const positionHeight = queue[0].height;
     const positionWidth = queue[0].width;
     const nowAt = `H${positionHeight}W${positionWidth}`;
-    const { step } = queue;
-
+    const { step } = queue[0];
     // 隊列是空的,結束遞迴
     if (!queue) {
       return;
