@@ -13,7 +13,9 @@ const callback = (response) => {
 
   response.on('end', () => {
     const result = JSON.parse(str);
-    console.log(result);
+    result.forEach((element) => {
+      console.log(`${element.id} ${element.name}`);
+    });
   });
 };
 
