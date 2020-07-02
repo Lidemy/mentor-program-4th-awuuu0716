@@ -70,7 +70,9 @@ const createBook = (name) => {
     method: 'post',
     host: 'lidemy-book-store.herokuapp.com',
     path: '/books',
-    data: { name },
+    headers: {
+      'Content-Type': 'application/json',
+    },
   };
   const callback = (response) => {
     let str = '';
@@ -82,15 +84,20 @@ const createBook = (name) => {
       console.log(str);
     });
   };
-  http.request(options, callback).end();
+  const req = http.request(options, callback);
+
+  req.write(JSON.stringify({ name }));
+  req.end();
 };
 
 const updateBook = (id, name) => {
   const options = {
     method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     host: 'lidemy-book-store.herokuapp.com',
     path: `/books/${id}`,
-    data: { name },
   };
   const callback = (response) => {
     let str = '';
@@ -102,29 +109,28 @@ const updateBook = (id, name) => {
       console.log(str);
     });
   };
-  http.request(options, callback).end();
+  const req = http.request(options, callback);
+
+  req.write(JSON.stringify({ name }));
+  req.end();
 };
 
-const actionsHandler = () => {
-  switch (action) {
-    case 'list':
-      list();
-      break;
-    case 'read':
-      read(...otherInfo);
-      break;
-    case 'delete':
-      deleteBook(...otherInfo);
-      break;
-    case 'create':
-      createBook(...otherInfo);
-      break;
-    case 'update':
-      updateBook(...otherInfo);
-      break;
-    default:
-      break;
-  }
-};
-
-actionsHandler();
+switch (action) {
+  case 'list':
+    list();
+    break;
+  case 'read':
+    read(...otherInfo);
+    break;
+  case 'delete':
+    deleteBook(...otherInfo);
+    break;
+  case 'create':
+    createBook(...otherInfo);
+    break;
+  case 'update':
+    updateBook(...otherInfo);
+    break;
+  default:
+    break;
+}
