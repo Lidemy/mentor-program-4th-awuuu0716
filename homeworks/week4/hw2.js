@@ -3,13 +3,16 @@ const http = require('http');
 const args = process.argv;
 const action = args[2];
 const otherInfo = args.slice(3);
+const options = {
+  method: 'get',
+  host: 'lidemy-book-store.herokuapp.com',
+  path: '/books?_limit=20',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
 
 const list = () => {
-  const options = {
-    method: 'get',
-    host: 'lidemy-book-store.herokuapp.com',
-    path: '/books?_limit=20',
-  };
   const callback = (response) => {
     let str = '';
     response.on('data', (chunk) => {
@@ -23,15 +26,14 @@ const list = () => {
       });
     });
   };
-  http.request(options, callback).end();
+  const req = http.request(options, callback);
+  req.on('error', (e) => {
+    console.error(e);
+  });
+  req.end();
 };
 
-const read = (id) => {
-  const options = {
-    method: 'get',
-    host: 'lidemy-book-store.herokuapp.com',
-    path: `/books/${id}`,
-  };
+const read = () => {
   const callback = (response) => {
     let str = '';
     response.on('data', (chunk) => {
@@ -46,12 +48,7 @@ const read = (id) => {
   http.request(options, callback).end();
 };
 
-const deleteBook = (id) => {
-  const options = {
-    method: 'delete',
-    host: 'lidemy-book-store.herokuapp.com',
-    path: `/books/${id}`,
-  };
+const deleteBook = () => {
   const callback = (response) => {
     let str = '';
     response.on('data', (chunk) => {
@@ -66,14 +63,6 @@ const deleteBook = (id) => {
 };
 
 const createBook = (name) => {
-  const options = {
-    method: 'post',
-    host: 'lidemy-book-store.herokuapp.com',
-    path: '/books',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
   const callback = (response) => {
     let str = '';
     response.on('data', (chunk) => {
@@ -90,15 +79,7 @@ const createBook = (name) => {
   req.end();
 };
 
-const updateBook = (id, name) => {
-  const options = {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    host: 'lidemy-book-store.herokuapp.com',
-    path: `/books/${id}`,
-  };
+const updateBook = (name) => {
   const callback = (response) => {
     let str = '';
     response.on('data', (chunk) => {
@@ -120,16 +101,22 @@ switch (action) {
     list();
     break;
   case 'read':
-    read(...otherInfo);
+    options.path = `/books/${otherInfo[0]}`;
+    read();
     break;
   case 'delete':
-    deleteBook(...otherInfo);
+    options.path = `/books/${otherInfo[0]}`;
+    deleteBook();
     break;
   case 'create':
-    createBook(...otherInfo);
+    options.method = 'POST';
+    options.path = '/books';
+    createBook(otherInfo[0]);
     break;
   case 'update':
-    updateBook(...otherInfo);
+    options.method = 'PATCH';
+    options.path = `/books/${otherInfo[0]}`;
+    updateBook(otherInfo[1]);
     break;
   default:
     break;
