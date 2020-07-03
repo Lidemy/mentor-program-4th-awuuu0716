@@ -14,9 +14,7 @@ const callback = (response) => {
   response.on('end', () => {
     let result;
     try {
-      if (str !== '') {
-        result = JSON.parse(str);
-      }
+      result = JSON.parse(str);
     } catch (err) {
       console.log(err);
     }
