@@ -45,7 +45,11 @@ const read = () => {
       console.log(`${result.id} ${result.name}`);
     });
   };
-  http.request(options, callback).end();
+  const req = http.request(options, callback);
+  req.on('error', (e) => {
+    console.error(e);
+  });
+  req.end();
 };
 
 const deleteBook = () => {
@@ -59,7 +63,11 @@ const deleteBook = () => {
       console.log(str);
     });
   };
-  http.request(options, callback).end();
+  const req = http.request(options, callback);
+  req.on('error', (e) => {
+    console.error(e);
+  });
+  req.end();
 };
 
 const createBook = (name) => {
@@ -74,7 +82,9 @@ const createBook = (name) => {
     });
   };
   const req = http.request(options, callback);
-
+  req.on('error', (e) => {
+    console.error(e);
+  });
   req.write(JSON.stringify({ name }));
   req.end();
 };
@@ -91,7 +101,9 @@ const updateBook = (name) => {
     });
   };
   const req = http.request(options, callback);
-
+  req.on('error', (e) => {
+    console.error(e);
+  });
   req.write(JSON.stringify({ name }));
   req.end();
 };
@@ -105,6 +117,7 @@ switch (action) {
     read();
     break;
   case 'delete':
+    options.method = 'DELETE';
     options.path = `/books/${otherInfo[0]}`;
     deleteBook();
     break;
