@@ -12,7 +12,14 @@ const callback = (response) => {
   });
 
   response.on('end', () => {
-    const result = JSON.parse(str);
+    let result;
+    try {
+      if (str !== '') {
+        result = JSON.parse(str);
+      }
+    } catch (err) {
+      console.log(err);
+    }
     result.forEach((element) => {
       console.log(`${element.id} ${element.name}`);
     });
