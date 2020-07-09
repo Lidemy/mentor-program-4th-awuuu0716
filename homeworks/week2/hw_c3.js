@@ -1,4 +1,5 @@
 const multiply = (a, b) => {
+  if (a === '0' || b === '0') return '0';
   const waitToAddNum = [];
   let addZero = 0;
   for (let i = b.length - 1; i >= 0; i -= 1) {
