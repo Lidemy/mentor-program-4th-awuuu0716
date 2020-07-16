@@ -63,9 +63,22 @@ footer {
 }
 
 footer .site__info {
-    width: 100%;
     background: black;
     color: #999999;
     text-align: center;
     padding: 26px 0px;
+}
+
+@media (max-width:768px) {
+    .wrapper {
+        width: auto;
+    }
+    .input_content {
+        width: 200px;
+    }
+    .form-body {
+        margin-top: 0;
+        width:auto;
+        padding: 52px 20px 35px 28px;
+    }
 }
