@@ -1,0 +1,97 @@
+body {
+  background: #F0F0F0;
+  font-family: 微軟正黑體;
+}
+
+.wrapper {
+  margin: 0 auto;
+  width: 645px;
+}
+
+.form__body {
+  padding: 52px 10px 35px 42px;
+  margin-top: 130px;
+  background: white;
+  border-top: 8px solid #fad312;
+  box-shadow: 1.8px 2.4px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.form__title {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.form__info {
+  font-size: 14px;
+}
+
+.form__info p {
+  line-height: 2em;
+  font-size: 14px;
+}
+
+.form__info p span { line-height: 2em;
+  font-size: 16px;
+}
+
+.important {
+  color: red;
+}
+
+.form__content {
+  margin-top: 55px;
+}
+
+.input__title {
+  font-size: 20px;
+}
+
+.input__content {
+  width: 287px;
+}
+
+.input {
+  margin-bottom: 49px;
+}
+
+.submit {
+  width: 92px;
+  height: 40px;
+  border-radius: 3px;
+  background-color: #fad312;
+  border: 0px;
+}
+
+.input__radio {
+  font-size: 14px;
+}
+
+.margin__top_20 {
+  margin-top: 20px;
+}
+
+footer {
+  margin-top:66px;
+  border-top: solid 3px #fad312; 
+}
+
+footer .site__info {
+  background: black;
+  color: #999999;
+  text-align: center;
+  padding: 26px 0px;
+}
+
+@media (max-width:768px) {
+  .wrapper {
+    width: auto;
+  }
+  .input_content {
+    width: 200px;
+  }
+  .form-body {
+    margin-top: 0;
+    width:auto;
+    padding: 52px 20px 35px 28px;
+  }
+}
