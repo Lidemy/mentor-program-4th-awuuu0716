@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./normalize.css">
+    <title>Lazy-form</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="form__body">
+            <div class="form__title">
+                新拖延運動報名表單
+            </div>
+            <div class="form__info">
+                <p>活動日期：2020/12/10 ~ 2020/12/11 <br>
+                    活動地點：台北市大安區新生南路二段1號 <br>
+                    <span class="important">* 必填</span>
+                </p>
+            </div>
+            <form action="" class="form__content">
+                <div class="input" id="nickname__parent">
+                    <div class="input__title">暱稱 <span class="important">*</span></div>
+                    <input type="text" class="input__content margin__top_20" id="nickname" name="nickname"
+                        placeholder="您的回答">
+                </div>
+                <div class="input" id="email__parent">
+                    <div class="input__title">電子郵件 <span class="important">*</span></div>
+                    <input type="email" class="input__content margin__top_20" id="email" name="email"
+                        placeholder="您的電子郵件">
+                </div>
+                <div class="input" id="phone__parent">
+                    <div class="input__title">手機號碼 <span class="important">*</span></div>
+                    <input type="text" class="input__content margin__top_20" id="phone" name="phone"
+                        placeholder="您的手機號碼">
+                </div>
+                <div class="input" id="sign__up__type__parent">
+                    <div class="input__title">報名類型 <span class="important">*</span></div>
+                    <input type="radio" class="input__radio margin__top_20" name="sign__up__Type" id="radio__1"
+                        value="躺在床上用想像力實作">
+                    躺在床上用想像力實作 <br><br>
+                    <input type="radio" class="input__radio" name="sign__up__Type" id="radio__2" value="趴在地上滑手機找現成的">
+                    趴在地上滑手機找現成的
+                </div>
+                <div class="input" id="how__To__know__parent">
+                    <div class="input__title">怎麼知道這個活動的？ <span class="important">*</span></div>
+                    <input type="text" class="input__content margin__top_20" id="how__to__know" name="how__to__know"
+                        placeholder="您的回答">
+                </div>
+                <div class="input">
+                    <div class="input__title">其他 </div>
+                    <div class="margin__top_20">對活動的一些建議</div>
+                    <input type="text" class="input__content margin__top_20" id="suggestions" name="suggestions"
+                        placeholder="您的回答">
+                </div>
+                <button class="submit" id="submit">提交</button>
+            </form>
+            <div class="margin__top_20">請勿透過表單送出您的密碼。</div>
+        </div>
+    </div>
+    <footer>
+        <div class="site__info">© 2020 © Copyright. All rights Reserved.</div>
+    </footer>
+    <script>
+        const submit = document.querySelector('#submit');
+
+        submit.addEventListener('click', (e) => {
+            const nickname = document.querySelector('#nickname').value
+            const email = document.querySelector('#email').value
+            const phone = document.querySelector('#phone').value
+            const howToKnow = document.querySelector('#how__to__know').value
+            const suggestions = document.querySelector('#suggestions').value
+
+            let signUpType;
+            if (document.querySelector('#radio__1').checked) {
+                signUpType = document.querySelector('#radio__1').value;
+            } else if (document.querySelector('#radio__2').checked) {
+                signUpType = document.querySelector('#radio__2').value;
+            } else {
+                signUpType = null;
+            }
+
+            const isInputValid = () => {
+                return nickname && email && phone && howToKnow && signUpType
+            }
+
+            const addErrorMessage = (parent, message, id) => {
+                const errElement = document.createElement('div')
+                errElement.classList.add('error__message')
+                errElement.setAttribute('id', id)
+                errElement.innerText = `請輸入${message}`
+                parent.appendChild(errElement)
+            }
+
+            const errorMessageHandler = () => {
+                const parentErrorHandler = (parentId, errorId, info, message) => {
+                    const parent = document.querySelector(`#${parentId}`)
+                    const error = document.querySelector(`#${errorId}`)
+                    if (!info && !error) {
+                        addErrorMessage(parent, message, errorId)
+                    } else if (info && error) {
+                        parent.removeChild(error)
+                    }
+                }
+                parentErrorHandler('nickname__parent', 'nickname__error', nickname, '暱稱')
+                parentErrorHandler('email__parent', 'email__error', email, 'email')
+                parentErrorHandler('phone__parent', 'phone__error', phone, '手機號碼')
+                parentErrorHandler('sign__up__type__parent', 'sign__up__type__error', signUpType, '報名類型')
+                parentErrorHandler('how__To__know__parent', 'how__To__know__error', howToKnow, '如何知道這活動')
+            }
+
+            if (!isInputValid()) {
+                alert(`送出失敗 缺少必要的資訊`);
+                errorMessageHandler();
+                e.preventDefault();
+            } else {
+                alert(
+                    `送出成功! 您輸入的資料為：
+暱稱：${nickname}
+email：${email}
+手機號碼：${phone}
+報名類型：${signUpType}
+如何知道這活動：${howToKnow}
+對活動的一些建議：${suggestions || '無'}
+`)
+            }
+        })
+
+    </script>
+</body>
+
+</html>
