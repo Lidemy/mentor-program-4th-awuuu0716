@@ -113,10 +113,10 @@
         </div>
     </footer>
     <script>
-        const text = document.querySelector('#questions__list');
-        text.addEventListener('click', (e) => {
-            const t = e.target.querySelector('.answer__hidden')
-            t.classList.toggle('answer__show')
+        const questionList = document.querySelector('#questions__list');
+        questionList.addEventListener('click', (e) => {
+            const answer = e.target.querySelector('.answer__hidden')
+            answer.classList.toggle('answer__show')
         })
     </script>
 </body>
