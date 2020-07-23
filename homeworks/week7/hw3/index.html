@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <section>
+        <header>Todo List</header>
+        <div class="input__container">
+            <div class="input__area" contenteditable="true" placeholder="Add a task..." autofocus></div>
+            <div class="input__focus__off"></div>
+        </div>
+
+        <div class="task__area">
+            <div class="task__container">
+                <button class="button__done__off" id="done"></button>
+                <p class="task__content">Do homeworks</p>
+                <div class="task__done__line__off"></div>
+                <button class="button__delete" id="del">X</button>
+            </div>
+            <div class="task__container">
+                <button class="button__done__off" id="done"></button>
+                <p class="task__content">折棉被</p>
+                <div class="task__done__line__off"></div>
+                <button class="button__delete" id="del">X</button>
+            </div>
+            <div class="task__container">
+                <button class="button__done__off button__done__on" id="done"></button>
+                <p class="task__content task__done">叫外送</p>
+                <div class="task__done__line__off task__done__line__on"></div>
+                <button class="button__delete" id="del">X</button>
+            </div>
+            <div class="task__container">
+                <button class="button__done__off button__done__on" id="done"></button>
+                <p class="task__content task__done">偷懶</p>
+                <div class="task__done__line__off task__done__line__on"></div>
+                <button class="button__delete" id="del">X</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // 新增
+        const input = document.querySelector('.input__area');
+        const taskArea = document.querySelector('.task__area');
+
+        input.addEventListener('keydown', (e) => {
+            const taskContent = input.innerHTML;
+            if (e.keyCode === 13 && taskContent) {
+                e.preventDefault()
+                const newTask = document.createElement('div');
+                newTask.classList.add('task__container');
+                input.innerHTML = '';
+                newTask.innerHTML = `
+            <button class="button__done__off" id="done"></button>
+            <p class="task__content">${taskContent}</p>
+            <div class="task__done__line__off"></div>
+            <button class="button__delete" id="del">X</button>`;
+                taskArea.insertBefore(newTask, taskArea.childNodes[0])
+            } else {
+                e.preventDefault()
+            }
+
+        })
+
+        // 刪除
+        taskArea.addEventListener('click', (e) => {
+            if (e.target.id === 'del') {
+                taskArea.removeChild(e.target.closest('.task__container'))
+            }
+        })
+
+        // 標記完成
+        taskArea.addEventListener('click', (e) => {
+            if (e.target.id === 'done') {
+                const parent = e.target.closest('.task__container');
+                parent.querySelector('.task__content').classList.toggle('task__done');
+                parent.querySelector('.task__done__line__off').classList.toggle('task__done__line__on');
+                e.target.classList.toggle('button__done__on');
+            }
+        })
+
+        // input focus
+        const inputFocus = document.querySelector('.input__focus__off');
+        const body = document.querySelector('body');
+
+        input.addEventListener('focus', () => {
+            inputFocus.classList.toggle('input__focus__on')
+        })
+
+        input.addEventListener('focusout', () => {
+            inputFocus.classList.toggle('input__focus__on')
+        })
+
+
+    </script>
+</body>
+
+</html>

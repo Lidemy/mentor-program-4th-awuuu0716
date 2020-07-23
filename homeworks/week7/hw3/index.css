@@ -1,0 +1,143 @@
+body {
+    font-family: 'Varela Round', 'sans-serif','微軟正黑體';
+    background: #DEF2D9;
+}
+
+header {
+    text-align: center;
+    font-size: 48px;
+    background: #F5F8FF;
+    color:rgb(104, 104, 104);
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    user-select: none;
+}
+
+section {
+    position: relative;
+    top:100px;
+    width: 600px;
+    background: white;
+    margin: 0 auto;
+    border-radius: 10px;
+    transition: all 0.1s;
+    box-shadow:2px 2px 6px #c2c2c2;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:focus {
+    outline: none;
+}
+
+.input__container {
+    padding: 10px 20px;
+    font-size: 18px;
+    margin: 5px;
+}
+
+.input__container:hover {
+    cursor: text;
+}
+
+.input__area {
+    width: 100%;
+    padding: 4px;
+    overflow: auto;
+}
+
+.input__focus__off {
+    border-bottom: rgb(185, 185, 185) 2px solid;
+    transition: all 0.3s;
+    width: 0px;
+}
+
+.input__focus__on {
+    width: 100%;
+}
+
+.input__area:empty:before {
+    content: attr(placeholder);
+    color: #bbb;
+}
+
+.input__area:focus {
+    outline: none;
+}
+
+.task__container {
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color:rgb(104, 104, 104);
+}
+
+.task__container + .task__container {
+    margin-top: 20px;
+}
+
+.task__container:hover {
+    background:#fbfcff ;
+    border-radius:10px;
+}
+
+.button__done__off {
+    margin:0 10px;
+    height: 20px;
+    width: 20px;
+    border: #daf0d4 solid 2px;
+    background-color:#ffffff00;
+    transition: all 0.3s;
+}
+
+.button__done__off:hover {
+    transform:scale(1.1);
+    background-color:#daf0d4;
+}
+
+.button__done__on {
+    transform:scale(1.1);
+    background-color:#daf0d4;
+}
+
+.task__content {
+    flex:1;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: all 0.3s;
+}
+
+.task__done {
+    color:rgb(185, 185, 185);
+}
+
+.button__done__off:hover ~.task__done__line__off {
+    width: 83%;
+}
+
+.task__done__line__off {
+    position: absolute;
+    left:38px;
+    width:0;
+    border-top: 2px rgb(185, 185, 185) solid;
+    transition: all 0.2s;
+}
+
+.task__done__line__on {
+    width:83%;
+}
+
+.button__delete {
+    color:rgb(104, 104, 104);
+    height:20px;
+    width:20px;
+    border:none;
+    background-color:#ffffff00;
+    margin-right: 20px;
+}
+
