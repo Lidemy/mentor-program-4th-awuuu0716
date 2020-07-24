@@ -54,18 +54,20 @@
         input.addEventListener('keydown', (e) => {
             const taskContent = input.innerHTML;
             if (e.keyCode === 13 && taskContent) {
-                e.preventDefault()
+                // 加入 preventDefault 以免 enter 做出換行效果
+                e.preventDefault();
                 const newTask = document.createElement('div');
-                newTask.classList.add('task__container');
-                input.innerHTML = '';
-                newTask.innerHTML = `
+                const newTaskHTML = `
             <button class="button__done__off" id="done"></button>
             <p class="task__content">${taskContent}</p>
             <div class="task__done__line__off"></div>
             <button class="button__delete" id="del">X</button>`;
+                newTask.innerHTML = newTaskHTML;
+                newTask.classList.add('task__container');
                 taskArea.insertBefore(newTask, taskArea.childNodes[0])
-            } else {
-                e.preventDefault()
+                input.innerHTML = '';
+            } else if (e.keyCode === 13 && !taskContent) {
+                e.preventDefault();
             }
 
         })
@@ -80,16 +82,19 @@
         // 標記完成
         taskArea.addEventListener('click', (e) => {
             if (e.target.id === 'done') {
-                const parent = e.target.closest('.task__container');
-                parent.querySelector('.task__content').classList.toggle('task__done');
-                parent.querySelector('.task__done__line__off').classList.toggle('task__done__line__on');
-                e.target.classList.toggle('button__done__on');
+                const parentNode = e.target.closest('.task__container');
+                const buttonDone = e.target;
+                // 字變灰
+                parentNode.querySelector('.task__content').classList.toggle('task__done');
+                // 加上刪除線
+                parentNode.querySelector('.task__done__line__off').classList.toggle('task__done__line__on');
+                // 按鈕變色
+                buttonDone.classList.toggle('button__done__on');
             }
         })
 
-        // input focus
+        // 當 focus 在輸入框時加入底線效果, 反之移除效果
         const inputFocus = document.querySelector('.input__focus__off');
-        const body = document.querySelector('body');
 
         input.addEventListener('focus', () => {
             inputFocus.classList.toggle('input__focus__on')
