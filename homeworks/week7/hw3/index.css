@@ -16,12 +16,12 @@ header {
 section {
     position: relative;
     top:100px;
-    width: 600px;
+    max-width: 600px;
     background: white;
     margin: 0 auto;
     border-radius: 10px;
     transition: all 0.1s;
-    box-shadow:2px 2px 6px #c2c2c2;
+    box-shadow:0px 4px 6px #dddddd;
 }
 
 button {
@@ -88,7 +88,7 @@ button:focus {
     margin:0 10px;
     height: 20px;
     width: 20px;
-    border: #daf0d4 solid 2px;
+    border: #daf0d4 dashed 2px;
     background-color:#ffffff00;
     transition: all 0.3s;
 }
@@ -101,6 +101,8 @@ button:focus {
 .button__done__on {
     transform:scale(1.1);
     background-color:#daf0d4;
+    box-shadow: 0px 2px 3px #b1b1b1 inset;
+
 }
 
 .task__content {
@@ -128,7 +130,7 @@ button:focus {
 }
 
 .task__done__line__on {
-    width:83%;
+    width:80%;
 }
 
 .button__delete {

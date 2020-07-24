@@ -47,32 +47,31 @@
     </section>
 
     <script>
-        // 新增
+        // 新增待辦事項
         const input = document.querySelector('.input__area');
         const taskArea = document.querySelector('.task__area');
 
         input.addEventListener('keydown', (e) => {
-            const taskContent = input.innerHTML;
-            if (e.keyCode === 13 && taskContent) {
+            if (e.keyCode === 13) {
+                const taskContent = input.innerHTML;
                 // 加入 preventDefault 以免 enter 做出換行效果
                 e.preventDefault();
+                // 沒有輸入, 不可以送出
+                if (!taskContent) return;
                 const newTask = document.createElement('div');
                 const newTaskHTML = `
-            <button class="button__done__off" id="done"></button>
-            <p class="task__content">${taskContent}</p>
-            <div class="task__done__line__off"></div>
-            <button class="button__delete" id="del">X</button>`;
+                    <button class="button__done__off" id="done"></button>
+                    <p class="task__content">${taskContent}</p>
+                    <div class="task__done__line__off"></div>
+                    <button class="button__delete" id="del">X</button>`;
                 newTask.innerHTML = newTaskHTML;
                 newTask.classList.add('task__container');
                 taskArea.insertBefore(newTask, taskArea.childNodes[0])
                 input.innerHTML = '';
-            } else if (e.keyCode === 13 && !taskContent) {
-                e.preventDefault();
             }
-
         })
 
-        // 刪除
+        // 刪除待辦事項
         taskArea.addEventListener('click', (e) => {
             if (e.target.id === 'del') {
                 taskArea.removeChild(e.target.closest('.task__container'))
