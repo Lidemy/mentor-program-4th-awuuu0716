@@ -85,6 +85,7 @@ footer .site__info {
 .error__message {
   margin-top: 5px;
   color: red;
+  position: absolute;
 }
 
 @media (max-width:768px) {
