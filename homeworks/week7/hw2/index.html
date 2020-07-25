@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./normalize.css">
+    <title>Just A Bite!</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="wrapper">
+            <div class="navbar__site-name">Just A Bite!</div>
+            <ul class="navbar__list">
+                <li class="active"><a href="#">抽個大獎</a></li>
+                <li><a href="#">我要點餐</a></li>
+                <li><a href="#">查詢訂單</a></li>
+                <li><a href="#">常見問題</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <section class="questions">
+        <h2 class="section__title">
+            FAQ - 常見問題
+        </h2>
+        <ul id='questions__list'>
+            <li><span>Q1: </span> 如何辦理退貨？
+                <div class="answer__hidden">
+                    請於收到商品次日起7天內，填寫線上退貨單。
+                </div>
+            </li>
+            <li><span>Q2: </span>目前提供哪些付款方式？
+                <div class="answer__hidden">
+                    目前提供線上信用卡付款、貨到付款，以及超商取貨付款三種方式。
+                </div>
+            </li>
+            <li><span>Q3: </span>線上刷卡如何操作呢？
+                <div class="answer__hidden">
+                    線上刷卡的使用方式也超簡單，只要您確認您當次的購物清單與金額都無誤，就可立即到匯款上傳系統，登入個人帳號密碼後，點選"線上刷卡方式"，確認收件住址後，再進行刷卡確認程序即可～
+                </div>
+            </li>
+            <li><span>Q4: </span>如何查詢目前訂單的處理情況？
+                <div class="answer__hidden">
+                    請您先登入，至會員中心的「訂單查詢」，即可查詢該訂單的處理狀態。
+                </div>
+            </li>
+            <li><span>Q5: </span>訂單成立後，是否可以取消或是更改訂單數量及商品？
+                <div class="answer__hidden">
+                    訂單成立送出之後，即無法再進行任何訂單內容的變更。
+                </div>
+            </li>
+            <li><span>Q6: </span>我想購買的商品已經缺貨，什麼時候會進貨呢？
+                <div class="answer__hidden">
+                    建議自行另外搜尋，其他同款有貨的賣家並重新下單購買。
+                </div>
+            </li>
+            <li><span>Q1: </span> 如何辦理退貨？
+                <div class="answer__hidden">
+                    請於收到商品次日起7天內，填寫線上退貨單。
+                </div>
+            </li>
+            <li><span>Q2: </span>目前提供哪些付款方式？
+                <div class="answer__hidden">
+                    目前提供線上信用卡付款、貨到付款，以及超商取貨付款三種方式。
+                </div>
+            </li>
+            <li><span>Q3: </span>線上刷卡如何操作呢？
+                <div class="answer__hidden">
+                    線上刷卡的使用方式也超簡單，只要您確認您當次的購物清單與金額都無誤，就可立即到匯款上傳系統，登入個人帳號密碼後，點選"線上刷卡方式"，確認收件住址後，再進行刷卡確認程序即可～
+                </div>
+            </li>
+            <li><span>Q4: </span>如何查詢目前訂單的處理情況？
+                <div class="answer__hidden">
+                    請您先登入，至會員中心的「訂單查詢」，即可查詢該訂單的處理狀態。
+                </div>
+            </li>
+            <li><span>Q5: </span>訂單成立後，是否可以取消或是更改訂單數量及商品？
+                <div class="answer__hidden">
+                    訂單成立送出之後，即無法再進行任何訂單內容的變更。
+                </div>
+            </li>
+            <li><span>Q6: </span>我想購買的商品已經缺貨，什麼時候會進貨呢？
+                <div class="answer__hidden">
+                    建議自行另外搜尋，其他同款有貨的賣家並重新下單購買。
+                </div>
+            </li>
+        </ul>
+    </section>
+
+
+    <footer>
+        <div class="footer__top">
+            <div class="wrapper">
+                <div class="footer__info">
+                    <div>餐館地址: 天上地下天堂路三分之一里六段520號</div>
+                    <div>訂位專線：02-1314-5566</div>
+                    <div>營業時間：週一〜週五 09:00~18:00 / 週六、週日、國定假日（含連假）休息</div>
+                    <div>email：service@justabite.com.tw</div>
+                </div>
+                <div>
+                    <div class="footer__site">Just A Bite!</div>
+                    <div>Facebook / Instagram / Youtube</div>
+                </div>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            Copyright © 2020 Just A Bite All Rights Reserved. 咬一口股份有限公司版權所有
+        </div>
+    </footer>
+    <script>
+        const questionList = document.querySelector('#questions__list');
+        questionList.addEventListener('click', (e) => {
+            const answer = e.target.querySelector('.answer__hidden')
+            answer.classList.toggle('answer__show')
+        })
+    </script>
+</body>
+
+</html>
