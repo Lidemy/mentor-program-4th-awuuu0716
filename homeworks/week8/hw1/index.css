@@ -211,6 +211,7 @@ h2 {
 
 .prize h1{
   font-weight: normal;
+  padding: 10px;
 }
 
 .lottery__button__again{
@@ -224,6 +225,30 @@ h2 {
     border-radius: 8px;
     cursor: pointer;
     outline: 0;
+}
+
+.loading {
+  display:none;
+  position: fixed;
+  top:50%;
+  left:50%;
+  width: 250px;
+  height: 250px;
+  transform:translate(-50%,-50%) ;
+  padding-top: 20px;
+text-align: center;
+background-color: rgba(255, 255, 255, 0.671);
+border-radius: 8px;
+
+}
+
+.loading img{
+position: relative;
+top:-100px;
+left:-25px;
+}
+.display__show {
+  display: block ;
 }
 
 .footer__top {
