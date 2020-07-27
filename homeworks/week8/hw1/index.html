@@ -42,10 +42,27 @@
             <div class="lottery__info__detail">
                 <button class="lottery__button">我要抽獎</button>
             </div>
+
         </div>
 
-
     </main>
+
+    <div class="prize prize__first ">
+        <h1>恭喜你中頭獎了！日本東京來回雙人遊！</h1>
+        <button class="lottery__button">再抽一次</button>
+    </div>
+    <div class="prize prize__second">
+        <h1>二獎！90 吋電視一台！</h1>
+        <button class="lottery__button">再抽一次</button>
+    </div>
+    <div class="prize prize__third">
+        <h1>恭喜你抽中三獎：知名 YouTuber 簽名握手會入場券一張，bang！</h1>
+        <button class="lottery__button">再抽一次</button>
+    </div>
+    <div class="prize prize__none">
+        <h1>銘謝惠顧</h1>
+        <button class="lottery__button">再抽一次</button>
+    </div>
 
     <footer>
         <div class="footer__top">
@@ -66,94 +83,44 @@
             Copyright © 2020 Just A Bite All Rights Reserved. 咬一口股份有限公司版權所有
         </div>
     </footer>
+
     <script>
-        const lottery = document.querySelector('.lottery__button');
+        const body = document.querySelector('body');
         const lotteryInfo = document.querySelector('.lottery__info');
         const background = document.querySelector('.lottery')
+        const prizeLog = [];
 
-        const getPrizeAgain = () => {
-            const buttonAgain = document.querySelector('.lottery__button__again')
-            const prizeMessage = document.querySelector('.prize__container h1')
-            const changeMessage = (message) => {
-                prizeMessage.innerHTML = message
-            }
-            const changeBackground = (prize) => {
-                const oldClass = background.classList[2];
-                background.classList.remove(oldClass)
-                background.classList.add(`lottery__prize__${prize}`)
-
-            }
-            buttonAgain.addEventListener('click', () => {
-                const request = new XMLHttpRequest()
-
-                request.addEventListener('load', () => {
-                    const result = JSON.parse(request.responseText).prize
-                    switch (result) {
-                        case 'FIRST':
-                            changeMessage('恭喜你中頭獎了！日本東京來回雙人遊！')
-                            changeBackground('first')
-                            break;
-                        case 'SECOND':
-                            changeMessage('二獎！90 吋電視一台！')
-                            changeBackground('second')
-                            break;
-                        case 'THIRD':
-                            changeMessage('恭喜你抽中三獎：知名 YouTuber 簽名握手會入場券一張，bang！')
-                            changeBackground('third')
-                            break;
-                        case 'NONE':
-
-                            break;
-                        default:
-                            alert('系統錯誤，請再試一次')
-                    }
-                })
-                request.open('GET', 'https://dvwhnbka7d.execute-api.us-east-1.amazonaws.com/default/lottery');
-                request.send()
-            })
-
-        }
-
-        lottery.addEventListener('click', () => {
+        body.addEventListener('click', (e) => {
+            if(!e.target.classList.contains('lottery__button')) return
             const request = new XMLHttpRequest()
-            const prizeHandler = (message) => {
-                const prizeContainer = document.createElement('div')
-                prizeContainer.classList.add('prize__container')
-                prizeContainer.innerHTML = `
-                        <h1>${message}</h1>
-                        <button class="lottery__button__again">再抽一次</button>`
-                background.appendChild(prizeContainer)
-            }
+
             const backgroundHandler = (prize) => {
-                lotteryInfo.classList.add('display__none')
-                background.classList.add('lottery__filter')
-                background.classList.add(`lottery__prize__${prize}`)
+                const target = document.querySelector(`.prize__${prize}`)
+                const lastPrize = document.querySelector(`.prize__${prizeLog[prizeLog.length-1]}`)
+                if(lastPrize) lastPrize.classList.remove('prize__show')
+                background.classList.add('display__none')
+                target.classList.add('prize__show')
             }
+
             request.addEventListener('load', () => {
                 if (request.status >= 200 && request.status < 400) {
                     const result = JSON.parse(request.responseText).prize
                     switch (result) {
                         case 'FIRST':
-                            prizeHandler('恭喜你中頭獎了！日本東京來回雙人遊！')
                             backgroundHandler('first')
-                            getPrizeAgain()
-
+                            prizeLog.push('first')
                             break;
                         case 'SECOND':
-                            prizeHandler('二獎！90 吋電視一台！')
                             backgroundHandler('second')
-                            getPrizeAgain()
-
+                            prizeLog.push('second')
                             break;
                         case 'THIRD':
-                            prizeHandler('恭喜你抽中三獎：知名 YouTuber 簽名握手會入場券一張，bang！')
                             backgroundHandler('third')
-                            getPrizeAgain()
-
+                            prizeLog.push('third')
                             break;
                         case 'NONE':
-
-                            lotteryInfo.classList.add('display__none')
+                            backgroundHandler('none')
+                            prizeLog.push('none')
                             break;
                         default:
                             alert('系統錯誤，請再試一次')
