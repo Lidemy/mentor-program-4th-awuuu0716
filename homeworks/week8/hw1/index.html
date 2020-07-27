@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./normalize.css">
+    <title>Just A Bite!</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="wrapper">
+            <div class="navbar__site-name">Just A Bite!</div>
+            <ul class="navbar__list">
+                <li class="active"><a href="#">抽個大獎</a></li>
+                <li><a href="#">我要點餐</a></li>
+                <li><a href="#">查詢訂單</a></li>
+                <li><a href="#">常見問題</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="lottery">
+        <div class="lottery__info">
+            <h2 class="lottery__title">2020 夏日輕盈特賞！ 抽獎活動辦法</h2>
+            <div class="lottery__info__detail ">
+                <div class="info__detail__title ">活動期間：</div>
+                <div class="info__detail__context ">2020/06/01 ~ 2020/07/01</div>
+            </div>
+            <div class="lottery__info__detail ">
+                <div class="info__detail__title ">活動說明：</div>
+                <div class="info__detail__context ">今天老闆佛心來著決定給大家發獎勵，有看有機會，沒看只能幫QQ！只要在店內消費滿1000000元即有機會獲得 - 頭獎日本東京來回雙人遊！
+                </div>
+            </div>
+            <div class="lottery__info__detail ">
+                <div class="info__detail__title ">獎　　品：</div>
+                <div class="info__detail__context ">❤ 頭獎一名：日本東京來回雙人遊(市價14990元)<br>❤ 貳獎三名：90 吋電視一台(市價5990元)<br>❤ 參獎十名：知名
+                    YouTuber 簽名握手會入場券一張(市價1500元)</div>
+            </div>
+            <div class="lottery__info__detail">
+                <button class="lottery__button">我要抽獎</button>
+            </div>
+        </div>
+
+
+    </main>
+
+    <footer>
+        <div class="footer__top">
+            <div class="wrapper">
+                <div class="footer__info">
+                    <div>餐館地址: 天上地下天堂路三分之一里六段520號</div>
+                    <div>訂位專線：02-1314-5566</div>
+                    <div>營業時間：週一〜週五 09:00~18:00 / 週六、週日、國定假日（含連假）休息</div>
+                    <div>email：service@justabite.com.tw</div>
+                </div>
+                <div>
+                    <div class="footer__site">Just A Bite!</div>
+                    <div>Facebook / Instagram / Youtube</div>
+                </div>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            Copyright © 2020 Just A Bite All Rights Reserved. 咬一口股份有限公司版權所有
+        </div>
+    </footer>
+    <script>
+        const lottery = document.querySelector('.lottery__button');
+        const lotteryInfo = document.querySelector('.lottery__info');
+        const background = document.querySelector('.lottery')
+
+        const getPrizeAgain = () => {
+            const buttonAgain = document.querySelector('.lottery__button__again')
+            const prizeMessage = document.querySelector('.prize__container h1')
+            const changeMessage = (message) => {
+                prizeMessage.innerHTML = message
+            }
+            const changeBackground = (prize) => {
+                const oldClass = background.classList[2];
+                background.classList.remove(oldClass)
+                background.classList.add(`lottery__prize__${prize}`)
+
+            }
+            buttonAgain.addEventListener('click', () => {
+                const request = new XMLHttpRequest()
+
+                request.addEventListener('load', () => {
+                    const result = JSON.parse(request.responseText).prize
+                    switch (result) {
+                        case 'FIRST':
+                            changeMessage('恭喜你中頭獎了！日本東京來回雙人遊！')
+                            changeBackground('first')
+                            break;
+                        case 'SECOND':
+                            changeMessage('二獎！90 吋電視一台！')
+                            changeBackground('second')
+                            break;
+                        case 'THIRD':
+                            changeMessage('恭喜你抽中三獎：知名 YouTuber 簽名握手會入場券一張，bang！')
+                            changeBackground('third')
+                            break;
+                        case 'NONE':
+
+                            break;
+                        default:
+                            alert('系統錯誤，請再試一次')
+                    }
+                })
+                request.open('GET', 'https://dvwhnbka7d.execute-api.us-east-1.amazonaws.com/default/lottery');
+                request.send()
+            })
+
+        }
+
+        lottery.addEventListener('click', () => {
+            const request = new XMLHttpRequest()
+            const prizeHandler = (message) => {
+                const prizeContainer = document.createElement('div')
+                prizeContainer.classList.add('prize__container')
+                prizeContainer.innerHTML = `
+                        <h1>${message}</h1>
+                        <button class="lottery__button__again">再抽一次</button>`
+                background.appendChild(prizeContainer)
+            }
+            const backgroundHandler = (prize) => {
+                lotteryInfo.classList.add('display__none')
+                background.classList.add('lottery__filter')
+                background.classList.add(`lottery__prize__${prize}`)
+            }
+            request.addEventListener('load', () => {
+                if (request.status >= 200 && request.status < 400) {
+                    const result = JSON.parse(request.responseText).prize
+                    switch (result) {
+                        case 'FIRST':
+                            prizeHandler('恭喜你中頭獎了！日本東京來回雙人遊！')
+                            backgroundHandler('first')
+                            getPrizeAgain()
+
+                            break;
+                        case 'SECOND':
+                            prizeHandler('二獎！90 吋電視一台！')
+                            backgroundHandler('second')
+                            getPrizeAgain()
+
+                            break;
+                        case 'THIRD':
+                            prizeHandler('恭喜你抽中三獎：知名 YouTuber 簽名握手會入場券一張，bang！')
+                            backgroundHandler('third')
+                            getPrizeAgain()
+
+                            break;
+                        case 'NONE':
+
+                            lotteryInfo.classList.add('display__none')
+                            break;
+                        default:
+                            alert('系統錯誤，請再試一次')
+                    }
+
+                } else {
+                    alert('出錯惹')
+                    console.log('err')
+                }
+            })
+            request.open('GET', 'https://dvwhnbka7d.execute-api.us-east-1.amazonaws.com/default/lottery');
+            request.send()
+        })
+    </script>
+</body>
+
+</html>
