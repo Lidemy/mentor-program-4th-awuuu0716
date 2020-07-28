@@ -1,0 +1,174 @@
+.debug *, .debug {outline:1px solid gold}
+
+body {
+    font-family: '微軟正黑體';
+  background-image: url("./bg.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    padding: 0;
+}
+
+
+.nav {
+    position:fixed;
+    top:0px;
+    left:0px;
+    display: flex;
+    width: 100%;
+    height: 100px;
+    align-items: center;
+    background-color: rgba(63, 63, 63, 0.61);
+    box-shadow: 1px 1px 3px rgb(49, 49, 49);
+    color: white;
+}
+
+.nav__title {
+    flex:3;
+    font-size: 30px;
+    text-align: center;
+}
+
+.nav__games {
+    flex:9;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nav__games li {
+    flex: 1;
+    font-size: 20px;
+    display: inline-block;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.nav__games li:hover {
+    transform: scale(1.1);
+}
+
+.streams__container{
+    display: flex;
+    margin-top: 150px;
+    align-items: center;
+    flex-direction: column;
+}
+
+.streams__header {
+    color:white;
+    text-shadow: 2px 1px 2px rgb(34, 34, 34);
+    margin: 10px 10px;
+    text-align: center;
+}
+
+.streams__top__20 {
+    padding: 10px;
+    max-width: 1140px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+
+.stream {
+    width: 360px;
+    background-color: rgba(0, 0, 0, 0.24);
+    margin: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.stream:hover {
+    transform: scale(1.05);
+}
+
+.stream__preview {
+    width: 100%;
+}
+
+.stream__preview img{
+    width: 100%;
+}
+
+.stream__info__container {
+    display: flex;
+    align-items: center;
+}
+
+.stream__info__thumbnail {
+    flex:1;
+    padding: 5px ;
+}
+
+.stream__info__thumbnail img {
+    border-radius: 50%;
+    float: left;
+}
+
+.stream__info__context {
+    flex:6;
+    color:white;
+}
+
+.stream__description {
+    width: 280px;
+    height: 25px;
+    padding: 5px;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+}
+
+.stream__name {
+    text-align: left;
+    padding: 5px;
+    height: 25px;
+}
+
+
+@media (max-width:1110px) {
+    .streams__top__20 {
+        width: 860px;
+    }
+    .stream {
+        width: 410px;
+    }
+    .stream__description {
+        width: 330px;
+    }
+}
+
+@media (max-width:840px) {
+   .streams__top__20 {
+        width: 410px;
+    }
+    .stream__description {
+        width: 330px;
+    }
+}
+
+@media (max-width:435px) {
+   .streams__top__20 {
+        width: 340px;
+    }
+    .stream__description {
+        width: 250px;
+    }
+}
+
+.display__none {
+    display: none;
+}
