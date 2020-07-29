@@ -29,6 +29,7 @@
         const clientId = 'wbd4r8kqc3urx0xd5f4fd4797nfr18';
         const topList = [];
         let nowGame = '';
+
         const appendGamesList = (name) => {
             const listParentNode = document.querySelector('.nav__games')
             const game = document.createElement('li')
@@ -70,7 +71,7 @@
         }
 
         const onGameListReady = (data, gameName) => {
-            // 把要得資料打包成物件
+            // 把要的資料打包成物件
             const streams = [];
             for (let i = 0; i < 20; i++) {
                 const stream = data.streams[i]
@@ -85,11 +86,15 @@
             // DOM
             const mainNode = document.querySelector('.streams__container')
             const gameTitle = document.querySelector('.streams__name')
+            const gameListButton = document.getElementById(`li${gameName}`)
             const streamContainNode = document.createElement('section')
             streamContainNode.classList.add('streams__top__20')
             streamContainNode.setAttribute('id', gameName)
             if (gameName !== topList[0]) streamContainNode.classList.add('display__none')
-            if (gameName === topList[0]) gameTitle.innerHTML = gameName;
+            if (gameName === topList[0]) {
+                gameTitle.innerHTML = gameName;
+                gameListButton.classList.add('nav__games__active')
+            }
             mainNode.appendChild(streamContainNode)
 
             streams.forEach(topStream => {
@@ -111,7 +116,7 @@
                 streamContainNode.appendChild(streamNode)
             })
             // 載入完才能顯示 li 按鈕
-            const gameListButton = document.getElementById(`li${gameName}`)
+
             gameListButton.classList.remove('display__none')
         }
 
@@ -124,11 +129,15 @@
             const newGame = e.target.innerHTML
             if (newGame === nowGame || !e.target.classList.contains('change')) return
             const title = document.querySelector('.streams__name')
+            const nowGameButton = document.getElementById(`li${nowGame}`)
+            const newGameButton = document.getElementById(`li${newGame}`)
             const nowDisplay = document.getElementById(nowGame)
             const changeTo = document.getElementById(newGame)
             title.innerHTML = newGame
             nowDisplay.classList.add('display__none')
             changeTo.classList.remove('display__none')
+            nowGameButton.classList.remove('nav__games__active')
+            newGameButton.classList.add('nav__games__active')
             nowGame = newGame
         })
 
