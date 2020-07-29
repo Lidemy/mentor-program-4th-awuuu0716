@@ -12,14 +12,15 @@
 <body>
 
     <nav class="nav">
-        <div class="nav__title">Twitch Top Games</div>
-        <ul class="nav__games ">
+        <div class="nav__title">Twitch Top Game</div>
+        <ul class="nav__games">
         </ul>
+        <img src="./open-menu.png" alt="" width="50px" height="50px" class="open__menu">
     </nav>
 
     <main class="streams__container">
         <section class="streams__header">
-            <h1 class="streams__name">League of Legends</h1>
+            <h1 class="streams__name"></h1>
             <h2 class="streams__describe">Top 20 popular live streams sorted by current viewers</h2>
         </section>
     </main>
@@ -33,10 +34,12 @@
             const listParentNode = document.querySelector('.nav__games')
             const game = document.createElement('li')
             game.classList.add('change')
+            game.classList.add('display__none')
+            game.setAttribute('id', `li${name}`)
             game.innerHTML = name
             listParentNode.appendChild(game)
         }
-        
+
         // 載入所有實況
         req.addEventListener('load', () => {
             if (req.status >= 200 && req.status < 400) {
@@ -46,8 +49,14 @@
                     topList.push(res.top[i].game.name)
                 }
 
+                // 設定目前頁面在哪個遊戲
+                nowGame = topList[0];
+
                 // 這邊會發 5 個 Request 誰先回傳不知道
                 topList.slice(0, 5).forEach(gameName => {
+  
+               
+                    // 遊戲列表加入 DOM
                     appendGamesList(gameName);
                     const req = new XMLHttpRequest
 
@@ -66,15 +75,16 @@
                             })
                         }
 
-                        // 設定目前頁面在哪個遊戲
-                        nowGame = gameName;
+
 
                         // DOM
                         const mainNode = document.querySelector('.streams__container')
                         const streamContainNode = document.createElement('section')
+                        const gameTitle = document.querySelector('.streams__name')
                         streamContainNode.classList.add('streams__top__20')
                         streamContainNode.setAttribute('id', gameName)
                         if (gameName !== topList[0]) streamContainNode.classList.add('display__none')
+                        if (gameName === topList[0]) gameTitle.innerHTML = gameName;
                         mainNode.appendChild(streamContainNode)
 
                         streams.forEach(topStream => {
@@ -93,9 +103,12 @@
                                         </div>
                                     </div>
                                 `
-                            console.log(streamNode)
                             streamContainNode.appendChild(streamNode)
                         })
+                        // 載入完才能顯示 li 按鈕
+                        const gameListButton = document.getElementById(`li${gameName}`)
+                        gameListButton.classList.remove('display__none')
+
                     })
 
                     req.open('GET', `https://api.twitch.tv/kraken/streams?game=${gameName}`)
@@ -118,6 +131,7 @@
         const ul = document.querySelector('ul');
         ul.addEventListener('click', (e) => {
             const newGame = e.target.innerHTML
+
             // 如果點到同一頁或是 ul 就不做動作
             if (newGame === nowGame || !e.target.classList.contains('change')) return
             const title = document.querySelector('.streams__name')
@@ -128,6 +142,15 @@
             changeTo.classList.remove('display__none')
             nowGame = newGame
         })
+
+        // 手機板開關 menu
+        const menu = document.querySelector('.open__menu')
+        const gameList = document.querySelector('.nav__games')
+        menu.addEventListener('click', () => {
+            gameList.classList.toggle('nav__games__show')
+        })
+        
+
     </script>
 </body>
 
