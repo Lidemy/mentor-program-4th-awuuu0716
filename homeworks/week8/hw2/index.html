@@ -2,31 +2,40 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./normalize.css">
-    <link rel="stylesheet" href="./index.css">
-    <script type="text/javascript" src="./index.js"></script>
-    <title>Twitch Top Game</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./normalize.css" />
+  <link rel="stylesheet" href="./index.css" />
+  <script type="text/javascript" src="./index.js"></script>
+  <title>Twitch Top Game</title>
 </head>
 
 <body>
 
-    <nav class="nav">
-        <div class="nav__title">Twitch Top Game</div>
-        <ul class="nav__games">
-        </ul>
-        <img src="./open-menu.png" alt="" width="50px" height="50px" class="open__menu">
-    </nav>
+  <nav class="nav">
+    <div class="nav__title"><a href="">Twitch Top Game</a></div>
 
-    <main class="streams__container">
-        <section class="streams__header">
-            <h1 class="streams__name"></h1>
-            <h2 class="streams__describe">Top 20 popular live streams sorted by current viewers</h2>
-        </section>
-    </main>
+    <div class=" arrow__container arrow__container__left">
+      <div class="nav__games__pre"></div>
+    </div>
+        <ul class="nav__games" id="display__games">
+        </ul>
+    <div class="arrow__container arrow__container__right">
+      <div class="nav__games__next"></div>
+    </div>
+
+    <img src="./open-menu.png" alt="" width="50px" height="50px" class="open__menu" />
+  </nav>
+
+  <main class="streams__container">
+    <section class="streams__header">
+      <h1 class="streams__name"></h1>
+      <h3 class="streams__describe">
+        Popular live streams sorted by current viewers
+      </h3>
+    </section>
+  </main>
 
 </body>
-
 
 </html>

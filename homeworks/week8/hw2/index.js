@@ -1,12 +1,12 @@
 window.onload = () => {
   const clientId = 'wbd4r8kqc3urx0xd5f4fd4797nfr18';
-  const topList = [];
+  const navGameList = [];
   let nowGame = '';
+
   const appendGamesList = (name) => {
     const listParentNode = document.querySelector('.nav__games');
     const game = document.createElement('li');
     game.classList.add('change');
-    game.classList.add('display__none');
     game.setAttribute('id', `li${name}`);
     game.innerHTML = name;
     listParentNode.appendChild(game);
@@ -31,7 +31,7 @@ window.onload = () => {
   const onGameListReady = (data, gameName) => {
     // 把要的資料打包成物件
     const streams = [];
-    for (let i = 0; i < 20; i += 1) {
+    for (let i = 0; i < data.streams.length; i += 1) {
       const stream = data.streams[i];
       streams.push({
         preview: stream.preview.medium,
@@ -41,6 +41,7 @@ window.onload = () => {
         url: stream.channel.url,
       });
     }
+
     // DOM
     const mainNode = document.querySelector('.streams__container');
     const gameTitle = document.querySelector('.streams__name');
@@ -48,8 +49,8 @@ window.onload = () => {
     const streamContainNode = document.createElement('section');
     streamContainNode.classList.add('streams__top__20');
     streamContainNode.setAttribute('id', gameName);
-    if (gameName !== topList[0]) streamContainNode.classList.add('display__none');
-    if (gameName === topList[0]) {
+    if (gameName !== navGameList[0]) streamContainNode.classList.add('display__none');
+    if (gameName === navGameList[0]) {
       gameTitle.innerHTML = gameName;
       gameListButton.classList.add('nav__games__active');
     }
@@ -68,43 +69,42 @@ window.onload = () => {
       streamNode.setAttribute('href', url);
       streamNode.setAttribute('target', '_blank');
       streamNode.innerHTML = `
-                                <div class="stream__preview"><img src="${preview}"></div>
-            <div class="stream__info__container">
-                <div class="stream__info__thumbnail"><img src="${thumbNail}" width="50px" height="50px"></div>
-                    <div class="stream__info__context">
-                        <div class="stream__description">${description}</div>
-                        <div class="stream__name">${streamerName}</div>
-                    </div>
+              <div class="stream__preview">
+                <img src="${preview}">
+              </div>
+                <div class="stream__info__container">
+                  <div class="stream__info__thumbnail">
+                    <img src="${thumbNail}" width="50px" height="50px">
+                  </div>
+                  <div class="stream__info__context">
+                    <div class="stream__description">${description}</div>
+                    <div class="stream__name">${streamerName}</div>
                 </div>
-                                `;
+              </div>`;
       streamContainNode.appendChild(streamNode);
     });
-    // 載入完才能顯示 li 按鈕
-
-    gameListButton.classList.remove('display__none');
   };
 
   const onDocumentReady = (data) => {
     for (let i = 0; i < data.top.length; i += 1) {
-      topList.push(data.top[i].game.name);
+      navGameList.push(data.top[i].game.name);
     }
     // 設定初始頁面顯示哪個遊戲
-    [nowGame] = [topList[0]];
+    [nowGame] = [navGameList[0]];
     // 拿到遊戲列表後再發 5 個 Request
-    topList.slice(0, 5).forEach((gameName) => {
-      sendRequest(onGameListReady, `streams?game=${gameName}`, gameName);
-      // 把遊戲列表貼上 navbar
+    navGameList.slice(0, 5).forEach((gameName) => {
+      sendRequest(onGameListReady, `streams/?game=${gameName.replace('&', '%26')}`, gameName);
       appendGamesList(gameName);
     });
   };
 
   // 網頁開啟載入初始 5 個遊戲實況
-  sendRequest(onDocumentReady, 'games/top');
+  sendRequest(onDocumentReady, 'games/top?limit=100');
 
   // 切換目前顯示的遊戲
   const ul = document.querySelector('ul');
   ul.addEventListener('click', (e) => {
-    const newGame = e.target.innerHTML;
+    const newGame = e.target.innerText;
     if (newGame === nowGame || !e.target.classList.contains('change')) return;
     const title = document.querySelector('.streams__name');
     const nowGameButton = document.getElementById(`li${nowGame}`);
@@ -114,7 +114,7 @@ window.onload = () => {
     title.innerHTML = newGame;
     nowDisplay.classList.add('display__none');
     changeTo.classList.remove('display__none');
-    nowGameButton.classList.remove('nav__games__active');
+    if (nowGameButton) nowGameButton.classList.remove('nav__games__active');
     newGameButton.classList.add('nav__games__active');
     nowGame = newGame;
   });
@@ -124,5 +124,32 @@ window.onload = () => {
   const gameList = document.querySelector('.nav__games');
   menu.addEventListener('click', () => {
     gameList.classList.toggle('nav__games__show');
+  });
+
+  // 遊戲選單左右移動
+  const arrowContainerLeft = document.querySelector('.arrow__container__left');
+  const arrowContainerRight = document.querySelector('.arrow__container__right');
+  let gameListIndex = 0;
+
+  arrowContainerRight.addEventListener('click', () => {
+    if (gameListIndex + 5 >= navGameList.length) return;
+    gameListIndex += 5;
+    const now = document.getElementById('display__games');
+    now.innerHTML = '';
+    navGameList.slice(gameListIndex, gameListIndex + 5).forEach((gameName) => {
+      if (!document.getElementById(gameName)) sendRequest(onGameListReady, `streams?game=${gameName.replace('&', '%26')}`, gameName);
+      appendGamesList(gameName);
+    });
+  });
+
+  arrowContainerLeft.addEventListener('click', () => {
+    if (gameListIndex - 5 < 0) return;
+    gameListIndex -= 5;
+    const now = document.getElementById('display__games');
+    now.innerHTML = '';
+    navGameList.slice(gameListIndex, gameListIndex + 5).forEach((gameName) => {
+      if (!document.getElementById(gameName)) sendRequest(onGameListReady, `streams?game=${gameName.replace('&', '%26')}`, gameName);
+      appendGamesList(gameName);
+    });
   });
 };
