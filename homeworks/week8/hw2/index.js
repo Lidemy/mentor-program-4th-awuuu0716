@@ -219,13 +219,20 @@ window.onload = () => {
   });
 
   // 卷軸捲到底部時載入更多遊戲
-
+  let allowLoading = true;
   document.addEventListener('scroll', () => {
     const isNeedLoading = (
       document.documentElement.scrollTop
       + window.screen.height
       - 150
-    ) === document.body.scrollHeight;
-    if (isNeedLoading) sendRequest(loadMoreNowGameStreams, `streams/?game=${nowGame.replace('&', '%26')}&limit=20&offset=${gamesInfo[nowGame].offset}`, nowGame);
+    ) >= document.body.scrollHeight;
+    if (isNeedLoading && allowLoading) {
+      sendRequest(loadMoreNowGameStreams, `streams/?game=${nowGame.replace('&', '%26')}&limit=20&offset=${gamesInfo[nowGame].offset}`, nowGame);
+      allowLoading = false;
+      window.setTimeout(() => {
+        allowLoading = true;
+        return null;
+      }, 1000);
+    }
   });
 };
