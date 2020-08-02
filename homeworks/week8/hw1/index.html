@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./index.css">
     <link rel="stylesheet" href="./normalize.css">
+    <script src="./index.js"></script>
     <title>Just A Bite!</title>
 </head>
 
@@ -21,7 +22,6 @@
             </ul>
         </div>
     </nav>
-
     <main class="lottery">
         <div class="lottery__info">
             <h2 class="lottery__title">2020 夏日輕盈特賞！ 抽獎活動辦法</h2>
@@ -42,11 +42,8 @@
             <div class="lottery__info__detail">
                 <button class="lottery__button">我要抽獎</button>
             </div>
-
         </div>
-
     </main>
-
     <div class="prize prize__first ">
         <h1>恭喜你中頭獎了！日本東京來回雙人遊！</h1>
         <button class="lottery__button">再抽一次</button>
@@ -86,68 +83,6 @@
             Copyright © 2020 Just A Bite All Rights Reserved. 咬一口股份有限公司版權所有
         </div>
     </footer>
-
-    <script>
-        const body = document.querySelector('body');
-        const reload = document.querySelector('.active a');
-        const lotteryInfo = document.querySelector('.lottery__info');
-        const background = document.querySelector('.lottery');
-        const loading = document.querySelector('.loading');
-        const prizeLog = [];
-
-        body.addEventListener('click', (e) => {
-
-            if (!e.target.classList.contains('lottery__button')) return
-            loading.classList.toggle('display__show')
-            const request = new XMLHttpRequest()
-
-            const backgroundHandler = (prize) => {
-                const target = document.querySelector(`.prize__${prize}`)
-                const lastPrize = document.querySelector(`.prize__${prizeLog[prizeLog.length - 1]}`)
-                if (lastPrize) lastPrize.classList.remove('prize__show')
-                background.classList.add('display__none')
-                target.classList.add('prize__show')
-            }
-
-            request.addEventListener('load', () => {
-                if (request.status >= 200 && request.status < 400) {
-                    const result = JSON.parse(request.responseText).prize
-                    switch (result) {
-                        case 'FIRST':
-                            backgroundHandler('first')
-                            prizeLog.push('first')
-                            loading.classList.toggle('display__show')
-                            break;
-                        case 'SECOND':
-                            backgroundHandler('second')
-                            prizeLog.push('second')
-                            loading.classList.toggle('display__show')
-                            break;
-                        case 'THIRD':
-                            backgroundHandler('third')
-                            prizeLog.push('third')
-                            loading.classList.toggle('display__show')
-                            break;
-                        case 'NONE':
-                            backgroundHandler('none')
-                            prizeLog.push('none')
-                            loading.classList.toggle('display__show')
-                            break;
-                        default:
-                            loading.classList.toggle('display__show')
-                            alert('系統錯誤，請再試一次')
-                    }
-
-                } else {
-                    alert('系統錯誤，請再試一次')
-                    loading.classList.toggle('display__show')
-                }
-            })
-            request.open('GET', 'https://dvwhnbka7d.execute-api.us-east-1.amazonaws.com/default/lottery');
-            request.send()
-        })
-        reload.addEventListener('click',()=>{window.location.reload()})
-    </script>
 </body>
 
 </html>
