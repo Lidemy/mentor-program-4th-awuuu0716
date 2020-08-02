@@ -81,13 +81,14 @@ window.onload = () => {
   };
 
   // 處理 nav 上遊戲列表的 DOM
+  const listParentNode = document.querySelector('.nav__games');
   const appendGamesList = (name) => {
-    const listParentNode = document.querySelector('.nav__games');
+    const arrowRight = document.querySelector('.arrow__right');
     const game = document.createElement('li');
     game.classList.add('change');
     game.setAttribute('id', `li${name}`);
     game.innerHTML = name;
-    listParentNode.appendChild(game);
+    listParentNode.insertBefore(game, arrowRight);
   };
 
   // 只在網頁第一次開啟時執行, 抓 100 個遊戲實況名稱
@@ -179,25 +180,28 @@ window.onload = () => {
     nowGame = newGame;
   });
 
-  // 手機板開關 menu
-  const menu = document.querySelector('.open__menu');
-  const gameList = document.querySelector('.nav__games');
-  menu.addEventListener('click', () => {
-    gameList.classList.toggle('nav__games__show');
-  });
-
   // 遊戲選單左右移動 在移動時就偷偷把實況載入
-  const arrowContainerLeft = document.querySelector('.arrow__container__left');
-  const arrowContainerRight = document.querySelector('.arrow__container__right');
   let gameListIndex = 0;
+  listParentNode.addEventListener('click', (e) => {
+    if (!e.target.closest('.arrow__left') && !e.target.closest('.arrow__right')) return;
+    if (e.target.closest('.arrow__left')) {
+      if (gameListIndex - 5 < 0) return;
+      gameListIndex -= 5;
+    } else {
+      if (gameListIndex + 5 >= navGameList.length) return;
+      gameListIndex += 5;
+    }
 
-  // 按右邊的箭頭
-  arrowContainerRight.addEventListener('click', () => {
-    if (gameListIndex + 5 >= navGameList.length) return;
     window.scrollTo(0, 0);
-    gameListIndex += 5;
     const now = document.getElementById('display__games');
-    now.innerHTML = '';
+    now.innerHTML = `         
+          <div class=" arrow__container arrow__left">
+            <div class="nav__games__pre">
+          </div>
+          </div>
+          <div class="arrow__container arrow__right">
+            <div class="nav__games__next">
+          </div>`;
     navGameList.slice(gameListIndex, gameListIndex + 5).forEach((name) => {
       // 沒載過的話就發 request 載入, 載過的話就不要載了
       if (!document.getElementById(name)) sendRequest(onGameListReady, `streams/?game=${name.replace('&', '%26')}&limit=20&offset=${gamesInfo[name].offset}`, name);
@@ -205,17 +209,11 @@ window.onload = () => {
     });
   });
 
-  // 按左邊的箭頭
-  arrowContainerLeft.addEventListener('click', () => {
-    if (gameListIndex - 5 < 0) return;
-    window.scrollTo(0, 0);
-    gameListIndex -= 5;
-    const now = document.getElementById('display__games');
-    now.innerHTML = '';
-    navGameList.slice(gameListIndex, gameListIndex + 5).forEach((name) => {
-      if (!document.getElementById(name)) sendRequest(onGameListReady, `streams/?game=${name.replace('&', '%26')}&limit=20&offset=${gamesInfo[name].offset}`, name);
-      appendGamesList(name);
-    });
+  // 手機板開關 menu
+  const menu = document.querySelector('.open__menu');
+  const gameList = document.querySelector('.nav__games');
+  menu.addEventListener('click', () => {
+    gameList.classList.toggle('nav__games__show');
   });
 
   // 卷軸捲到底部時載入更多遊戲

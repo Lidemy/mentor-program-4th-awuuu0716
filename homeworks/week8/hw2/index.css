@@ -84,12 +84,8 @@ ul {
     margin-right: 10px;
 }
 
-.arrow__container:hover {
-    transform: translate(-5px,0);
-}
-
-.nav__games+.arrow__container:hover {
-    transform: translate(5px,0);
+.arrow__container:hover div {
+  border-color: white;
 }
 
 .nav__games__pre {
@@ -100,6 +96,7 @@ ul {
     margin-left: 10px;
     border-top: 8px solid rgba(252, 252, 252, 0.397);
     border-left: 8px solid rgba(252, 252, 252, 0.397);
+    transition: all 0.2s;
     transform: rotate(-45deg);
   }
 
@@ -111,6 +108,7 @@ ul {
     margin-right: 10px;
     border-bottom: 8px solid rgba(252, 252, 252, 0.397);
     border-right: 8px solid rgba(252, 252, 252, 0.397);
+    transition: all 0.2s;
     transform: rotate(-45deg);
 }
 
@@ -210,8 +208,8 @@ ul {
     }
     .nav__games {
         position: absolute;
-        top: 60px;
-        right: 0px;
+        top: 100px;
+        right: -250px;
         flex-direction: column;
         opacity: 0;
         background-color: rgba(63, 63, 63, 0.61);
@@ -232,6 +230,17 @@ ul {
     .stream__description {
         width: 330px;
     }
+    .arrow__container {
+      width: 250px;
+      display: flex;
+      justify-content: center;
+    }
+  .nav__games__pre {
+    transform: rotate(45deg);
+  }
+  .nav__games__next{
+        transform: rotate(45deg);
+  }
 }
 
 @media (max-width:840px) {
@@ -262,6 +271,7 @@ ul {
 }
 
 .nav__games__show {
-    top: 100px;
+    right:0;
     opacity: 1;
 }
+
