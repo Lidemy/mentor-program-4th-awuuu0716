@@ -20,15 +20,12 @@ window.onload = () => {
     xhr.send();
   };
 
-  // 遊戲列表出來時就載入實況
-  const onGameListReady = (data, gameName) => {
-    // 把要的資料打包成物件
-    const streams = [];
-    const streamsNum = data.streams.length;
-    gamesInfo[gameName].offset += streamsNum < 20 ? streamsNum : 20;
-    for (let i = 0; i < streamsNum; i += 1) {
+  // 負責整理打包資料的 function
+  const pickStreamsInfoFromResponse = (data, dataLength) => {
+    const tempArr = [];
+    for (let i = 0; i < dataLength; i += 1) {
       const stream = data.streams[i];
-      streams.push({
+      tempArr.push({
         preview: stream.preview.medium,
         thumbNail: stream.channel.logo,
         description: stream.channel.description || 'No description',
@@ -36,22 +33,12 @@ window.onload = () => {
         url: stream.channel.url,
       });
     }
+    return tempArr;
+  };
 
-    // DOM
-    const mainNode = document.querySelector('.streams__container');
-    const gameTitle = document.querySelector('.streams__name');
-    const gameListButton = document.getElementById(`li${gameName}`);
-    const streamContainNode = document.createElement('section');
-    streamContainNode.classList.add('streams__top__20');
-    streamContainNode.setAttribute('id', gameName);
-    if (gameName !== navGameList[0]) streamContainNode.classList.add('display__none');
-    if (gameName === navGameList[0]) {
-      gameTitle.innerHTML = gameName;
-      gameListButton.classList.add('nav__games__active');
-    }
-    mainNode.appendChild(streamContainNode);
-
-    streams.forEach((topStream) => {
+  // 負責把實況資料塞進 <section> 的 function
+  const appendStreamData = (data, parentNode) => {
+    data.forEach((topStream) => {
       const streamNode = document.createElement('a');
       const {
         preview,
@@ -76,8 +63,31 @@ window.onload = () => {
                     <div class="stream__name">${streamerName}</div>
                 </div>
               </div>`;
-      streamContainNode.appendChild(streamNode);
+      parentNode.appendChild(streamNode);
     });
+  };
+
+  // 遊戲列表出來時就載入實況
+  const onGameListReady = (data, gameName) => {
+    // 把要的資料打包成物件
+    const streamsNum = data.streams.length;
+    const streams = pickStreamsInfoFromResponse(data, streamsNum);
+    gamesInfo[gameName].offset += streamsNum < 20 ? streamsNum : 20;
+
+    // DOM
+    const mainNode = document.querySelector('.streams__container');
+    const gameTitle = document.querySelector('.streams__name');
+    const gameListButton = document.getElementById(`li${gameName}`);
+    const streamContainNode = document.createElement('section');
+    streamContainNode.classList.add('streams__top__20');
+    streamContainNode.setAttribute('id', gameName);
+    if (gameName !== navGameList[0]) streamContainNode.classList.add('display__none');
+    if (gameName === navGameList[0]) {
+      gameTitle.innerHTML = gameName;
+      gameListButton.classList.add('nav__games__active');
+    }
+    mainNode.appendChild(streamContainNode);
+    appendStreamData(streams, streamContainNode);
   };
 
   // 處理 nav 上遊戲列表的 DOM
@@ -114,51 +124,14 @@ window.onload = () => {
 
   // 載入更多目前顯示的遊戲實況
   const loadMoreNowGameStreams = (data, gameName) => {
-    console.log('now loading:', gameName);
-    const streams = [];
     const streamsNum = data.streams.length;
     if (streamsNum === 0) return;
+    const streams = pickStreamsInfoFromResponse(data, streamsNum);
     gamesInfo[gameName].offset += streamsNum < 20 ? streamsNum : 20;
-    for (let i = 0; i < streamsNum; i += 1) {
-      const stream = data.streams[i];
-      streams.push({
-        preview: stream.preview.medium,
-        thumbNail: stream.channel.logo,
-        description: stream.channel.description || 'No description',
-        streamerName: stream.channel.display_name || 'No name',
-        url: stream.channel.url,
-      });
-    }
 
     // DOM
     const streamsContainer = document.getElementById(gameName);
-    streams.forEach((stream) => {
-      const streamNode = document.createElement('a');
-      const {
-        preview,
-        thumbNail,
-        description,
-        streamerName,
-        url,
-      } = stream;
-      streamNode.classList.add('stream');
-      streamNode.setAttribute('href', url);
-      streamNode.setAttribute('target', '_blank');
-      streamNode.innerHTML = `
-              <div class="stream__preview">
-                <img src="${preview}">
-              </div>
-                <div class="stream__info__container">
-                  <div class="stream__info__thumbnail">
-                    <img src="${thumbNail}" width="50px" height="50px">
-                  </div>
-                  <div class="stream__info__context">
-                    <div class="stream__description">${description}</div>
-                    <div class="stream__name">${streamerName}</div>
-                </div>
-              </div>`;
-      streamsContainer.appendChild(streamNode);
-    });
+    appendStreamData(streams, streamsContainer);
   };
 
   // 切換目前顯示的遊戲
