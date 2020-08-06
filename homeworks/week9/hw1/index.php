@@ -22,6 +22,8 @@
       <textarea name="comment" id="" cols="30" rows="10"></textarea>
       <input type="submit">
     </form>
+    <a href="login.php">登入</a>
+    <a href="sign__in.php">註冊</a>
   </section>
   <section class="comments">
     <?php while ($row = $result->fetch_assoc()) { ?>
@@ -36,6 +38,7 @@
         <div class="post__wrapper">
           <p class=""><?php echo $row["comment"] ?></p>
         </div>
+        <a class="delete__post" href=<?php echo "delete_post.php?id=".$row["id"]?>>刪除</a>
       </div>
     <?php } ?>
   </section>
