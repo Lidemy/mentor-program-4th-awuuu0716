@@ -1,6 +1,7 @@
 <?php 
-  require_once("conn.php");
-  $id = $_GET["id"];
+  require_once("utlis.php");
+  
+  $id = $_POST["id"];
   $sql = sprintf("DELETE FROM `Awu_comments` WHERE id=%s",$id);
 
   $result = $conn->query($sql);

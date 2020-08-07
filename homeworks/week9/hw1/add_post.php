@@ -1,5 +1,6 @@
 <?php 
-  require_once("conn.php");
+  require_once("utlis.php");
+  
   $nickname = $_POST["nickname"];
   $comment = $_POST["comment"];
   $sql = sprintf(
