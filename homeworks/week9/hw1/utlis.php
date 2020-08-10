@@ -2,8 +2,7 @@
 // 連線用 php
 require_once("conn.php");
 
-// 一些 function
-
+// 一些實用 function
 // 產生 token
 
 function generateToken($length)

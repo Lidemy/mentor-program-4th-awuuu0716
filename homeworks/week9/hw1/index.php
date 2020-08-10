@@ -14,7 +14,6 @@ if (isset($_COOKIE["token"])) {
   $nickname = "Guest";
   $isLogIn = false;
 }
-  $greeting = "Hello " . $nickname;
 ?>
 
 <!DOCTYPE html>
@@ -24,24 +23,42 @@ if (isset($_COOKIE["token"])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>留言板</title>
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <script src="js/index.js"></script>
   </link>
 </head>
 
 <body>
   <header class="warning">注意！本站為練習用網站，因教學用途刻意忽略資安的實作，註冊時請勿使用任何真實的帳號或密碼。</header>
-  <h1 class="greeting"><?php echo $greeting ?></h1>
-  <section class="user__operating">
-    <form class="input__form" action="add_post.php" method="post">
-      <input name="nickname" type="text" hidden value=<?php echo $nickname?>>
-      <textarea name="comment" id="" cols="30" rows="10"></textarea>
-      <input type="submit">
-    </form>
+  <nav class="navbar">
     <?php if (!$isLogIn) { ?>
-      <a href="log_in.php">登入</a>
-      <a href="sign_up.php">註冊</a>
+      <a class="log__in" href="log_in.php">登入</a>
+      <a class="sign__up" href="sign_up.php">註冊</a>
+    <?php } else { ?>
+      <a class="log__out" href="handle_log_out.php">登出</a>
+      <a class="home" href="/hw1/index.php">首頁</a>
+      <div class="user__name">
+        <div class="user__avatar__small"></div>
+        <?php echo $nickname ?>
+      </div>
     <?php } ?>
+  </nav>
+
+  <section class="user__operating">
+    <div class="add__post__title">建立貼文</div>
+    <form class="input__form" action="add_post.php" method="post">
+      <input name="nickname" type="text" hidden value=<?php echo $nickname ?>>
+      <input type="text" name="comment" hidden value="" id="comment">
+      <div class="add__post__content" contenteditable="true"></div>
+      <div class="submit__wrapper">
+        <input class="btn__submit" type="submit" value="發佈貼文">
+      </div>
+    </form>
   </section>
+
+  <div class="filter"></div>
+
   <section class="comments">
     <?php while ($row = $result->fetch_assoc()) { ?>
       <div class="comment__body">
@@ -57,7 +74,7 @@ if (isset($_COOKIE["token"])) {
           </div>
         </div>
         <div class="post__wrapper">
-          <p class=""><?php echo $row["comment"]; ?></p>
+          <p class="post__content"><?php echo $row["comment"]; ?></p>
         </div>
 
       </div>

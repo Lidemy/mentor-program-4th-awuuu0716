@@ -2,7 +2,7 @@
   require_once("utlis.php");
   
   $nickname = $_POST["nickname"];
-  $comment = $_POST["comment"];
+  $comment =  htmlspecialchars($_POST["comment"]);
   $sql = sprintf(
   "INSERT INTO `Awu_comments` (`nickname`, `comment`) VALUES ('%s', '%s');",
     $nickname,
