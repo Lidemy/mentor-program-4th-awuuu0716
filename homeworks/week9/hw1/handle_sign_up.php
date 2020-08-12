@@ -2,7 +2,7 @@
   require_once("utlis.php");
   
   $username = $_POST["username"];
-  $nickname = $_POST["nickname"];
+  $nickname = htmlspecialchars($_POST["nickname"]);
   $password = $_POST["password"];
   $token = generateToken(16);
 

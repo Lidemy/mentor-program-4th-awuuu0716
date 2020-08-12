@@ -27,6 +27,9 @@
         <input name="password" type="password" placeholder="請輸入密碼">
       </div>
         <input class="btn__log__in" type="submit" value="登入">
+        <div class="no__account">還沒有帳號？
+          <a href="sign_up.php">註冊</a>
+        </div>
     </form>
   </section>
 

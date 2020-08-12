@@ -31,7 +31,7 @@ while ($row = $result->fetch_assoc()) {
       <div class="input__wrapper">
         帳號：
         <input class="input__username" name="username" type="text" placeholder="帳號名稱">
-        <div class="warning__username display__none">此帳號已被使用</div>
+        <div class="warning__username opacity__zero">此帳號已被使用</div>
       </div>
       <div class="input__wrapper">
         暱稱：
@@ -59,9 +59,9 @@ while ($row = $result->fetch_assoc()) {
     setTimeout(() => {
       const input = userNameInput.value;
       if (usersList.indexOf(input) >= 0) {
-        userNameRepeat.classList.remove('display__none');
+        userNameRepeat.classList.remove('opacity__zero');
       } else {
-        userNameRepeat.classList.add('display__none');
+        userNameRepeat.classList.add('opacity__zero');
       }
     }, 1)
 
