@@ -42,7 +42,7 @@ if (isset($_COOKIE["token"])) {
       <a class="sign__up" href="sign_up.php">註冊</a>
     <?php } else { ?>
       <a class="log__out" href="handle_log_out.php">登出</a>
-      <a class="home" href="/hw1/index.php">首頁</a>
+      <a class="home" href="index.php">首頁</a>
       <div class="user__name">
         <div class="user__avatar__small"></div>
         <?php echo $nickname ?>
