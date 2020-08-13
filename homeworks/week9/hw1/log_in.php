@@ -20,16 +20,19 @@
 
   <section class="account__info">
     <form class="account__form" action="handle_log_in.php" method="post">
+      <?php if (isset($_GET['error']) && $_GET['error'] == "tjhji4xk7") { ?>
+        <div class="account__error animation__shack">帳號密碼錯誤 (╥﹏╥)</div>
+      <?php } ?>
       <div class="input__container">帳號：
         <input name="username" type="text" placeholder="請輸入帳號名稱">
       </div>
       <div class="input__container">密碼：
         <input name="password" type="password" placeholder="請輸入密碼">
       </div>
-        <input class="btn__log__in" type="submit" value="登入">
-        <div class="no__account">還沒有帳號？
-          <a href="sign_up.php">註冊</a>
-        </div>
+      <input class="btn__log__in" type="submit" value="登入">
+      <div class="no__account">還沒有帳號？
+        <a href="sign_up.php">註冊</a>
+      </div>
     </form>
   </section>
 

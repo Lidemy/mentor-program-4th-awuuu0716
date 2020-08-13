@@ -30,17 +30,18 @@ while ($row = $result->fetch_assoc()) {
     <form class="sign__up__form" action="handle_sign_up.php" method="post">
       <div class="input__wrapper">
         帳號：
-        <input class="input__username" name="username" type="text" placeholder="帳號名稱">
+        <input class="input__username" name="username" type="text" placeholder="帳號名稱 (最多16個字)" maxlength="16">
         <div class="warning__username opacity__zero">此帳號已被使用</div>
       </div>
       <div class="input__wrapper">
         暱稱：
-        <input name="nickname" type="text" placeholder="暱稱">
+        <input name="nickname" type="text" placeholder="暱稱 (最多20個字)" maxlength="20">
       </div>
       <div class="input__wrapper">
         密碼：
         <input name="password" type="password" placeholder="密碼">
       </div>
+      
       <div class="submit__wrapper bc__white">
         <input class="btn__submit submit__active" type="submit" value="註冊">
       </div>
@@ -64,7 +65,6 @@ while ($row = $result->fetch_assoc()) {
         userNameRepeat.classList.add('opacity__zero');
       }
     }, 1)
-
   })
 </script>
 

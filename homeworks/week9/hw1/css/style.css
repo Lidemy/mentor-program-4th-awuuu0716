@@ -4,14 +4,18 @@
   outline: none;
 }
 
-p {
-  margin: 0;
-}
-
 body {
   margin: 0;
   font-family:"微軟正黑體";
   background-color: rgb(233,235,238);
+}
+
+p {
+  margin: 0;
+}
+
+iframe {
+  margin: 10px auto;
 }
 
 .navbar {
@@ -96,14 +100,16 @@ body {
 }
 
 .add__post__content {
+  display: block;
   max-width: 100%;
   height: 200px;
-  margin: 5px;
-  white-space: pre-line;
-  word-break: break-all;
+  width: 95%;
+  margin: 10px auto;
+  white-space: pre-wrap;
   overflow-x:hidden;
   overflow-y:auto;
-
+  resize: none;
+  border: none;
 }
 
 .account__info {
@@ -131,6 +137,11 @@ body {
   flex-direction: row-reverse;
   background-color: rgb(245,246,247);
   border-radius: 0px 0px 5px 5px;
+}
+
+.account__error {
+  color: red;
+  margin: 10px;
 }
 
 .input__container {
@@ -162,7 +173,7 @@ body {
   top:0px;
   left:0px;
   width:100%;
-  height:100%;
+  height:200%;
   background-color: black;
   opacity: 0;
   z-index: -1;
@@ -205,7 +216,6 @@ body {
 
 .user__wrapper {
   display: flex;
-  margin-bottom: 10px;
 }
 
 .user__avatar {
@@ -224,9 +234,11 @@ body {
   margin-bottom: 5px;
 }
 
-.post__content {
+.post__wrapper {
+  overflow-x: hidden;
+  word-break: break-word;
   white-space: pre-line;
-  word-break: break-all;
+  line-height: 1.5em;
 }
 
 .btn__log__in {
@@ -328,4 +340,30 @@ body {
 
 .opacity__zero {
   opacity: 0;
+}
+
+.animation__shack {
+  animation: shack 0.2s ease-in-out;
+}
+
+@keyframes shack {
+  0% {
+     transform: translate(20px,0px);
+  }
+
+  25% {
+      transform: translate(-10px,0px);
+  }
+
+  50% {
+      transform: translate(7px,0px);
+  }
+
+  75% {
+      transform: translate(-7px,0px);
+  }
+
+  100% {
+      transform: translate(0px,0px);
+  }
 }

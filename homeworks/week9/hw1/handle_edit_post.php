@@ -1,7 +1,7 @@
 <?php
   require_once("utlis.php");
   $id = $_POST['id'];
-  $comment = htmlspecialchars($_POST["comment"]);
+  $comment = $parsedown->line($_POST["comment"]);
 
   $sql = sprintf("UPDATE `Awu_comments` SET `comment` = '%s' WHERE `id` = '%s'",
     $comment,

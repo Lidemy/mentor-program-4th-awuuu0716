@@ -14,8 +14,10 @@
   if (!$result) {
     die($conn->error);
   } 
+
   if($result->num_rows === 0) {
-    die('帳號密碼錯誤');
+    header("Location:log_in.php?error=tjhji4xk7");
+    die();
   }
 
   // 寫入 token

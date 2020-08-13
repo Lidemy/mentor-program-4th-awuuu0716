@@ -1,6 +1,5 @@
 <?php
 require_once("utlis.php");
-
 $result = $conn->query("SELECT * FROM Awu_comments ORDER BY id DESC");
 
 // 判斷有沒有登入與設置 nickname
@@ -52,11 +51,10 @@ if (isset($_COOKIE["token"])) {
   </nav>
 
   <section class="user__operating">
-    <div class="add__post__title">建立貼文</div>
+    <div class="add__post__title">建立貼文 (支援 MarkDown 格式, 歡迎測試)</div>
     <form class="input__form" action="add_post.php" method="post">
       <input name="nickname" type="text" hidden value=<?php echo $nickname ?>>
-      <input type="text" name="comment" hidden value="" id="comment">
-      <div class="add__post__content" contenteditable="true"></div>
+      <textarea name="comment" class="add__post__content" rows="15"></textarea>
       <div class="submit__wrapper">
         <?php if ($isLogIn) { ?>
           <input class="btn__submit" type="submit" value="發佈貼文">
@@ -77,9 +75,10 @@ if (isset($_COOKIE["token"])) {
             <div class="user__nickname"><?php echo $row["nickname"]; ?></div>
             <div class="user__time"><?php echo $row["date"]; ?></div>
           </div>
-          <div class="more__action">...
-            <div class="action__wrapper">
-              <?php if ($row["nickname"] == $nickname && $isLogIn) { ?>
+          <?php if ($row["nickname"] == $nickname && $isLogIn) { ?>
+            <div class="more__action">...
+              <div class="action__wrapper">
+
                 <form action="delete_post.php" method="POST">
                   <input class="action" type="text" name="id" value="<?php echo $row["id"]; ?>" hidden>
                   <input class="action" type="submit" value="刪除貼文">
@@ -88,15 +87,13 @@ if (isset($_COOKIE["token"])) {
                   <input class="action" type="text" name="id" value="<?php echo $row["id"]; ?>" hidden>
                   <input class="action" type="submit" value="編輯貼文">
                 </form>
-              <?php } else { ?>
-                <div class="action">檢舉貼文</div>
-              <?php } ?>
-            </div>
-          </div>
 
+              </div>
+            </div>
+          <?php } ?>
         </div>
         <div class="post__wrapper">
-          <p class="post__content"><?php echo $row["comment"]; ?></p>
+          <?php echo $parsedown->text($row["comment"]) ?>
         </div>
 
       </div>

@@ -1,23 +1,23 @@
 window.onload = () => {
-  // 送出留言
+  // 送出留言, 空白不能送出
   const submitBtn = document.querySelector('.btn__submit');
   const userInputNode = document.querySelector('.add__post__content');
   submitBtn.addEventListener('click', (e) => {
-    const userInput = userInputNode.innerText;
+    const userInput = userInputNode.value;
     if (!userInput.replace(/\s*/g, '')) {
       e.preventDefault();
       return;
     }
+    localStorage.setItem('tempComment', '');
     const comment = document.getElementById('comment');
     comment.setAttribute('value', userInput);
-    localStorage.setItem('tempComment', '');
   });
 
   // 控制是否可按下送出貼文
   userInputNode.addEventListener('keydown', () => {
     // 加入 setTimeout 是為了抓到第一個輸入, 沒加的話要輸入兩個字以上按鈕才會亮起來
     setTimeout(() => {
-      const userInput = userInputNode.innerText;
+      const userInput = userInputNode.value;
       if (!userInput.replace(/\s*/g, '')) {
         submitBtn.classList.remove('submit__active');
         return;
@@ -69,14 +69,14 @@ window.onload = () => {
   let handleTimeout = setTimeout(() => {
     const comment = userInputNode.innerText;
     localStorage.setItem('tempComment', comment);
-  }, 1000);
+  }, 500);
 
   userInputNode.addEventListener('keydown', () => {
     clearTimeout(handleTimeout);
     handleTimeout = setTimeout(() => {
       const comment = userInputNode.innerText;
       localStorage.setItem('tempComment', comment);
-    }, 1000);
+    }, 500);
   });
 
   // 將 localStorage 的東西拿出來
