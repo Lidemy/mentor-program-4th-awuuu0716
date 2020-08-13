@@ -15,7 +15,7 @@
   <nav class="navbar">
     <a class="log__in" href="log_in.php">登入</a>
     <a class="sign__up" href="sign_up.php">註冊</a>
-    <a class="home" href="/hw1/index.php">首頁</a>
+    <a class="home" href="index.php">首頁</a>
   </nav>
 
   <section class="account__info">
