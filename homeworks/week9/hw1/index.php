@@ -53,7 +53,7 @@ if (isset($_COOKIE["token"])) {
   <section class="user__operating">
     <div class="add__post__title">建立貼文 (支援 MarkDown 格式, 歡迎測試)</div>
     <form class="input__form" action="add_post.php" method="post">
-      <input name="nickname" type="text" hidden value=<?php echo $nickname ?>>
+      <input name="nickname" type="text" hidden value="<?php echo $nickname ?>">
       <textarea name="comment" class="add__post__content" rows="15"></textarea>
       <div class="submit__wrapper">
         <?php if ($isLogIn) { ?>

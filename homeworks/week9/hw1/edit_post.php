@@ -21,6 +21,7 @@ $postContent = $getPost->fetch_assoc()['comment'];
   <title>留言板</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/normalize.css">
+  <script type="module" src="js/edit_post.js"></script>
   </link>
 </head>
 
@@ -43,7 +44,7 @@ $postContent = $getPost->fetch_assoc()['comment'];
       </div>
     </form>
   </section>
-
+  <div class="filter"></div>
 
 
 </body>

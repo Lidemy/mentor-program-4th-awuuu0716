@@ -34,12 +34,12 @@ const utlis = {
     const filter = document.querySelector('.filter');
     const comments = document.querySelector('.comments');
     userInputNode.addEventListener('focus', () => {
-      comments.classList.toggle('comments__fliter__off');
+      if (comments) comments.classList.toggle('comments__fliter__off');
       filter.classList.toggle('filter__on');
     });
     userInputNode.addEventListener('focusout', () => {
       setTimeout(() => {
-        comments.classList.toggle('comments__fliter__off');
+        if (comments) comments.classList.toggle('comments__fliter__off');
       }, 200);
       filter.classList.toggle('filter__on');
     });
