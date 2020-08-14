@@ -1,7 +1,7 @@
 <?php 
   require_once("utlis.php");
   $nickname = $_POST["nickname"];
-  $comment = $parsedown->line($_POST["comment"]);
+  $comment = $_POST["comment"];
   $sql = sprintf(
   "INSERT INTO `Awu_comments` (`nickname`, `comment`) VALUES ('%s', '%s');",
     $nickname,

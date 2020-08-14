@@ -14,10 +14,6 @@ p {
   margin: 0;
 }
 
-iframe {
-  margin: 10px auto;
-}
-
 .navbar {
   display: flex;
   height: 50px;

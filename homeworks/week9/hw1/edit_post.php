@@ -9,7 +9,7 @@ $post_id = $_POST['id'];
 // 拿文章內容
 $token_sql = sprintf("SELECT `comment` FROM Awu_comments WHERE id='%s'", $post_id);
 $getPost = $conn->query($token_sql);
-$postContent = $parsedown->text($getPost->fetch_assoc()['comment']);
+$postContent = $getPost->fetch_assoc()['comment'];
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +21,6 @@ $postContent = $parsedown->text($getPost->fetch_assoc()['comment']);
   <title>留言板</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/normalize.css">
-  <script src="js/index.js"></script>
   </link>
 </head>
 
@@ -38,8 +37,7 @@ $postContent = $parsedown->text($getPost->fetch_assoc()['comment']);
     <div class="add__post__title">編輯貼文</div>
     <form class="input__form" action="handle_edit_post.php" method="post">
       <input name="id" type="text" hidden value=<?php echo $post_id ?>>
-      <input name="comment" type="text" hidden value="" id="comment">
-      <textarea class="add__post__content" rows="15"><?php echo $postContent ?></textarea>
+      <textarea class="add__post__content" rows="15" name="comment"><?php echo $postContent ?></textarea>
       <div class="submit__wrapper">
         <input class="btn__submit" type="submit" value="發佈貼文">
       </div>

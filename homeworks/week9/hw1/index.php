@@ -30,7 +30,7 @@ if (isset($_COOKIE["token"])) {
   <title>留言板</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/normalize.css">
-  <script src="js/index.js"></script>
+  <script type="module" src="js/index.js"></script>
   </link>
 </head>
 
@@ -78,7 +78,6 @@ if (isset($_COOKIE["token"])) {
           <?php if ($row["nickname"] == $nickname && $isLogIn) { ?>
             <div class="more__action">...
               <div class="action__wrapper">
-
                 <form action="delete_post.php" method="POST">
                   <input class="action" type="text" name="id" value="<?php echo $row["id"]; ?>" hidden>
                   <input class="action" type="submit" value="刪除貼文">
@@ -87,7 +86,6 @@ if (isset($_COOKIE["token"])) {
                   <input class="action" type="text" name="id" value="<?php echo $row["id"]; ?>" hidden>
                   <input class="action" type="submit" value="編輯貼文">
                 </form>
-
               </div>
             </div>
           <?php } ?>
