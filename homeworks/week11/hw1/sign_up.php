@@ -1,0 +1,77 @@
+<?php
+require_once("utlis.php");
+$result = $conn->query("SELECT `username` FROM `Awu_users`");
+$usersList = "";
+while ($row = $result->fetch_assoc()) {
+  $usersList .= " " . $row["username"];
+}
+
+!empty($_GET['errcode'])? $error = true : $error = false;
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>會員註冊</title>
+  <link rel="stylesheet" href="css/style.css">
+  </link>
+</head>
+
+<body>
+  <header class="warning">注意！本站為練習用網站，因教學用途刻意忽略資安的實作，註冊時請勿使用任何真實的帳號或密碼。</header>
+  <nav class="navbar">
+    <a class="log__in" href="log_in.php">登入</a>
+    <a class="sign__up" href="sign_up.php">註冊</a>
+    <a class="home" href="index.php">首頁</a>
+  </nav>
+
+  <section class="sign__up__wrapper">
+    <?php if ($error) { ?>
+      <div class="warning__username">好像有東西沒填喔!</div>
+    <?php } ?>
+    <form class="sign__up__form" action="handle_sign_up.php" method="post">
+      <div class="input__wrapper">
+        帳號：
+        <input class="input__username" name="username" type="text" placeholder="帳號名稱 (最多16個字)" maxlength="16">
+        <div class="warning__username opacity__zero">此帳號已被使用</div>
+      </div>
+      <div class="input__wrapper">
+        暱稱：
+        <input name="nickname" type="text" placeholder="暱稱 (最多20個字)" maxlength="20">
+      </div>
+      <div class="input__wrapper">
+        密碼：
+        <input name="password" type="password" placeholder="密碼">
+      </div>
+
+      <div class="submit__wrapper bc__white">
+        <input class="btn__submit submit__active" type="submit" value="註冊">
+      </div>
+
+    </form>
+  </section>
+
+</body>
+
+<script>
+  const usersList = "<?php echo $usersList ?>".trim().split(" ");
+  const userNameInput = document.querySelector(".input__username");
+  const userNameRepeat = document.querySelector(".warning__username")
+
+  userNameInput.addEventListener("keydown", () => {
+    setTimeout(() => {
+      const input = userNameInput.value;
+      if (usersList.indexOf(input) >= 0) {
+        userNameRepeat.classList.remove('opacity__zero');
+      } else {
+        userNameRepeat.classList.add('opacity__zero');
+      }
+    }, 1)
+  })
+</script>
+
+</html>
