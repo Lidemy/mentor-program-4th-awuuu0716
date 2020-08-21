@@ -1,12 +1,12 @@
 <?php 
   session_start();
-  require_once("utlis.php");
+  require_once("../utils/utils.php");
   $username = htmlspecialchars($_POST["username"]);
   $nickname = htmlspecialchars($_POST["nickname"]);
   $password = $_POST["password"];
   $level = "general";
   if (empty($username) || empty($nickname) || empty($password)) {
-    header("Location: sign_up.php?errcode=1");
+    header("Location: ../sign_up.php?errcode=1");
     die();
   }
   $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
@@ -19,5 +19,5 @@
   }
   $_SESSION['username'] = $username;
   $_SESSION['level'] = $level;
-  header("Location: index.php");
+  header("Location: ../index.php");
 ?>

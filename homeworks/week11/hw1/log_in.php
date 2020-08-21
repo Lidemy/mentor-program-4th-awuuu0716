@@ -19,7 +19,7 @@
   </nav>
 
   <section class="account__info">
-    <form class="account__form" action="handle_log_in.php" method="post">
+    <form class="account__form" action="action/handle_log_in.php" method="post">
       <?php if (isset($_GET['error']) && $_GET['error'] == "tjhji4xk7") { ?>
         <div class="account__error animation__shack">帳號密碼錯誤 (╥﹏╥)</div>
       <?php } ?>

@@ -1,29 +1,41 @@
 <?php
 session_start();
-require_once("utlis.php");
-$result = $conn -> query("SELECT ".
-"C.id as id,".
-"C.nickname as nickname,".
-"C.comment as comment,".
-"C.username as username,".
-"date ".
-"FROM Awu_comments as C ".
-"left join ".
-"Awu_users as U ".
-"on C.nickname = U.nickname ".
-"order by C.id desc");
+require_once("utils/utils.php");
+// 撈文章出來
+if (!empty($_GET["offset"])) {
+  $offset = $_GET["offset"];
+} else {
+  $offset = 0;
+}
+$items_per_page = 5;
+$sql = "SELECT " .
+  "C.id as id," .
+  "C.nickname as nickname," .
+  "C.comment as comment," .
+  "C.username as username," .
+  "date " .
+  "FROM Awu_comments as C " .
+  "left join " .
+  "Awu_users as U " .
+  "on C.nickname = U.nickname " .
+  "order by C.id desc " .
+  "limit ? offset ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ii", $items_per_page, $offset);
+$result = $stmt->execute();
+$result = $stmt->get_result();
 
 // 判斷有沒有登入與設置 nickname
 if (!empty($_SESSION['username'])) {
   $username = $_SESSION['username'];
   $isLogIn = true;
   $sql = "SELECT nickname FROM Awu_users WHERE username = ?";
-  $stmt = $conn -> prepare($sql);
-  $stmt -> bind_param("s", $username);
-  $getNickname = $stmt -> execute();
-  $getNickname = $stmt -> get_result();
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("s", $username);
+  $getNickname = $stmt->execute();
+  $getNickname = $stmt->get_result();
   if (isset($getNickname)) {
-    $nickname = $getNickname -> fetch_assoc()['nickname'];
+    $nickname = $getNickname->fetch_assoc()['nickname'];
   }
 } else {
   $nickname = "Guest";
@@ -58,7 +70,7 @@ if (!empty($_SESSION["level"])) {
       <a class="log__in" href="log_in.php">登入</a>
       <a class="sign__up" href="sign_up.php">註冊</a>
     <?php } else { ?>
-      <a class="log__out" href="handle_log_out.php">登出</a>
+      <a class="log__out" href="action/handle_log_out.php">登出</a>
       <a class="home" href="index.php">首頁</a>
       <div class="user__name">
         <div class="user__avatar__small"></div>
@@ -69,7 +81,7 @@ if (!empty($_SESSION["level"])) {
 
   <section class="user__operating">
     <div class="add__post__title">建立貼文 (支援 MarkDown 格式, 歡迎測試)</div>
-    <form class="input__form" action="add_post.php" method="post">
+    <form class="input__form" action="action/add_post.php" method="post">
       <input name="nickname" type="text" hidden value="<?php echo $nickname ?>">
       <textarea name="comment" class="add__post__content" rows="15"></textarea>
       <div class="submit__wrapper">
@@ -84,7 +96,7 @@ if (!empty($_SESSION["level"])) {
   </section>
 
   <section class="comments comments__fliter__off">
-    <?php while ($row = $result -> fetch_assoc()) { ?>
+    <?php while ($row = $result->fetch_assoc()) { ?>
       <div class="comment__body">
         <div class="user__wrapper">
           <div class="user__avatar"></div>
@@ -95,7 +107,7 @@ if (!empty($_SESSION["level"])) {
           <?php if (($row["username"] == $username && $isLogIn) || $level == "admin") { ?>
             <div class="more__action">...
               <div class="action__wrapper">
-                <form action="delete_post.php" method="POST">
+                <form action="action/delete_post.php" method="POST">
                   <input class="action" type="text" name="id" value="<?php echo $row["id"]; ?>" hidden>
                   <input class="action" type="submit" value="刪除貼文">
                 </form>
@@ -110,9 +122,21 @@ if (!empty($_SESSION["level"])) {
         <div class="post__wrapper">
           <?php echo $parsedown->text($row["comment"]) ?>
         </div>
-
       </div>
     <?php } ?>
+  </section>
+  <section class="pagination">
+    <ul>
+      <?php
+      $sql = "SELECT * FROM Awu_comments";
+      $stmt = $conn->prepare($sql);
+      $result = $stmt->execute();
+      $posts_num = $stmt->get_result()->num_rows;
+      $pagination_num = ceil($posts_num / 5);
+      for ($i = 1; $i <= $pagination_num; $i += 1) { ?>
+        <li class="page"><a class="page__num" href="index.php?offset=<?php echo ($i-1)*5?>"><?php echo $i ?></a></li>
+      <?php } ?> 
+    </ul>
   </section>
   <div class="filter"></div>
 

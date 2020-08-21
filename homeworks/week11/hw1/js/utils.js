@@ -1,4 +1,4 @@
-const utlis = {
+const utils = {
   saveToLocalStorage(key, value) {
     localStorage.setItem(key, value);
   },
@@ -73,7 +73,7 @@ const utlis = {
     let handleTimeout = setTimeout(() => {
       const comment = userInputNode.value;
       this.saveToLocalStorage('tempComment', comment);
-    }, 500);
+    }, 200);
 
     userInputNode.addEventListener('keydown', () => {
       clearTimeout(handleTimeout);
@@ -94,4 +94,4 @@ const utlis = {
   },
 };
 
-export default utlis;
+export default utils;

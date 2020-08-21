@@ -1,9 +1,15 @@
 <?php
-require_once("utlis.php");
-$token = $_COOKIE["token"];
-$token_sql = sprintf("SELECT `nickname` FROM Awu_users WHERE token='%s'", $token);
-$getNickname = $conn->query($token_sql);
-$nickname = $getNickname->fetch_assoc()['nickname'];
+session_start();
+require_once("utils/utils.php");
+$username = $_SESSION["username"];
+
+$sql = "SELECT `nickname` FROM Awu_users WHERE username=?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $username);
+$result = $stmt->execute();
+$result = $stmt->get_result();
+
+$nickname = $result->fetch_assoc()['nickname'];
 $post_id = $_POST['id'];
 
 // 拿文章內容
@@ -27,7 +33,7 @@ $postContent = $getPost->fetch_assoc()['comment'];
 
 <body>
   <nav class="navbar">
-    <a class="log__out" href="handle_log_out.php">登出</a>
+    <a class="log__out" href="action/handle_log_out.php">登出</a>
     <a class="home" href="/hw1/index.php">首頁</a>
     <div class="user__name">
       <div class="user__avatar__small"></div>
@@ -36,7 +42,7 @@ $postContent = $getPost->fetch_assoc()['comment'];
   </nav>
   <section class="user__operating">
     <div class="add__post__title">編輯貼文</div>
-    <form class="input__form" action="handle_edit_post.php" method="post">
+    <form class="input__form" action="action/handle_edit_post.php" method="post">
       <input name="id" type="text" hidden value=<?php echo $post_id ?>>
       <textarea class="add__post__content" rows="15" name="comment"><?php echo $postContent ?></textarea>
       <div class="submit__wrapper">

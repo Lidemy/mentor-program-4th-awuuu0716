@@ -18,6 +18,10 @@ img {
   width: 100%;
 }
 
+ul {
+  padding:0;
+}
+
 .navbar {
   display: flex;
   height: 50px;
@@ -344,6 +348,31 @@ img {
 
 .animation__shack {
   animation: shack 0.2s ease-in-out;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.page {
+  display: inline-block;
+  padding:5px 10px;
+  margin:5px;
+  background-color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  border:1px rgb(218, 218, 218) solid;
+  transition: all ease-in-out 0.2s;
+}
+
+.page:hover {
+  transform: scale(1.1);
+}
+
+.page__num {
+  color:black;
+  font-weight: bold;
 }
 
 @keyframes shack {

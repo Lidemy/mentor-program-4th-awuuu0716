@@ -1,22 +1,22 @@
 /* eslint-disable import/extensions */
-import utlis from './utlis.js';
+import utils from './utils.js';
 
 window.onload = () => {
   // 送出留言, 空白不能送出
-  utlis.handleSubmitButton();
+  utils.handleSubmitButton();
 
   // 控制是否可按下送出貼文
-  utlis.handleButtonClickable();
+  utils.handleButtonClickable();
 
   // 控制濾鏡
-  utlis.handleFilter();
+  utils.handleFilter();
 
   // 控制開啟貼文選單
-  utlis.handlePostOption();
+  utils.handlePostOption();
 
   // 將貼文存入 localStorage
-  utlis.handleTempComment();
+  utils.handleTempComment();
 
   // 將 localStorage 的東西拿出來
-  utlis.getPostFromLocalStorage();
+  utils.getPostFromLocalStorage();
 };

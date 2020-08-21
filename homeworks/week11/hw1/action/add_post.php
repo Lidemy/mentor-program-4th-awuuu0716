@@ -1,6 +1,6 @@
 <?php 
   session_start();
-  require_once("utlis.php");
+  require_once("../utils/utils.php");
   $username = $_SESSION["username"];
   $nickname = $_POST["nickname"];
   $comment = $_POST["comment"];
@@ -13,5 +13,5 @@
     die($conn -> error);
   } 
 
-  header("Location: index.php")
+  header("Location: ../index.php")
 ?>

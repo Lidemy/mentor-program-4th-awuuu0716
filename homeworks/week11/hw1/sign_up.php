@@ -1,6 +1,9 @@
 <?php
-require_once("utlis.php");
-$result = $conn->query("SELECT `username` FROM `Awu_users`");
+require_once("utils/utils.php");
+$sql = "SELECT `username` FROM `Awu_users`";
+$stmt = $conn->prepare($sql);
+$result = $stmt->execute();
+$result = $stmt->get_result();
 $usersList = "";
 while ($row = $result->fetch_assoc()) {
   $usersList .= " " . $row["username"];
@@ -33,7 +36,7 @@ while ($row = $result->fetch_assoc()) {
     <?php if ($error) { ?>
       <div class="warning__username">好像有東西沒填喔!</div>
     <?php } ?>
-    <form class="sign__up__form" action="handle_sign_up.php" method="post">
+    <form class="sign__up__form" action="action/handle_sign_up.php" method="post">
       <div class="input__wrapper">
         帳號：
         <input class="input__username" name="username" type="text" placeholder="帳號名稱 (最多16個字)" maxlength="16">
