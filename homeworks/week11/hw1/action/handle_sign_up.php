@@ -19,5 +19,8 @@
   }
   $_SESSION['username'] = $username;
   $_SESSION['level'] = $level;
+  // 設置 csrftoken
+  $csrftoken = generateToken(10);
+  setcookie("csrftoken", $csrftoken, time() + 3600 * 24, "/");
   header("Location: ../index.php");
 ?>
