@@ -73,18 +73,17 @@ const utils = {
     let handleTimeout = setTimeout(() => {
       const comment = userInputNode.value;
       this.saveToLocalStorage('tempComment', comment);
-    }, 200);
+    }, 100);
 
     userInputNode.addEventListener('keydown', () => {
       clearTimeout(handleTimeout);
       handleTimeout = setTimeout(() => {
         const comment = userInputNode.value;
         this.saveToLocalStorage('tempComment', comment);
-      }, 500);
+      }, 100);
     });
   },
   getPostFromLocalStorage() {
-    // 將 localStorage 的東西拿出來
     if (localStorage.getItem('tempComment')) {
       const userInputNode = document.querySelector('.add__post__content');
       const submitBtn = document.querySelector('.btn__submit');

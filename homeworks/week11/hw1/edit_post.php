@@ -13,9 +13,18 @@ $nickname = $result->fetch_assoc()['nickname'];
 $post_id = $_POST['id'];
 
 // 拿文章內容
-$token_sql = sprintf("SELECT `comment` FROM Awu_comments WHERE id='%s'", $post_id);
-$getPost = $conn->query($token_sql);
+$sql = "SELECT `comment` FROM Awu_comments WHERE id=?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $post_id);
+$getPost = $stmt->execute();
+$getPost = $stmt->get_result();
+
 $postContent = $getPost->fetch_assoc()['comment'];
+
+// 設置 csrftoken
+if (!empty($_COOKIE["csrftoken"])) {
+  $csrftoken = $_COOKIE["csrftoken"];
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +37,6 @@ $postContent = $getPost->fetch_assoc()['comment'];
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/normalize.css">
   <script type="module" src="js/edit_post.js"></script>
-  </link>
 </head>
 
 <body>
@@ -43,10 +51,11 @@ $postContent = $getPost->fetch_assoc()['comment'];
   <section class="user__operating">
     <div class="add__post__title">編輯貼文</div>
     <form class="input__form" action="action/handle_edit_post.php" method="post">
+      <input type="hidden" name="csrftoken" value="<?php echo $csrftoken ?>" />
       <input name="id" type="text" hidden value=<?php echo $post_id ?>>
-      <textarea class="add__post__content" rows="15" name="comment"><?php echo $postContent ?></textarea>
+      <textarea class="add__post__content" rows="15" name="comment"><?php echo htmlspecialchars($postContent); ?></textarea>
       <div class="submit__wrapper">
-        <input class="btn__submit" type="submit" value="發佈貼文">
+        <input class="btn__submit submit__active" type="submit" value="發佈貼文">
       </div>
     </form>
   </section>

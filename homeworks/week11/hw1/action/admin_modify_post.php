@@ -1,40 +1,41 @@
 <?php
   session_start();
   require_once("../utils/utils.php");
-
+  
   // 檢查是否為跨站攻擊
   if ($_POST["csrftoken"] !== $_COOKIE["csrftoken"]) {
     die("88888");
   }
-
+  
   $id = $_POST["id"];
-  $username = $_SESSION['username'];
   $level = $_SESSION['level'];
+  $deleted = $_POST["deleted"];
+  
+  if ($level !== "admin") {
+    header("Location: ../index.php");
+  }
 
-  if ($level == "admin") {
+  if($deleted == 0) {
     $sql = "UPDATE `Awu_comments` SET `deleted` = '1' WHERE (`id` = ?)";
+  } else if ($deleted == 1 ){
+    $sql = "UPDATE `Awu_comments` SET `deleted` = '0' WHERE (`id` = ?)";
   } else {
-    $sql = "UPDATE `Awu_comments` SET `deleted` = '1' WHERE id=? and username=?";
+    header("Location: ../index.php?errorcode=1");
   }
 
   $stmt = $conn->prepare($sql);
 
   if (!$stmt) {
-    header("Location: ../index.php?errcode=1");
+    header("Location: ../admin_post.php?errcode=1");
     die();
   }
 
-  if ($level == "admin") {
-    $stmt->bind_param("s", $id);
-  } else {
-    $stmt->bind_param("ss", $id, $username);
-  }
-
+  $stmt->bind_param("s", $id);
   $result = $stmt->execute();
   
   if (!$result) {
     die($conn->error);
   } 
 
-  header("Location: ../index.php")
+  header("Location: ../admin_post.php")
 ?>

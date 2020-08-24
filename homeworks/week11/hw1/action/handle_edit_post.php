@@ -1,7 +1,12 @@
 <?php
   require_once("../utils/utils.php");
+  // 檢查是否為跨站攻擊
+  if ($_POST["csrftoken"] !== $_COOKIE["csrftoken"]) {
+    die("88888");
+  }
+  
   $id = $_POST['id'];
-  $comment = $parsedown->line($_POST["comment"]);
+  $comment = $_POST["comment"];
 
   $sql = "UPDATE `Awu_comments` SET `comment` = ? WHERE `id` = ?";
   $stmt = $conn->prepare($sql);
