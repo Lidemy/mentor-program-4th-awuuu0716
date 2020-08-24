@@ -394,6 +394,7 @@ ul {
 .table__body {
   background-color: #fff;
   margin:10px;
+  margin-bottom: 100px;
   padding: 5px;
 }
 

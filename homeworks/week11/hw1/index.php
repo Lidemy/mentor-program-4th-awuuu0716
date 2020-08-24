@@ -150,7 +150,7 @@ if (!empty($_COOKIE["csrftoken"])) {
   <section class="pagination">
     <ul>
       <?php
-      $sql = "SELECT * FROM Awu_comments";
+      $sql = "SELECT * FROM Awu_comments WHERE deleted = 0";
       $stmt = $conn->prepare($sql);
       $result = $stmt->execute();
       $posts_num = $stmt->get_result()->num_rows;
