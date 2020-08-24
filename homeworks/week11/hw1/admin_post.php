@@ -69,7 +69,7 @@ if (!empty($_COOKIE["csrftoken"])) {
                   <input type="hidden" name="csrftoken" value="<?php echo $csrftoken ?>" />
                   <input name="deleted" value="<?php echo $row["deleted"] ?>" hidden>
                   <input name="id" value="<?php echo $row["id"] ?>" hidden>
-                  <button type="submit"><?php echo $row["deleted"] === 0 ? "Delete" : "UnDo" ?></button>
+                  <button type="submit"><?php echo $row["deleted"] === 0 ? "Delete" : "Undo" ?></button>
                 </form>
               </td>
             </tr>
