@@ -1,11 +1,12 @@
 <?php
 session_start();
-require_once("utils/utils.php");
 
+// 阻止沒有存取權限又偷跑進來的人
 if (empty($_SESSION["access_level"]) || $_SESSION["access_level"] !== "ilovecodingloveme") {
   die("88888");
 }
 
+require_once("utils/utils.php");
 if (!empty($_GET["id"])) {
   $id = $_GET["id"];
   $sql = "select * from Awu_posts where id =?";
