@@ -108,6 +108,10 @@ h1 {
   justify-content: space-between;
 }
 
+.post__header-title {
+  font-size: 20px;
+}
+
 .post__action {
   padding: 3px 12px;
   border: solid 1px #a8a8a8;
@@ -123,10 +127,13 @@ h1 {
 }
 
 .post__content {
+  max-height: 500px;
   margin-top: 17px;
   white-space: pre-line;
   word-break: break-word;
   line-height: 1.5em;
+  overflow: hidden;
+
 }
 
 .btn-read-more {
@@ -168,6 +175,7 @@ h1 {
   background-image: linear-gradient(to top, #000000, #434343);
   color: white;
   margin-top: 73px;
+  cursor: pointer;
 }
 
 .login-wrapper h2 {

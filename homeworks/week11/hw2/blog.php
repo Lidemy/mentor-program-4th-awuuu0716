@@ -1,12 +1,14 @@
 <?php
-require_once("utils/utils.php");
-$id = $_GET["id"];
-$sql = "select * from Awu_posts where id =?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $id);
-$result = $stmt->execute();
-$result = $stmt->get_result();
-$row = $result->fetch_assoc();
+  session_start();
+  require_once("utils/utils.php");
+  $id = $_GET["id"];
+  $sql = "select * from Awu_posts where id =?";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("i", $id);
+  $result = $stmt->execute();
+  $result = $stmt->get_result();
+  $row = $result->fetch_assoc();
+  $is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "ilovecodingloveme";
 ?>
 
 <!DOCTYPE html>
@@ -37,8 +39,12 @@ $row = $result->fetch_assoc();
           <li><a href="#">關於我</a></li>
         </div>
         <div>
-          <li><a href="admin.php">管理後台</a></li>
-          <li><a href="#">登出</a></li>
+          <?php if ($is_login) {?>
+            <li><a href="admin.php">管理後台</a></li>
+            <li><a href="#">登出</a></li>
+          <?php } else {?>
+            <li><a href="login.php">登入</a></li>
+          <?php }?>
         </div>
       </ul>
     </div>
@@ -61,7 +67,9 @@ $row = $result->fetch_assoc();
             <?php echo $row["title"] ?>
           </div>
           <div class="post__actions">
+            <?php if ($is_login) {?>
             <a class="post__action" href="edit.php?id=<?php echo $row["id"] ?>">編輯</a>
+            <?php }?>
           </div>
         </div>
         <div class="post__info">

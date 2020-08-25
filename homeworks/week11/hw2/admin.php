@@ -1,10 +1,14 @@
 <?php
+session_start();
+if (empty($_SESSION["access_level"]) || $_SESSION["access_level"] !== "ilovecodingloveme") {
+  die("88888");
+}
 require_once("utils/utils.php");
 $sql = "select id, title, date, deleted from Awu_posts order by id desc;";
 $stmt = $conn->prepare($sql);
 $result = $stmt->execute();
 $result = $stmt->get_result();
-
+$csrftoken = $_COOKIE["csrftoken"];
 ?>
 <!DOCTYPE html>
 
@@ -59,9 +63,9 @@ $result = $stmt->get_result();
           <div class="admin-post">
             <div class="admin-post__title">
               <?php echo htmlspecialchars($row["title"]) ?>
-              <?php if($row["deleted"] === 1) { ?>
+              <?php if ($row["deleted"] === 1) { ?>
                 (已隱藏)
-              <?php }?>
+              <?php } ?>
             </div>
             <div class="admin-post__info">
               <div class="admin-post__created-at">
@@ -71,6 +75,7 @@ $result = $stmt->get_result();
                 編輯
               </a>
               <form action="action/handle_delete_post.php" method="POST">
+                <input type="hidden" name="csrftoken" value="<?php echo $csrftoken ?>" />
                 <input type="hidden" name="id" value="<?php echo $row["id"] ?>">
                 <input type="submit" value="刪除" class="admin-post__btn">
               </form>

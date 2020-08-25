@@ -1,5 +1,10 @@
 <?php 
   require_once("../utils/utils.php");
+  
+  // 檢查是否為跨站攻擊
+  if ($_POST["csrftoken"] !== $_COOKIE["csrftoken"]) {
+    die("88888");
+  }
 
   if (!empty($_POST["id"])) {
     $id = $_POST["id"];

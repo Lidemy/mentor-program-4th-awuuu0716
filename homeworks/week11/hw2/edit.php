@@ -1,5 +1,11 @@
 <?php
+session_start();
 require_once("utils/utils.php");
+
+if (empty($_SESSION["access_level"]) || $_SESSION["access_level"] !== "ilovecodingloveme") {
+  die("88888");
+}
+
 if (!empty($_GET["id"])) {
   $id = $_GET["id"];
   $sql = "select * from Awu_posts where id =?";
@@ -13,6 +19,7 @@ if (!empty($_GET["id"])) {
   $row = $result->fetch_assoc();
 }
 
+$csrftoken = $_COOKIE["csrftoken"];
 ?>
 
 <!DOCTYPE html>
@@ -59,15 +66,16 @@ if (!empty($_GET["id"])) {
     <div class="container">
       <div class="edit-post">
         <form action="action/handle_edit_post.php" method="POST">
-          <input type="hidden" name="id" value="<?php echo isset($row)? $row["id"]: null ?>" />
+          <input type="hidden" name="id" value="<?php echo isset($row) ? $row["id"] : null ?>" />
+          <input type="hidden" name="csrftoken" value="<?php echo $csrftoken ?>" />
           <div class="edit-post__title">
             發表文章：
           </div>
           <div class="edit-post__input-wrapper">
-            <input class="edit-post__input" name="title" placeholder="請輸入文章標題" value="<?php echo isset($row)? $row["title"]:"" ?>" />
+            <input class="edit-post__input" name="title" placeholder="請輸入文章標題" value="<?php echo isset($row) ? $row["title"] : "" ?>" />
           </div>
           <div class="edit-post__input-wrapper">
-            <textarea rows="20" class="edit-post__content" name="content"><?php echo htmlspecialchars(isset($row)? $row["content"]:"") ?></textarea>
+            <textarea rows="20" class="edit-post__content" name="content"><?php echo htmlspecialchars(isset($row) ? $row["content"] : "") ?></textarea>
           </div>
           <div class="edit-post__btn-wrapper">
             <input class="edit-post__btn" type="submit" value="送出"></input>

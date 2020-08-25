@@ -1,10 +1,11 @@
 <?php
-require_once("utils/utils.php");
-$sql = "SELECT * FROM Awu_posts WHERE deleted = 0 ORDER BY id DESC";
-$stmt = $conn->prepare($sql);
-$result = $stmt->execute();
-$result = $stmt->get_result();
-
+  session_start();
+  require_once("utils/utils.php");
+  $sql = "SELECT * FROM Awu_posts WHERE deleted = 0 ORDER BY id DESC";
+  $stmt = $conn->prepare($sql);
+  $result = $stmt->execute();
+  $result = $stmt->get_result();
+  $is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "ilovecodingloveme";
 ?>
 
 <!DOCTYPE html>
@@ -33,8 +34,13 @@ $result = $stmt->get_result();
           <li><a href="#">關於我</a></li>
         </div>
         <div>
-          <li><a href="admin.php">管理後台</a></li>
-          <li><a href="login.php">登入</a></li>
+
+          <?php if ($is_login) { ?>
+            <li><a href="admin.php">管理後台</a></li>
+            <li><a href="action/handle_logout.php">登出</a></li>
+          <?php } else { ?>
+            <li><a href="login.php">登入</a></li>
+          <?php } ?>
         </div>
       </ul>
     </div>
@@ -56,11 +62,13 @@ $result = $stmt->get_result();
 
         <article class="post">
           <div class="post__header">
-            <div>
+            <div class="post__header-title">
               <?php echo htmlspecialchars($row["title"]) ?>
             </div>
             <div class="post__actions">
+              <?php if ($is_login) { ?>
               <a class="post__action" href="edit.php?id=<?php echo $row["id"] ?>">編輯</a>
+              <?php }?>
             </div>
           </div>
           <div class="post__info">
