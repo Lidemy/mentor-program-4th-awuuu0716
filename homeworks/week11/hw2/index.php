@@ -1,11 +1,16 @@
 <?php
-  session_start();
-  require_once("utils/utils.php");
-  $sql = "SELECT * FROM Awu_posts WHERE deleted = 0 ORDER BY id DESC";
-  $stmt = $conn->prepare($sql);
-  $result = $stmt->execute();
-  $result = $stmt->get_result();
-  $is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "ilovecodingloveme";
+session_start();
+require_once("utils/utils.php");
+$offset = empty($_GET["offset"]) ? 0 : $_GET["offset"];
+$posts_per_page = 5;
+$sql = "SELECT * FROM Awu_posts WHERE deleted = 0 ORDER BY id DESC limit ? offset ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ii", $posts_per_page, $offset);
+$result = $stmt->execute();
+$result = $stmt->get_result();
+$posts_amount = $result->num_rows;
+$pagination_num = ceil($posts_amount / 5);
+$is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "ilovecodingloveme";
 ?>
 
 <!DOCTYPE html>
@@ -17,12 +22,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/normalize.css" />
   <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
   <!-- navbar -->
-  <nav class="navbar">
+  <nav class="navbar" id="top">
     <div class="wrapper navbar__wrapper">
       <div class="navbar__site-name">
         <a href='index.php'>Awu's Blog</a>
@@ -34,7 +40,6 @@
           <li><a href="#">關於我</a></li>
         </div>
         <div>
-
           <?php if ($is_login) { ?>
             <li><a href="admin.php">管理後台</a></li>
             <li><a href="action/handle_logout.php">登出</a></li>
@@ -56,7 +61,6 @@
 
   <!-- container-wrapper -->
   <div class="container-wrapper">
-
     <div class="posts">
       <?php while ($row = $result->fetch_assoc()) { ?>
 
@@ -67,8 +71,8 @@
             </div>
             <div class="post__actions">
               <?php if ($is_login) { ?>
-              <a class="post__action" href="edit.php?id=<?php echo $row["id"] ?>">編輯</a>
-              <?php }?>
+                <a class="post__action" href="edit.php?id=<?php echo $row["id"] ?>">編輯</a>
+              <?php } ?>
             </div>
           </div>
           <div class="post__info">
@@ -83,6 +87,24 @@
       <?php } ?>
     </div>
   </div>
+  <!-- pagination -->
+  <div class="pagination__wrapper">
+    <?php
+    $sql = "SELECT * FROM Awu_posts WHERE deleted = 0 ORDER BY id DESC";
+    $stmt = $conn->prepare($sql);
+    $result = $stmt->execute();
+    $result = $stmt->get_result();
+    $posts_amount = $result->num_rows;
+    $pagination_num = ceil($posts_amount / 5);
+    for ($i = 1; $i <= $pagination_num; $i += 1) { ?>
+      <a class="page__num" href="index.php?offset=<?php echo ($i - 1) * 5 ?>">
+        <?php echo $i ?>
+      </a>
+    <?php } ?>
+  </div>
+
+  <!-- btn__to-top -->
+  <a href="#top" class="btn__to-top">Top</a>
 
   <!-- footer -->
   <footer>Copyright © 2020 Who's Blog All Rights Reserved.</footer>

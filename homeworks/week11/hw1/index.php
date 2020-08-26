@@ -2,11 +2,7 @@
 session_start();
 require_once("utils/utils.php");
 // 撈文章出來
-if (!empty($_GET["offset"])) {
-  $offset = $_GET["offset"];
-} else {
-  $offset = 0;
-}
+$offset = empty($GET["offset"]) ? 0 : $GET["offset"];
 $items_per_page = 5;
 $sql = "SELECT " .
   "C.id as id," .
@@ -147,6 +143,7 @@ if (!empty($_COOKIE["csrftoken"])) {
 
     <?php } ?>
   </section>
+
   <section class="pagination">
     <ul>
       <?php

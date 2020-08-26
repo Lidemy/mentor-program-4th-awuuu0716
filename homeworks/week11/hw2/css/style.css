@@ -78,7 +78,6 @@ h1 {
 .container-wrapper {
   display: flex;
   justify-content: center;
-  padding-bottom: 138px;
   min-height: calc(100vh - 350px);
 }
 
@@ -109,7 +108,20 @@ h1 {
 }
 
 .post__header-title {
-  font-size: 20px;
+  height: 30px;
+  font-size: 22px;
+  max-width: 580px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.post__header-title-all {
+  max-width: 580px;
+  height: auto;
+  white-space: unset;
+  overflow: unset;
+  line-height: 1.5em;
 }
 
 .post__action {
@@ -127,13 +139,16 @@ h1 {
 }
 
 .post__content {
-  max-height: 500px;
+  max-height: 9em;
   margin-top: 17px;
   white-space: pre-line;
   word-break: break-word;
   line-height: 1.5em;
   overflow: hidden;
+}
 
+.post__content-all {
+  max-height:unset;
 }
 
 .btn-read-more {
@@ -243,8 +258,12 @@ h1 {
 }
 
 .admin-post__title {
+  max-width: 500px;
   font-size: 16px;
   margin-left: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .admin-post__info {
@@ -271,11 +290,73 @@ h1 {
   margin-right: 16px;
 }
 
+.pagination__wrapper {
+  width: 200px;
+  margin:20px auto;
+  text-align: center;
+}
+
+.page__num {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  padding:5px 10px;
+  color:black;
+  text-decoration: none;
+  border:1px black solid;
+  margin:5px;
+}
+
+.btn__to-top {
+  position: fixed;
+  right: 20px;
+  top: 750px;
+  display: block;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #eeeeeed3;
+  color: white;
+  font-size: 32px;
+  line-height: 75px;
+  text-align: center;
+  text-decoration: none;
+  font-family: 'Open Sans', sans-serif;
+  transition: all ease-in-out 0.2s ;
+  animation: float 4s ease-in-out infinite;
+}
+
+.btn__to-top:hover {
+  background-color: #8a8a8af6;
+}
+
 footer {
   padding: 10px 0px;
   background-color: #323232;
   font-size: 14px;
   color: white;
   text-align: center;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0px,0px);
+  }
+
+  25% {
+    transform: translate(0px,-10px);
+  }
+
+  50% {
+    transform: translate(0px,0px);
+  }
+
+  75% {
+    transform: translate(0px,-10px);
+  }
+
+  100% {
+    transform: translate(0px,0px);
+  }
 }
 
