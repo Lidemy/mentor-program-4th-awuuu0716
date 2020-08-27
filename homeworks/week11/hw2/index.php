@@ -35,9 +35,9 @@ $is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "i
       </div>
       <ul class="navbar__list">
         <div>
-          <li><a href="#">文章列表</a></li>
-          <li><a href="#">分類專區</a></li>
-          <li><a href="#">關於我</a></li>
+          <li><a href="index.php">文章列表</a></li>
+          <li><a href="category.php">分類專區</a></li>
+          <li><a href="about.php">關於我</a></li>
         </div>
         <div>
           <?php if ($is_login) { ?>
@@ -54,8 +54,8 @@ $is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "i
   <!-- banner -->
   <section class="banner">
     <div class="banner__wrapper">
-      <h1>存放技術之地</h1>
-      <div>Welcome to my blog</div>
+      <h1>存放廢文之地</h1>
+      <div>Welcome Welcome Welcome</div>
     </div>
   </section>
 
@@ -79,7 +79,7 @@ $is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "i
             <?php echo $row["date"] ?>
           </div>
           <div class="post__content">
-            <?php echo htmlspecialchars($row["content"]) ?>
+            <?php echo $row["content"] ?>
           </div>
           <a class="btn-read-more" href="blog.php?id=<?php echo $row["id"] ?>">READ MORE</a>
         </article>

@@ -32,6 +32,7 @@ $csrftoken = $_COOKIE["csrftoken"];
 
   <title>部落格</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="js/ckeditor/ckeditor.js"></script>
   <link rel="stylesheet" href="css/normalize.css" />
   <link rel="stylesheet" href="css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200;600&display=swap" rel="stylesheet">
@@ -45,21 +46,21 @@ $csrftoken = $_COOKIE["csrftoken"];
       </div>
       <ul class="navbar__list">
         <div>
-          <li><a href="#">文章列表</a></li>
-          <li><a href="#">分類專區</a></li>
-          <li><a href="#">關於我</a></li>
+          <li><a href="index.php">文章列表</a></li>
+          <li><a href="category.php">分類專區</a></li>
+          <li><a href="about.php">關於我</a></li>
         </div>
         <div>
           <li><a href="admin.php">管理後台</a></li>
-          <li><a href="#">登出</a></li>
+          <li><a href="action/handle_logout.php">登出</a></li>
         </div>
       </ul>
     </div>
   </nav>
   <section class="banner">
     <div class="banner__wrapper">
-      <h1>存放技術之地</h1>
-      <div>Welcome to my blog</div>
+      <h1>存放廢文之地</h1>
+      <div>Welcome Welcome Welcome</div>
     </div>
   </section>
 
@@ -76,7 +77,7 @@ $csrftoken = $_COOKIE["csrftoken"];
             <input class="edit-post__input" name="title" placeholder="請輸入文章標題" value="<?php echo isset($row) ? $row["title"] : "" ?>" />
           </div>
           <div class="edit-post__input-wrapper">
-            <textarea rows="20" class="edit-post__content" name="content"><?php echo htmlspecialchars(isset($row) ? $row["content"] : "") ?></textarea>
+            <textarea rows="20" class="edit-post__content" name="content"><?php echo isset($row) ? htmlspecialchars($row["content"]) : "" ?></textarea>
           </div>
           <div class="edit-post__btn-wrapper">
             <input class="edit-post__btn" type="submit" value="送出"></input>
@@ -86,6 +87,9 @@ $csrftoken = $_COOKIE["csrftoken"];
     </div>
   </div>
   <footer>Copyright © 2020 Who's Blog All Rights Reserved.</footer>
+  <script>
+    CKEDITOR.replace('content');
+  </script>
 </body>
 
 </html>

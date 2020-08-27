@@ -36,9 +36,9 @@ $csrftoken = $_COOKIE["csrftoken"];
       </div>
       <ul class="navbar__list">
         <div>
-          <li><a href="#">文章列表</a></li>
-          <li><a href="#">分類專區</a></li>
-          <li><a href="#">關於我</a></li>
+          <li><a href="index.php">文章列表</a></li>
+          <li><a href="category.php">分類專區</a></li>
+          <li><a href="about.php">關於我</a></li>
         </div>
         <div>
           <li><a href="edit.php">新增文章</a></li>
