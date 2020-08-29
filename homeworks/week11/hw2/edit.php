@@ -57,12 +57,6 @@ $csrftoken = $_COOKIE["csrftoken"];
       </ul>
     </div>
   </nav>
-  <section class="banner">
-    <div class="banner__wrapper">
-      <h1>存放廢文之地</h1>
-      <div>Welcome Welcome Welcome</div>
-    </div>
-  </section>
 
   <div class="container-wrapper">
     <div class="container">
@@ -75,6 +69,9 @@ $csrftoken = $_COOKIE["csrftoken"];
           </div>
           <div class="edit-post__input-wrapper">
             <input class="edit-post__input" name="title" placeholder="請輸入文章標題" value="<?php echo isset($row) ? $row["title"] : "" ?>" />
+          </div>
+          <div class="edit-post__input-wrapper">
+            <input class="edit-post__input" name="tags" placeholder="請輸入文章標籤" value="<?php echo isset($row) ? $row["tags"] : "" ?>" />
           </div>
           <div class="edit-post__input-wrapper">
             <textarea rows="20" class="edit-post__content" name="content"><?php echo isset($row) ? htmlspecialchars($row["content"]) : "" ?></textarea>

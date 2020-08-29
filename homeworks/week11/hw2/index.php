@@ -51,14 +51,6 @@ $is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "i
     </div>
   </nav>
 
-  <!-- banner -->
-  <section class="banner">
-    <div class="banner__wrapper">
-      <h1>存放廢文之地</h1>
-      <div>Welcome Welcome Welcome</div>
-    </div>
-  </section>
-
   <!-- container-wrapper -->
   <div class="container-wrapper">
     <div class="posts">
@@ -67,7 +59,9 @@ $is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "i
         <article class="post">
           <div class="post__header">
             <div class="post__header-title">
-              <?php echo htmlspecialchars($row["title"]) ?>
+              <a href="blog.php?id=<?php echo $row["id"] ?>">
+                <?php echo htmlspecialchars($row["title"]) ?>
+              </a>
             </div>
             <div class="post__actions">
               <?php if ($is_login) { ?>

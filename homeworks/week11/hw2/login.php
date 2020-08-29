@@ -28,14 +28,12 @@
       </ul>
     </div>
   </nav>
-  <section class="banner">
-    <div class="banner__wrapper">
-      <h1>存放技術之地</h1>
-      <div>Welcome to my blog</div>
-    </div>
-  </section>
+
   <div class="login-wrapper">
     <h2>Login</h2>
+    <?php if (!empty($_GET["error"]) && $_GET["error"] == 1) {?>
+    <div class="account__error">帳號密碼錯誤</div>
+    <?php }?>
     <form action="action/handle_login.php" method="POST">
       <div class="input__wrapper">
         <div class="input__label">USERNAME</div>

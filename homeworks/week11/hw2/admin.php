@@ -48,14 +48,6 @@ $csrftoken = $_COOKIE["csrftoken"];
     </div>
   </nav>
 
-  <!-- banner -->
-  <section class="banner">
-    <div class="banner__wrapper">
-      <h1>存放技術之地</h1>
-      <div>Welcome to my blog</div>
-    </div>
-  </section>
-
   <!-- container-wrapper -->
   <div class="container-wrapper">
     <div class="container">

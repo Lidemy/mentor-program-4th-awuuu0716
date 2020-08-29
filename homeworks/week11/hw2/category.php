@@ -1,21 +1,13 @@
 <?php
 session_start();
+
 require_once("utils/utils.php");
-
-if (empty($_GET["id"])) {
-  die("缺少文章 id!");
-}
-
-$id = $_GET["id"];
-$sql = "select * from Awu_posts where id =?";
+$sql = "select id, title, date, tags from Awu_posts where deleted = 0 order by id desc";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $id);
 $result = $stmt->execute();
 $result = $stmt->get_result();
-$row = $result->fetch_assoc();
 $is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "ilovecodingloveme";
 ?>
-
 <!DOCTYPE html>
 
 <html>
@@ -23,11 +15,13 @@ $is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "i
 <head>
   <meta charset="utf-8">
 
-  <title>部落格</title>
+  <title>分類文章</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/normalize.css" />
   <link rel="stylesheet" href="css/style.css" />
+  <script src="js/category.js" type="module"></script>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200;600&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
@@ -55,32 +49,38 @@ $is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "i
     </div>
   </nav>
 
+  <!-- tags-wrapper -->
+  <div class="tags__wrapper">
+    文章標籤：
+  </div>
   <!-- container-wrapper -->
-  <div class="container-wrapper">
-    <div class="posts">
-      <article class="post">
-        <div class="post__header">
-          <div class="post__header-title post__header-title-all">
-            <?php echo $row["title"] ?>
+  <div class="container-wrapper container-wrapper__no-banner">
+
+    <div class="container no-margin-top">
+      <div class="admin-posts">
+
+        <?php while ($row = $result->fetch_assoc()) { ?>
+          <div class="admin-post" data-tags="<?php echo $row["tags"] ?>">
+            <div class="admin-post__title">
+              <a href="blog.php?id=<?php echo $row["id"] ?>">
+                <?php echo htmlspecialchars($row["title"]) ?>
+              </a>
+            </div>
+            <div class="post__tags">
+              Tags:
+              <?php echo htmlspecialchars($row['tags']) ?>
+            </div>
+            <div class="admin-post__info">
+              <div class="admin-post__created-at">
+                <?php echo $row["date"] ?>
+              </div>
+            </div>
           </div>
-          <div class="post__actions">
-            <?php if ($is_login) { ?>
-              <a class="post__action" href="edit.php?id=<?php echo $row["id"] ?>">編輯</a>
-            <?php } ?>
-          </div>
-        </div>
-        <div class="post__info">
-          <?php echo $row["date"] ?>
-        </div>
-        <div class="post__content post__content-all">
-          <?php echo $row["content"] ?>
-        </div>
-      </article>
+
+        <?php } ?>
+      </div>
     </div>
   </div>
-
-  <!-- btn__to-top -->
-  <a href="#top" class="btn__to-top">Top</a>
 
   <!-- footer -->
   <footer>Copyright © 2020 Who's Blog All Rights Reserved.</footer>
