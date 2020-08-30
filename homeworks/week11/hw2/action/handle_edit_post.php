@@ -1,6 +1,6 @@
 <?php
   require_once("../utils/utils.php");
-  require_once("action/check_admin.php");
+  require_once("./check_admin.php");
   require_once("./check_csrf.php");
 
   if (!empty($_POST["id"])) {
