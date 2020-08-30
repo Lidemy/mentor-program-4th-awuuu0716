@@ -2,7 +2,7 @@
 session_start();
 require_once("utils/utils.php");
 // 撈文章出來
-$offset = empty($GET["offset"]) ? 0 : $GET["offset"];
+$offset = empty($_GET["offset"]) ? 0 : $_GET["offset"];
 $items_per_page = 5;
 $sql = "SELECT " .
   "C.id as id," .
@@ -80,7 +80,7 @@ if (!empty($_COOKIE["csrftoken"])) {
       <a class="home" href="index.php">首頁</a>
       <div class="user__name">
         <div class="user__avatar__small"></div>
-        <?php echo $nickname ?>
+        <?php echo htmlspecialchars($nickname) ?>
       </div>
     <?php } ?>
   </nav>
@@ -89,7 +89,7 @@ if (!empty($_COOKIE["csrftoken"])) {
     <div class="add__post__title">建立貼文 (支援 MarkDown 格式, 歡迎測試)</div>
     <form class="input__form" action="action/add_post.php" method="post">
       <input type="hidden" name="csrftoken" value="<?php echo $csrftoken ?>" />
-      <input name="nickname" type="text" hidden value="<?php echo $nickname ?>">
+      <input name="nickname" type="text" hidden value="<?php echo htmlspecialchars($nickname) ?>">
       <textarea name="comment" class="add__post__content" rows="15"></textarea>
       <div class="submit__wrapper">
         <?php if ($isLogIn) { ?>
@@ -113,7 +113,7 @@ if (!empty($_COOKIE["csrftoken"])) {
         <div class="user__wrapper">
           <div class="user__avatar"></div>
           <div class="user__info">
-            <div class="user__nickname"><?php echo $row["nickname"]; ?></div>
+            <div class="user__nickname"><?php echo htmlspecialchars($row["nickname"]); ?></div>
             <div class="user__time"><?php echo $row["date"]; ?></div>
           </div>
           <?php if (($row["username"] == $username && $isLogIn) || $level == "admin") { ?>

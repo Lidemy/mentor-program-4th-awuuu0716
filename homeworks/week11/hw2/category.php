@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 require_once("utils/utils.php");
 $sql = "select id, title, date, tags from Awu_posts where deleted = 0 order by id desc";
 $stmt = $conn->prepare($sql);

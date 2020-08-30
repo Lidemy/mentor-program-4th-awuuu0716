@@ -4,6 +4,7 @@
 
   // 檢查是否為跨站攻擊
   if ($_POST["csrftoken"] !== $_COOKIE["csrftoken"]) {
+    header("Location:index.php");
     die("88888");
   }
 

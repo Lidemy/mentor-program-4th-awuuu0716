@@ -1,13 +1,6 @@
 <?php
-session_start();
-
-// 阻止沒有存取權限又偷跑進來的人
-if (empty($_SESSION["access_level"]) || $_SESSION["access_level"] !== "ilovecodingloveme") {
-  header("Location:index.php");
-  die("88888");
-}
-
 require_once("utils/utils.php");
+require_once("action/check_admin.php");
 if (!empty($_GET["id"])) {
   $id = $_GET["id"];
   $sql = "select * from Awu_posts where id =?";
@@ -19,9 +12,8 @@ if (!empty($_GET["id"])) {
     die("這裡沒有東西喔!");
   }
   $row = $result->fetch_assoc();
-  $is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "ilovecodingloveme";
 }
-
+$is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "ilovecodingloveme";
 $csrftoken = $_COOKIE["csrftoken"];
 ?>
 

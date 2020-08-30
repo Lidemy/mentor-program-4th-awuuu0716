@@ -1,4 +1,6 @@
 <?php
+// 在這邊直接開啟 SESSION
+session_start();
 // 連線用 php
 require_once("conn.php");
 

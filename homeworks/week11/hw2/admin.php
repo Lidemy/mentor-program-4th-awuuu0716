@@ -1,12 +1,6 @@
 <?php
-session_start();
-
-// 阻止沒有存取權限偷跑進來的人
-if (empty($_SESSION["access_level"]) || $_SESSION["access_level"] !== "ilovecodingloveme") {
-  header("Location:index.php");
-  die("88888");
-}
 require_once("utils/utils.php");
+require_once("action/check_admin.php");
 $offset = empty($_GET["offset"]) ? 0 : $_GET["offset"];
 $posts_per_page = 10;
 $sql = "select id, title, date, deleted from Awu_posts order by id desc;";

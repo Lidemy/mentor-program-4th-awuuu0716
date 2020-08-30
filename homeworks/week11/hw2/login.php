@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once("utils/utils.php");
 $is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "ilovecodingloveme";
 ?>

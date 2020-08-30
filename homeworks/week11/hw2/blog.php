@@ -1,8 +1,8 @@
 <?php
-session_start();
 require_once("utils/utils.php");
 
 if (empty($_GET["id"])) {
+  header("Location:index.php");
   die("缺少文章 id!");
 }
 

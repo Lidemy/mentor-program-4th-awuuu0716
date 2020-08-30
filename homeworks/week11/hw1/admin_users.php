@@ -1,7 +1,7 @@
 <?php
   session_start();
   require_once("utils/utils.php");
-  $level = $_SESSION["level"];
+  require_once("action/check_admin.php");
   $sql = "SELECT id, username, nickname, level FROM Awu_users";
   $stmt = $conn->prepare($sql);
   $result = $stmt->execute();
@@ -28,7 +28,6 @@
     <a class="home" href="admin_post.php">文章管理</a>
     <a class="home" href="admin_users.php">用戶管理</a>
   </nav>
-  <?php if ($level === "admin") { ?>
     <section class="table__wrapper">
       <table class="table__body">
         <thead>
@@ -69,9 +68,6 @@
         </tbody>
       </table>
     </section>
-  <?php } else { ?>
-    <h1 class="no__access">此帳號無權限瀏覽此頁面</h1>
-  <?php } ?>
 </body>
 
 </html>

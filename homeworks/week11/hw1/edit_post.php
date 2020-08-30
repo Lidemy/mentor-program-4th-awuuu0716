@@ -45,7 +45,7 @@ if (!empty($_COOKIE["csrftoken"])) {
     <a class="home" href="/hw1/index.php">首頁</a>
     <div class="user__name">
       <div class="user__avatar__small"></div>
-      <?php echo $nickname ?>
+      <?php echo htmlspecialchars($nickname) ?>
     </div>
   </nav>
   <section class="user__operating">

@@ -9,7 +9,7 @@
         <li><a href="category.php">分類專區</a></li>
       </div>
       <div>
-        <?php if ($is_login) { ?>
+        <?php if (!empty($is_login) && $is_login) { ?>
           <li><a href="edit.php">新增文章</a></li>
           <li><a href="admin.php">管理後台</a></li>
           <li><a href="action/handle_logout.php">登出</a></li>

@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once("utils/utils.php");
 $offset = empty($_GET["offset"]) ? 0 : $_GET["offset"];
 $posts_per_page = 5;

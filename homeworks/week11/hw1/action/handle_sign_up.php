@@ -1,8 +1,8 @@
 <?php 
   session_start();
   require_once("../utils/utils.php");
-  $username = htmlspecialchars($_POST["username"]);
-  $nickname = htmlspecialchars($_POST["nickname"]);
+  $username = $_POST["username"];
+  $nickname = $_POST["nickname"];
   $password = $_POST["password"];
   $level = "general";
   if (empty($username) || empty($nickname) || empty($password)) {

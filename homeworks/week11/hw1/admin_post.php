@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once("utils/utils.php");
-$level = $_SESSION["level"];
+require_once("action/check_admin.php");
 $sql = "SELECT " .
   "C.id as id," .
   "C.nickname as nickname," .
@@ -38,7 +38,6 @@ if (!empty($_COOKIE["csrftoken"])) {
     <a class="home" href="admin_post.php">文章管理</a>
     <a class="home" href="admin_users.php">用戶管理</a>
   </nav>
-  <?php if ($level === "admin") { ?>
     <section class="table__wrapper">
       <table class="table__body">
         <thead>
@@ -77,9 +76,6 @@ if (!empty($_COOKIE["csrftoken"])) {
         </tbody>
       </table>
     </section>
-  <?php } else { ?>
-    <h1 class="no__access">此帳號無權限瀏覽此頁面</h1>
-  <?php } ?>
 </body>
 
 </html>
