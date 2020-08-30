@@ -1,3 +1,8 @@
+<?php
+session_start();
+require_once("utils/utils.php");
+$is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "ilovecodingloveme";
+?>
 <!DOCTYPE html>
 
 <html>
@@ -14,26 +19,14 @@
 </head>
 
 <body>
-  <nav class="navbar">
-    <div class="wrapper navbar__wrapper">
-      <div class="navbar__site-name">
-        <a href='index.php'>Who's Blog</a>
-      </div>
-      <ul class="navbar__list">
-        <div>
-          <li><a href="#">文章列表</a></li>
-          <li><a href="#">分類專區</a></li>
-          <li><a href="#">關於我</a></li>
-        </div>
-      </ul>
-    </div>
-  </nav>
+  <!-- navbar -->
+  <?php require_once("navbar.php") ?>
 
   <div class="login-wrapper">
     <h2>Login</h2>
-    <?php if (!empty($_GET["error"]) && $_GET["error"] == 1) {?>
-    <div class="account__error">帳號密碼錯誤</div>
-    <?php }?>
+    <?php if (!empty($_GET["error"]) && $_GET["error"] == 1) { ?>
+      <div class="account__error">帳號密碼錯誤</div>
+    <?php } ?>
     <form action="action/handle_login.php" method="POST">
       <div class="input__wrapper">
         <div class="input__label">USERNAME</div>

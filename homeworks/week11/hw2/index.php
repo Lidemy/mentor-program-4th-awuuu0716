@@ -28,28 +28,7 @@ $is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "i
 
 <body>
   <!-- navbar -->
-  <nav class="navbar" id="top">
-    <div class="wrapper navbar__wrapper">
-      <div class="navbar__site-name">
-        <a href='index.php'>Awu's Blog</a>
-      </div>
-      <ul class="navbar__list">
-        <div>
-          <li><a href="index.php">文章列表</a></li>
-          <li><a href="category.php">分類專區</a></li>
-          <li><a href="about.php">關於我</a></li>
-        </div>
-        <div>
-          <?php if ($is_login) { ?>
-            <li><a href="admin.php">管理後台</a></li>
-            <li><a href="action/handle_logout.php">登出</a></li>
-          <?php } else { ?>
-            <li><a href="login.php">登入</a></li>
-          <?php } ?>
-        </div>
-      </ul>
-    </div>
-  </nav>
+<?php require_once("navbar.php")?>
 
   <!-- container-wrapper -->
   <div class="container-wrapper">
@@ -92,7 +71,10 @@ $is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "i
     $result = $stmt->get_result();
     $posts_amount = $result->num_rows;
     $pagination_num = ceil($posts_amount / 5);
-    for ($i = 1; $i <= $pagination_num; $i += 1) { ?>
+    $now_page = $offset == 0 ? 1 : ($offset / 5)+1;
+    ?>
+    <div class="page__now">第 <?php echo $now_page ?> 頁</div>
+    <?php for ($i = 1; $i <= $pagination_num; $i += 1) { ?>
       <a class="page__num" href="index.php?offset=<?php echo ($i - 1) * 5 ?>">
         <?php echo $i ?>
       </a>

@@ -3,14 +3,18 @@ session_start();
 
 // 阻止沒有存取權限偷跑進來的人
 if (empty($_SESSION["access_level"]) || $_SESSION["access_level"] !== "ilovecodingloveme") {
+  header("Location:index.php");
   die("88888");
 }
 require_once("utils/utils.php");
+$offset = empty($_GET["offset"]) ? 0 : $_GET["offset"];
+$posts_per_page = 10;
 $sql = "select id, title, date, deleted from Awu_posts order by id desc;";
 $stmt = $conn->prepare($sql);
 $result = $stmt->execute();
 $result = $stmt->get_result();
 $csrftoken = $_COOKIE["csrftoken"];
+$is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "ilovecodingloveme";
 ?>
 <!DOCTYPE html>
 
@@ -29,24 +33,7 @@ $csrftoken = $_COOKIE["csrftoken"];
 
 <body>
   <!-- navbar -->
-  <nav class="navbar">
-    <div class="wrapper navbar__wrapper">
-      <div class="navbar__site-name">
-        <a href='index.php'>Awu's Blog</a>
-      </div>
-      <ul class="navbar__list">
-        <div>
-          <li><a href="index.php">文章列表</a></li>
-          <li><a href="category.php">分類專區</a></li>
-          <li><a href="about.php">關於我</a></li>
-        </div>
-        <div>
-          <li><a href="edit.php">新增文章</a></li>
-          <li><a href="#">登出</a></li>
-        </div>
-      </ul>
-    </div>
-  </nav>
+  <?php require_once("navbar.php") ?>
 
   <!-- container-wrapper -->
   <div class="container-wrapper">
@@ -56,9 +43,13 @@ $csrftoken = $_COOKIE["csrftoken"];
         <?php while ($row = $result->fetch_assoc()) { ?>
           <div class="admin-post">
             <div class="admin-post__title">
-              <?php echo htmlspecialchars($row["title"]) ?>
-              <?php if ($row["deleted"] === 1) { ?>
-                (已隱藏)
+
+              <?php if ($row["deleted"]) { ?>
+                <s>
+                  <?php echo htmlspecialchars($row["title"]) ?>
+                </s>
+              <?php } else { ?>
+                <?php echo htmlspecialchars($row["title"]) ?>
               <?php } ?>
             </div>
             <div class="admin-post__info">
@@ -68,16 +59,39 @@ $csrftoken = $_COOKIE["csrftoken"];
               <a class="admin-post__btn" href="edit.php?id=<?php echo $row["id"] ?>">
                 編輯
               </a>
-              <form action="action/handle_delete_post.php" method="POST">
+              <form action="action/<?php echo $row["deleted"] ? "handle_revive_post.php" : "handle_delete_post.php" ?>" method="POST">
                 <input type="hidden" name="csrftoken" value="<?php echo $csrftoken ?>" />
                 <input type="hidden" name="id" value="<?php echo $row["id"] ?>">
-                <input type="submit" value="刪除" class="admin-post__btn">
+                <?php if ($row["deleted"]) { ?>
+                  <input type="submit" value="復原" class="admin-post__btn">
+                <?php } else { ?>
+                  <input type="submit" value="刪除" class="admin-post__btn">
+                <?php } ?>
               </form>
             </div>
           </div>
         <?php } ?>
       </div>
     </div>
+  </div>
+
+  <!-- pagination -->
+  <div class="pagination__wrapper">
+    <?php
+    $sql = "SELECT * FROM Awu_posts ORDER BY id DESC";
+    $stmt = $conn->prepare($sql);
+    $result = $stmt->execute();
+    $result = $stmt->get_result();
+    $posts_amount = $result->num_rows;
+    $pagination_num = ceil($posts_amount / 10);
+    $now_page = $offset == 0 ? 1 : ($offset / 10);
+    ?>
+    <div class="page__now">第 <?php echo $now_page ?> 頁</div>
+    <?php for ($i = 1; $i <= $pagination_num; $i += 1) { ?>
+      <a class="page__num" href="admin.php?offset=<?php echo ($i - 1) * 10 ?>">
+        <?php echo $i ?>
+      </a>
+    <?php } ?>
   </div>
 
   <!-- footer -->

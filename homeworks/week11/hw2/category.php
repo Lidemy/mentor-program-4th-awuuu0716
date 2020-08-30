@@ -33,12 +33,12 @@ $is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "i
       </div>
       <ul class="navbar__list">
         <div>
-          <li><a href="index.php">文章列表</a></li>
+          <li><a href="index.php">首頁</a></li>
           <li><a href="category.php">分類專區</a></li>
-          <li><a href="about.php">關於我</a></li>
         </div>
         <div>
           <?php if ($is_login) { ?>
+            <li><a href="edit.php">新增文章</a></li>
             <li><a href="admin.php">管理後台</a></li>
             <li><a href="action/handle_logout.php">登出</a></li>
           <?php } else { ?>

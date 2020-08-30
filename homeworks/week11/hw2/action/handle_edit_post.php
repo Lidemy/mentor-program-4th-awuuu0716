@@ -26,7 +26,7 @@
     if (!$result) {
       die($conn->error);
     }
-    header("Location: ../index.php");
+    header("Location: ../blog.php?id=$id");
 
   } else {
     // 沒帶 id 為新增文章

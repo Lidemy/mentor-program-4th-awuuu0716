@@ -3,6 +3,7 @@ session_start();
 
 // 阻止沒有存取權限又偷跑進來的人
 if (empty($_SESSION["access_level"]) || $_SESSION["access_level"] !== "ilovecodingloveme") {
+  header("Location:index.php");
   die("88888");
 }
 
@@ -18,6 +19,7 @@ if (!empty($_GET["id"])) {
     die("這裡沒有東西喔!");
   }
   $row = $result->fetch_assoc();
+  $is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "ilovecodingloveme";
 }
 
 $csrftoken = $_COOKIE["csrftoken"];
@@ -39,24 +41,8 @@ $csrftoken = $_COOKIE["csrftoken"];
 </head>
 
 <body>
-  <nav class="navbar">
-    <div class="wrapper navbar__wrapper">
-      <div class="navbar__site-name">
-        <a href='index.php'>Who's Blog</a>
-      </div>
-      <ul class="navbar__list">
-        <div>
-          <li><a href="index.php">文章列表</a></li>
-          <li><a href="category.php">分類專區</a></li>
-          <li><a href="about.php">關於我</a></li>
-        </div>
-        <div>
-          <li><a href="admin.php">管理後台</a></li>
-          <li><a href="action/handle_logout.php">登出</a></li>
-        </div>
-      </ul>
-    </div>
-  </nav>
+  <!-- navbar -->
+  <?php require_once("navbar.php") ?>
 
   <div class="container-wrapper">
     <div class="container">

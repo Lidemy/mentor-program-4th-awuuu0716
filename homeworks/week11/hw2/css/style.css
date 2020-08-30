@@ -90,7 +90,8 @@ img {
 .tags__wrapper {
   display: flex;
   height: 150px;
-  margin:0 auto;
+  width: 600px;
+  margin:20px auto;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
@@ -157,7 +158,7 @@ img {
 .post__header-title {
   height: 30px;
   font-size: 26px;
-  max-width: 580px;
+  max-width: 700px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -169,7 +170,7 @@ img {
 }
 
 .post__header-title-all {
-  max-width: 580px;
+  max-width: 700px;
   height: auto;
   white-space: unset;
   overflow: unset;
@@ -201,10 +202,10 @@ img {
 }
 
 .post__content {
-  max-height: 27em;
+  max-height: 33em;
   margin-top: 17px;
   word-break: break-word;
-  line-height: 1.5em;
+  line-height: 2em;
   overflow: hidden;
 }
 
@@ -379,13 +380,21 @@ img {
 }
 
 .pagination__wrapper {
-  width: 200px;
+  display: flex;
+align-items: center;
+justify-content: center;
+  width: 600px;
   margin:20px auto;
-  text-align: center;
 }
 
+.page__now {
+  width: 80px;
+  margin-right: 20px;
+  margin-left: -150px;
+}
+
+
 .page__num {
-  display: inline-block;
   width: 30px;
   height: 30px;
   padding:5px 10px;

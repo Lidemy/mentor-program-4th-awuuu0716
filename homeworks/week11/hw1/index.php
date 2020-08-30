@@ -22,7 +22,6 @@ $stmt->bind_param("ii", $items_per_page, $offset);
 $result = $stmt->execute();
 $result = $stmt->get_result();
 
-
 // 判斷有沒有登入與設置 nickname
 if (!empty($_SESSION['username'])) {
   $username = $_SESSION['username'];
