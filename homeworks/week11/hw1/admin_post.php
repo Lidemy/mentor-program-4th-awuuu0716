@@ -59,8 +59,8 @@ if (!empty($_COOKIE["csrftoken"])) {
           <?php while ($row = $result->fetch_assoc()) { ?>
             <tr>
               <td class="table__post-id"><?php echo $row["id"] ?></td>
-              <td class="table__post-username"><?php echo $row["username"] ?></td>
-              <td class="table__post-nickname"><?php echo $row["nickname"] ?></td>
+              <td class="table__post-username"><?php echo htmlspecialchars($row["username"]) ?></td>
+              <td class="table__post-nickname"><?php echo htmlspecialchars($row["nickname"]) ?></td>
               <td class="table__post-content"><?php echo htmlspecialchars($row["comment"]) ?></td>
               <td class="table__post-deleted"><?php echo $row["deleted"] === 0 ? "N" : "Y" ?></td>
               <td class="table__post-delete__btn">

@@ -48,9 +48,9 @@
           <?php while ($row = $result->fetch_assoc()) { ?>
             <tr>
               <td class="table__post-id"><?php echo $row["id"] ?></td>
-              <td class="table__post-username"><?php echo $row["username"] ?></td>
-              <td class="table__post-nickname"><?php echo $row["nickname"] ?></td>
-              <td class="table__post-content"><?php echo $row["level"] ?></td>
+              <td class="table__post-username"><?php echo htmlspecialchars($row["username"]) ?></td>
+              <td class="table__post-nickname"><?php echo htmlspecialchars($row["nickname"]) ?></td>
+              <td class="table__post-content"><?php echo htmlspecialchars($row["level"]) ?></td>
               <td>
                 <form action="action/admin_modify_users.php" method="POST">
                 <input type="hidden" name="csrftoken" value="<?php echo $csrftoken ?>" />
