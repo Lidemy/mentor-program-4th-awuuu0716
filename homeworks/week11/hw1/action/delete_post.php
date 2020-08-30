@@ -1,11 +1,8 @@
 <?php
   session_start();
   require_once("../utils/utils.php");
-
-  // 檢查是否為跨站攻擊
-  if ($_POST["csrftoken"] !== $_COOKIE["csrftoken"]) {
-    die("88888");
-  }
+  require_once("action/check_baduser.php");
+  require_once("./check_csrf.php");
 
   $id = $_POST["id"];
   $username = $_SESSION['username'];

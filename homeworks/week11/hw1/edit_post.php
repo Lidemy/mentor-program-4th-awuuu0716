@@ -1,7 +1,10 @@
 <?php
 session_start();
 require_once("utils/utils.php");
+require_once("action/check_baduser.php");
 $username = $_SESSION["username"];
+
+
 
 $sql = "SELECT `nickname` FROM Awu_users WHERE username=?";
 $stmt = $conn->prepare($sql);
