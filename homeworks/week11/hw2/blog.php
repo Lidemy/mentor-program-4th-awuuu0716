@@ -61,7 +61,7 @@ $is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "i
       <article class="post">
         <div class="post__header">
           <div class="post__header-title post__header-title-all">
-            <?php echo $row["title"] ?>
+            <?php echo htmlspecialchars($row["title"]) ?>
           </div>
           <div class="post__actions">
             <?php if ($is_login) { ?>

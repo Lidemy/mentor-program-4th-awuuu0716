@@ -70,7 +70,9 @@ $is_login = isset($_SESSION["access_level"]) && $_SESSION["access_level"] === "i
             </div>
           </div>
           <div class="post__info">
-            <?php echo $row["date"] ?>
+            <div> <?php echo $row["date"] ?></div>
+            <div> Tags: <?php echo htmlspecialchars($row["tags"]) ?></div>
+
           </div>
           <div class="post__content">
             <?php echo $row["content"] ?>

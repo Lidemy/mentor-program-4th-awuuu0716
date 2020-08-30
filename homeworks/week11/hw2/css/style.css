@@ -192,6 +192,8 @@ img {
 }
 
 .post__info {
+  display: flex;
+  justify-content: space-between;
   margin-top: 19px;
   padding: 12px 22px;
   background: #fbfbfb;

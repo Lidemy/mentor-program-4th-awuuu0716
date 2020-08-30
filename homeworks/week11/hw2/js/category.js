@@ -22,12 +22,14 @@ window.onload = () => {
       postTagArray.forEach((tag) => {
         postTagObject[tag] = true;
       });
-      Object.keys(filterList).forEach((tag) => {
+
+      Object.keys(filterList).every((tag) => {
         if (postTagObject[tag] || !filterList[tag]) {
           showPost = true;
-        } else {
-          showPost = false;
+          return true;
         }
+        showPost = false;
+        return false;
       });
       if (showPost) {
         post.classList.remove('display-none');
@@ -36,6 +38,5 @@ window.onload = () => {
       }
     });
     tagButton.classList.toggle('tag-active');
-    console.log(filterList);
   });
 };

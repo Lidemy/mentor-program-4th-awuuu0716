@@ -12,7 +12,7 @@ const utils = {
   },
   appendTags(parentNode, content) {
     const newContent = document.createElement('div');
-    newContent.innerHTML = content;
+    newContent.innerText = content;
     newContent.classList = 'tag';
     parentNode.appendChild(newContent);
   },
