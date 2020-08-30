@@ -1,16 +1,8 @@
-<?php 
-  session_start();
-
-  // 阻止沒有存取權限偷跑進來的人
-  if (empty($_SESSION["access_level"]) || $_SESSION["access_level"] !== "ilovecodingloveme") {
-    die("88888");
-  }
-  // 檢查是否為跨站攻擊
-  if ($_POST["csrftoken"] !== $_COOKIE["csrftoken"]) {
-    die("88888");
-  }
-
+<?php
   require_once("../utils/utils.php");
+  require_once("action/check_admin.php");
+  require_once("./check_csrf.php");
+
   if (!empty($_POST["id"])) {
     // 帶 id 進來代表要編輯文章
     $id = $_POST["id"];
