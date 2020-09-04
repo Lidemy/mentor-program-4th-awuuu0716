@@ -1,8 +1,8 @@
 <?php 
   session_start();
   require_once("../utils/utils.php");
-  require_once("action/check_baduser.php");
-  require_once("./check_csrf.php");
+  require_once("check_baduser.php");
+  require_once("check_csrf.php");
 
   $username = $_SESSION["username"];
   $nickname = $_POST["nickname"];
