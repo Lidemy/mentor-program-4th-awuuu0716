@@ -111,7 +111,7 @@ $(document).ready(() => {
         offset += 9;
         data.forEach((element) => {
           $(parentNode).append(`
-<div class="card comment__wrapper col" style="height: 24rem;">
+<div class="card comment__wrapper col-lg-4 col-sm-6 col-12" style="height: 24rem;">
     <div class="card-body ">
     <h5 class="card-title">${escapeHtml(element.nickname)}</h5>
     <h6 class="card-subtitle mb-2 text-muted">${element.create_time}</h6>
