@@ -17,8 +17,8 @@ $(document).ready(() => {
     offset += 9;
     const parentNode = $('.comments__container');
     data.forEach((element) => {
-      $(parentNode).prepend(`
-<div class="card m-2 row-3 pb-2 comment__wrapper" style="width: 22rem; height: 24rem;">
+      $(parentNode).append(`
+<div class="card comment__wrapper col-lg-4 col-sm-6 col-12" style="height: 24rem;">
     <div class="card-body ">
     <h5 class="card-title">${escapeHtml(element.nickname)}</h5>
     <h6 class="card-subtitle mb-2 text-muted">${element.create_time}</h6>
@@ -34,7 +34,7 @@ $(document).ready(() => {
     e.preventDefault();
     $.ajax({
       type: 'POST',
-      url: 'http://localhost/hw1/api/add_comment.php',
+      url: 'api/add_comment.php',
       data: {
         nickname: $('input[name=nickname]').val(),
         comment: $('textarea[name=comment]').val(),
@@ -68,7 +68,7 @@ $(document).ready(() => {
     const id = target.attr('id');
     $.ajax({
       type: 'POST',
-      url: 'http://localhost/hw1/api/add_love.php',
+      url: 'api/add_love.php',
       data: {
         id,
         newLoveNum,
@@ -105,13 +105,13 @@ $(document).ready(() => {
         type: 'GET',
         url: `api/comments.php?offset=${offset}`,
       }).done((data) => {
-        if (!data) {
+        if (data.length === 0) {
           return;
         }
+        offset += 9;
         data.forEach((element) => {
-          offset += 9;
-          $(parentNode).prepend(`
-<div class="card m-2 row-3 pb-2 comment__wrapper" style="width: 22rem; height: 24rem;">
+          $(parentNode).append(`
+<div class="card comment__wrapper col" style="height: 24rem;">
     <div class="card-body ">
     <h5 class="card-title">${escapeHtml(element.nickname)}</h5>
     <h6 class="card-subtitle mb-2 text-muted">${element.create_time}</h6>

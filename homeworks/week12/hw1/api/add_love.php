@@ -6,9 +6,9 @@ if(empty($_POST["id"]) || empty($_POST["newLoveNum"])) {
   die();
 }
 
-$sql = "UPDATE `mtr04group2`.`Awu_api_comments` SET `love` = ? WHERE (`id` = ?);";
+$sql = "UPDATE `Awu_api_comments` SET `love` = ? WHERE (`id` = ?);";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("ii", $_POST["newLoveNum"], $_POST["id"]);
+$stmt->bind_param("ss", $_POST["newLoveNum"], $_POST["id"]);
 $result = $stmt->execute();
 
 if (!$result) {
