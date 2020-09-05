@@ -1,5 +1,13 @@
 /* eslint-env jquery */
 $(document).ready(() => {
+  const escapeHtml = unsafe => (
+    unsafe
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;'));
+
   const parseCookie = () => {
     const cookieObj = {};
     const cookieAry = document.cookie.split(';');
@@ -28,7 +36,7 @@ $(document).ready(() => {
     const taskContainer = $('.tasks__container');
     const template = `
 <li class="list-group-item flex align-items-center justify-content-between ${done ? 'container__task__done' : ''}">
-  <div class="task__content w-75 ${done ? 'task__done' : ''}">${content}</div>
+  <div class="task__content w-75 ${done ? 'task__done' : ''}">${escapeHtml(content)}</div>
   <div>
     <button type="button" class="btn btn-success btn-done">標記完成</button>
     <button type="button" class="btn btn-warning btn-edit" data-toggle="modal" data-target="#editModal">編輯</button>
