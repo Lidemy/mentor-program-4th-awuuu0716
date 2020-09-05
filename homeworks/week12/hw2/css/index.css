@@ -5,3 +5,8 @@
   right:1%;
   color:#007bff;
 }
+
+.task__done {
+  text-decoration: line-through;
+  color:#8f8f8f;
+}

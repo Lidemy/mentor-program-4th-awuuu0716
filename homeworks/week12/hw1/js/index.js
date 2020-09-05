@@ -1,19 +1,18 @@
 /* eslint-env jquery */
 $(document).ready(() => {
-  const escapeHtml = (unsafe) => {
+  const escapeHtml = unsafe => (
     unsafe
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  };
+      .replace(/'/g, '&#039;'));
 
   let offset = 0;
   // 初次載入留言
   $.ajax({
     type: 'GET',
-    url: `http://localhost/hw1/api/comments.php?offset=${offset}`,
+    url: `api/comments.php?offset=${offset}`,
   }).done((data) => {
     offset += 9;
     const parentNode = $('.comments__container');
@@ -104,7 +103,7 @@ $(document).ready(() => {
       }, 1000);
       $.ajax({
         type: 'GET',
-        url: `http://localhost/hw1/api/comments.php?offset=${offset}`,
+        url: `api/comments.php?offset=${offset}`,
       }).done((data) => {
         if (!data) {
           return;
