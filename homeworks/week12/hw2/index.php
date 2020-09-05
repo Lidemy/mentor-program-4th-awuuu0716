@@ -34,8 +34,19 @@
     <hr />
     <!-- tasks -->
     <div class="card">
-      <div class="card-header">
-        待辦事項
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <div>待辦事項</div>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label class="btn btn-secondary active">
+            <input type="radio" class="filter" name="all" id="option1" checked> 全部
+          </label>
+          <label class="btn btn-secondary">
+            <input type="radio" class="filter" name="done" id="option2"> 完成
+          </label>
+          <label class="btn btn-secondary">
+            <input type="radio" class="filter" name="undone" id="option3"> 未完成
+          </label>
+        </div>
       </div>
       <ul class="list-group list-group-flush tasks__container">
       </ul>

@@ -10,3 +10,7 @@
   text-decoration: line-through;
   color:#8f8f8f;
 }
+
+.flex {
+  display: flex;
+}

@@ -27,7 +27,7 @@ $(document).ready(() => {
   const appendTask = (content, done, isprepend) => {
     const taskContainer = $('.tasks__container');
     const template = `
-<li class="list-group-item d-flex align-items-center d-flex justify-content-between">
+<li class="list-group-item flex align-items-center justify-content-between ${done ? 'container__task__done' : ''}">
   <div class="task__content w-75 ${done ? 'task__done' : ''}">${content}</div>
   <div>
     <button type="button" class="btn btn-success btn-done">標記完成</button>
@@ -47,6 +47,7 @@ $(document).ready(() => {
   // 讀取 cookie 內的 id, 有的話向資料庫索取 todos
   const id = getCookieByName('id') ? getCookieByName('id') : null;
   if (id) {
+    $('.tasks__container').append('<div class="spinner-border m-5" role="status"><span class="sr-only">Loading...</span></div >');
     $.ajax({
       type: 'POST',
       url: 'api/get_todos.php',
@@ -54,6 +55,7 @@ $(document).ready(() => {
         id,
       },
     }).done((data) => {
+      $('.spinner-border').remove();
       data.forEach((element) => {
         appendTask(element.content, element.done);
       });
@@ -91,8 +93,10 @@ $(document).ready(() => {
 
   // 標記完成
   $('.tasks__container').on('click', '.btn-done', (e) => {
-    const targetTask = $(e.target).closest('.list-group-item').find('.task__content');
+    const targetContainer = $(e.target).closest('.list-group-item');
+    const targetTask = targetContainer.find('.task__content');
     targetTask.toggleClass('task__done');
+    targetContainer.toggleClass('container__task__done');
   });
 
   // 儲存 todos 至資料庫
@@ -141,5 +145,37 @@ $(document).ready(() => {
     }).fail((data) => {
       console.log(data);
     });
+  });
+
+  // 處理篩選待辦事項
+  $('.btn-group-toggle').on('click', '.filter', (e) => {
+    const tag = $(e.target).attr('name');
+    switch (tag) {
+      case 'all':
+        $('.list-group-item').each((index, element) => {
+          $(element).fadeIn();
+        });
+        break;
+      case 'done':
+        $('.list-group-item').each((index, element) => {
+          if ($(element).hasClass('container__task__done')) {
+            $(element).fadeIn();
+          } else {
+            $(element).fadeOut();
+          }
+        });
+        break;
+      case 'undone':
+        $('.list-group-item').each((index, element) => {
+          if ($(element).hasClass('container__task__done')) {
+            $(element).fadeOut();
+          } else {
+            $(element).fadeIn();
+          }
+        });
+        break;
+      default:
+        break;
+    }
   });
 });
