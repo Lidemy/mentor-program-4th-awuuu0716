@@ -27,6 +27,7 @@ $(document).ready(() => {
 </div>`;
       if (isPrepend) {
         $(parentNode).prepend(template);
+        return;
       }
       $(parentNode).append(template);
     });
