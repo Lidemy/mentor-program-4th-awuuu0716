@@ -1,5 +1,6 @@
 /* eslint-env jquery */
 $(document).ready(() => {
+  let offset = 0;
   const escapeHtml = unsafe => (
     unsafe
       .replace(/&/g, '&amp;')
@@ -7,8 +8,6 @@ $(document).ready(() => {
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;'));
-
-  let offset = 0;
 
   const appendComments = (data, isPrepend) => {
     const parentNode = $('.comments__container');
