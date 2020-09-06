@@ -9,15 +9,11 @@ $(document).ready(() => {
       .replace(/'/g, '&#039;'));
 
   let offset = 0;
-  // 初次載入留言
-  $.ajax({
-    type: 'GET',
-    url: `api/comments.php?offset=${offset}`,
-  }).done((data) => {
-    offset += 9;
+
+  const appendComments = (data, isPrepend) => {
     const parentNode = $('.comments__container');
     data.forEach((element) => {
-      $(parentNode).append(`
+      const template = `
 <div class="card comment__wrapper col-lg-4 col-sm-6 col-12" style="height: 24rem;">
     <div class="card-body ">
     <h5 class="card-title">${escapeHtml(element.nickname)}</h5>
@@ -25,19 +21,36 @@ $(document).ready(() => {
     <p class="card-text overflow-auto h-75">${escapeHtml(element.comment)}</p>
     <a href="#" class="card-link love" id="${element.id}">❤ ${element.love}</a>
   </div>
-</div>`);
+</div>`;
+      if (isPrepend) {
+        $(parentNode).prepend(template);
+      }
+      $(parentNode).append(template);
     });
+  };
+
+  // 初次載入留言
+  $.ajax({
+    type: 'GET',
+    url: `api/comments.php?offset=${offset}`,
+  }).done((data) => {
+    offset += 9;
+    appendComments(data);
   });
 
   // 新增留言
   $('.add-comment-form').submit((e) => {
     e.preventDefault();
+    const nickname = $('input[name=nickname]').val();
+    const comment = $('textarea[name=comment]').val();
+    const newComment = [{ nickname, comment }];
+    appendComments(newComment, true);
     $.ajax({
       type: 'POST',
       url: 'api/add_comment.php',
       data: {
-        nickname: $('input[name=nickname]').val(),
-        comment: $('textarea[name=comment]').val(),
+        nickname,
+        comment,
       },
     }).done((data) => {
       if (!data.ok) {
@@ -45,7 +58,6 @@ $(document).ready(() => {
         return;
       }
       console.log(data.message);
-      window.location.reload();
     });
   });
 
@@ -95,7 +107,6 @@ $(document).ready(() => {
     const scrollTop = $(window).scrollTop();
     const bodyHeight = $('body').height();
     if (scrollTop + windowHeight >= bodyHeight && allowLoadMore) {
-      const parentNode = $('.comments__container');
       allowLoadMore = false;
       setTimeout(() => {
         allowLoadMore = true;
@@ -109,17 +120,7 @@ $(document).ready(() => {
           return;
         }
         offset += 9;
-        data.forEach((element) => {
-          $(parentNode).append(`
-<div class="card comment__wrapper col-lg-4 col-sm-6 col-12" style="height: 24rem;">
-    <div class="card-body ">
-    <h5 class="card-title">${escapeHtml(element.nickname)}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">${element.create_time}</h6>
-    <p class="card-text overflow-auto h-75">${escapeHtml(element.comment)}</p>
-    <a href="#" class="card-link love" id="${element.id}">❤ ${element.love}</a>
-  </div>
-</div>`);
-        });
+        appendComments(data);
       });
     }
   });
