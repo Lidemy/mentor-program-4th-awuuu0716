@@ -29,6 +29,16 @@ $(document).ready(() => {
     });
   };
 
+  const getCreateTime = () => {
+    const date = new Date();
+    const YY = date.getFullYear();
+    const MM = date.getMonth().toString().padStart(2, '0');
+    const DD = date.getDate().toString().padStart(2, '0');
+    const HH = date.getHours().toString().padStart(2, '0');
+    const Minutes = date.getMinutes().toString().padStart(2, '0');
+    const SS = date.getSeconds().toString().padStart(2, '0');
+    return `${YY}-${MM}-${DD} ${HH}:${Minutes}:${SS}`;
+  };
   // 初次載入留言
   $.ajax({
     type: 'GET',
@@ -43,7 +53,8 @@ $(document).ready(() => {
     e.preventDefault();
     const nickname = $('input[name=nickname]').val();
     const comment = $('textarea[name=comment]').val();
-    const newComment = [{ nickname, comment }];
+    const createTime = getCreateTime();
+    const newComment = [{ nickname, comment, create_time: createTime }];
     appendComments(newComment, true);
     $.ajax({
       type: 'POST',
