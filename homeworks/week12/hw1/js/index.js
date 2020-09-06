@@ -192,7 +192,7 @@ $(document).ready(() => {
       setTimeout(() => {
         allowLoadMore = true;
         return true;
-      }, 1000);
+      }, 300);
       $.ajax({
         type: 'GET',
         url: `api/comments.php?offset=${offset}`,
