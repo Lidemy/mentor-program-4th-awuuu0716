@@ -4,3 +4,13 @@
   color:#007bff;
   opacity: 1;
 }
+
+.warning {
+  color:red;
+  font-size: 14px;
+  opacity: 1;
+}
+
+.opacity-0 {
+  opacity: 0;
+}

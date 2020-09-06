@@ -71,6 +71,67 @@ $(document).ready(() => {
     });
   });
 
+  // 限制暱稱長度
+  $('input[name=nickname]').keypress((e) => {
+    const nicknameLength = $('input[name=nickname]').val().length;
+    if (nicknameLength > 9) {
+      e.preventDefault();
+    }
+  });
+
+  $('input[name=nickname]').focusout(() => {
+    const nicknameLength = $('input[name=nickname]').val().length;
+    if (nicknameLength > 10) {
+      const longNickname = $('input[name=nickname]').val();
+      const shortNickname = longNickname.slice(0, 10);
+      $('input[name=nickname]').val(shortNickname);
+    }
+  });
+
+  // 檢查欄位是否為空
+  const inputNickname = $('input[name=nickname]');
+  const inputComment = $('textarea[name=comment]');
+
+  const isInputEmpty = (element) => {
+    const value = $(element).val().trim();
+    return !value;
+  };
+  const errorMessageHandler = (target, option) => {
+    if (option === 'show') {
+      $(target).siblings('.warning').removeClass('opacity-0');
+      return;
+    }
+    $(target).siblings('.warning').addClass('opacity-0');
+  };
+
+  const SubmitBtnHandler = () => {
+    const isNicknameEmpty = isInputEmpty(inputNickname);
+    const isCommentEmpty = isInputEmpty(inputComment);
+    if (isNicknameEmpty || isCommentEmpty) {
+      $('.btn-submit').attr('disabled', true);
+      return;
+    }
+    $('.btn-submit').attr('disabled', false);
+  };
+
+  const checkInputHandler = (inputNode) => {
+    const isTargetEmpty = isInputEmpty(inputNode);
+
+    SubmitBtnHandler();
+    if (isTargetEmpty) {
+      errorMessageHandler(inputNode, 'show');
+    } else {
+      errorMessageHandler(inputNode);
+    }
+  };
+
+  inputNickname.focusout(() => {
+    checkInputHandler(inputNickname);
+  });
+  inputComment.focusout(() => {
+    checkInputHandler(inputComment);
+  });
+
   // 點愛心小功能
   let allowClick = true;
   $(document).on('click', '.love', (e) => {
