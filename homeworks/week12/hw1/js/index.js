@@ -53,7 +53,12 @@ $(document).ready(() => {
     const nickname = $('input[name=nickname]').val();
     const comment = $('textarea[name=comment]').val();
     const createTime = getCreateTime();
-    const newComment = [{ nickname, comment, create_time: createTime }];
+    const newComment = [{
+      nickname,
+      comment,
+      create_time: createTime,
+      love: 0,
+    }];
     appendComments(newComment, true);
     $.ajax({
       type: 'POST',
