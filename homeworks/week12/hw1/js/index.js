@@ -131,6 +131,16 @@ $(document).ready(() => {
   inputComment.focusout(() => {
     checkInputHandler(inputComment);
   });
+  inputNickname.keypress(() => {
+    setTimeout(() => {
+      checkInputHandler(inputNickname);
+    }, 0);
+  });
+  inputComment.keypress(() => {
+    setTimeout(() => {
+      checkInputHandler(inputComment);
+    }, 0);
+  });
 
   // 點愛心小功能
   let allowClick = true;
@@ -188,6 +198,8 @@ $(document).ready(() => {
         url: `api/comments.php?offset=${offset}`,
       }).done((data) => {
         if (data.length === 0) {
+          $('.btn-nomore').click();
+          $(document).off('scroll');
           return;
         }
         offset += 9;

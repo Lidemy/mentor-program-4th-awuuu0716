@@ -46,6 +46,25 @@
     <div class="row row-cols-3 comments__container"></div>
   </div>
 
+<!-- Nomore comments message Modal -->
+<button class="btn-nomore" data-toggle="modal" data-target="#noMoreModal" hidden></button>
+<div class="modal fade" id="noMoreModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">沒有更多留言囉!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body save-success__message">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 
 </html>
