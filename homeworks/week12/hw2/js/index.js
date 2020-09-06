@@ -35,7 +35,7 @@ $(document).ready(() => {
   const appendTask = (content, done, isprepend) => {
     const taskContainer = $('.tasks__container');
     const template = `
-<li class="list-group-item flex align-items-center justify-content-between ${done ? 'container__task__done' : ''}">
+<li class="list-group-item flex show align-items-center justify-content-between ${done ? 'container__task__done' : ''}">
   <div class="task__content w-75 ${done ? 'task__done' : ''}">${escapeHtml(content)}</div>
   <div>
     <button type="button" class="btn btn-success btn-done">標記完成</button>
@@ -133,6 +133,16 @@ $(document).ready(() => {
     });
   });
 
+  // 清空項目
+  $('.btn-empty').click(() => {
+    $('.btn-close__empty').click();
+    $('.list-group-item').each((index, element) => {
+      if ($(element).hasClass('show')) {
+        $(element).remove();
+      }
+    });
+  });
+
   // 用 id 讀取資料庫的 todos
   $('.btn-load-todos').click(() => {
     const inputId = $('.input-id').val();
@@ -162,14 +172,17 @@ $(document).ready(() => {
       case 'all':
         $('.list-group-item').each((index, element) => {
           $(element).fadeIn();
+          $(element).removeClass('show');
         });
         break;
       case 'done':
         $('.list-group-item').each((index, element) => {
           if ($(element).hasClass('container__task__done')) {
             $(element).fadeIn();
+            $(element).addClass('show');
           } else {
             $(element).fadeOut();
+            $(element).removeClass('show');
           }
         });
         break;
@@ -177,8 +190,10 @@ $(document).ready(() => {
         $('.list-group-item').each((index, element) => {
           if ($(element).hasClass('container__task__done')) {
             $(element).fadeOut();
+            $(element).removeClass('show');
           } else {
             $(element).fadeIn();
+            $(element).addClass('show');
           }
         });
         break;

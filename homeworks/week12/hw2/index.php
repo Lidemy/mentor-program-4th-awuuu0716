@@ -36,16 +36,19 @@
     <div class="card">
       <div class="card-header d-flex justify-content-between align-items-center">
         <div>待辦事項</div>
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-secondary active">
-            <input type="radio" class="filter" name="all" id="option1" checked> 全部
-          </label>
-          <label class="btn btn-secondary">
-            <input type="radio" class="filter" name="done" id="option2"> 完成
-          </label>
-          <label class="btn btn-secondary">
-            <input type="radio" class="filter" name="undone" id="option3"> 未完成
-          </label>
+        <div>
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+              <input type="radio" class="filter" name="all" id="option1" checked> 全部
+            </label>
+            <label class="btn btn-secondary">
+              <input type="radio" class="filter" name="done" id="option2"> 完成
+            </label>
+            <label class="btn btn-secondary">
+              <input type="radio" class="filter" name="undone" id="option3"> 未完成
+            </label>
+          </div>
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#emptyModal">清空當前事項</button>
         </div>
       </div>
       <ul class="list-group list-group-flush tasks__container">
@@ -109,6 +112,24 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty List Modal -->
+  <div class="modal fade" id="emptyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">確定要清空嗎？</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-close__empty" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary btn-empty">確定</button>
         </div>
       </div>
     </div>
