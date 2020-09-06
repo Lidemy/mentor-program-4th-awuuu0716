@@ -1,6 +1,10 @@
 /* eslint-env jquery */
 $(document).ready(() => {
   let offset = 0;
+  const emptyInput = () => {
+    $('input[name=nickname]').val('');
+    $('textarea[name=comment]').val('');
+  };
   const escapeHtml = unsafe => (
     unsafe
       .replace(/&/g, '&amp;')
@@ -48,7 +52,7 @@ $(document).ready(() => {
   });
 
   // 新增留言
-  $('.add-comment-form').submit((e) => {
+  $('.btn-submit').click((e) => {
     e.preventDefault();
     const nickname = $('input[name=nickname]').val();
     const comment = $('textarea[name=comment]').val();
@@ -60,6 +64,8 @@ $(document).ready(() => {
       love: 0,
     }];
     appendComments(newComment, true);
+    emptyInput();
+    $('.btn-submit').attr('disabled', true);
     $.ajax({
       type: 'POST',
       url: 'api/add_comment.php',
