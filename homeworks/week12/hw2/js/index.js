@@ -172,7 +172,7 @@ $(document).ready(() => {
       case 'all':
         $('.list-group-item').each((index, element) => {
           $(element).fadeIn();
-          $(element).removeClass('show');
+          $(element).addClass('show');
         });
         break;
       case 'done':
