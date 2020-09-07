@@ -2,6 +2,7 @@ window.onload = () => {
   const clientId = 'wbd4r8kqc3urx0xd5f4fd4797nfr18';
   const navGameList = [];
   const gamesInfo = {};
+  const accept = 'application/vnd.twitchtv.v5+json';
   let nowGame = '';
 
   const sendRequest = (cb, url, gameName) => {
@@ -19,6 +20,25 @@ window.onload = () => {
     });
     xhr.send();
   };
+
+  // fetch
+  const fetchRequest = () => fetch('https://api.twitch.tv/kraken/games/top?limit=100',
+    {
+      method: 'GET',
+      headers: new Headers({
+        'client-id': clientId,
+        Accept: accept,
+      }),
+    }).then((response) => {
+    const { status } = response;
+    if (status >= 200 && status < 400) return response.json();
+    return false;
+  }).then(data => data)
+    .catch((err) => {
+      console.log(err);
+    });
+
+  // fetchRequest().then(data => {console.log(data)})
 
   // 負責整理打包資料的 function
   const pickStreamsInfoFromResponse = (data, dataLength) => {
@@ -120,8 +140,17 @@ window.onload = () => {
   };
 
   // 網頁開啟載入初始 5 個遊戲實況
-  sendRequest(onDocumentReady, 'games/top?limit=100');
-
+  // sendRequest(onDocumentReady, 'games/top?limit=100');
+  const newLoadTopFive = async () => {
+    let topGameObj;
+    await fetchRequest().then((data) => {
+      topGameObj = data;
+      return true;
+    });
+    console.log(topGameObj);
+    onDocumentReady(topGameObj);
+  };
+  newLoadTopFive();
   // 載入更多目前顯示的遊戲實況
   const loadMoreNowGameStreams = (data, gameName) => {
     const streamsNum = data.streams.length;
