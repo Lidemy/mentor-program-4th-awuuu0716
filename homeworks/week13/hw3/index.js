@@ -3,42 +3,27 @@ window.onload = () => {
   const navGameList = [];
   const gamesInfo = {};
   const accept = 'application/vnd.twitchtv.v5+json';
+  const path = 'https://api.twitch.tv/kraken/';
   let nowGame = '';
 
-  const sendRequest = (cb, url, gameName) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', `https://api.twitch.tv/kraken/${url}`);
-    xhr.setRequestHeader('client-id', clientId);
-    xhr.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
-    xhr.addEventListener('load', () => {
-      if (xhr.status >= 200 && xhr.status < 400) {
-        const data = JSON.parse(xhr.responseText);
-        cb(data, gameName);
-      } else {
-        console.log('err');
-      }
-    });
-    xhr.send();
-  };
-
   // fetch
-  const fetchRequest = () => fetch('https://api.twitch.tv/kraken/games/top?limit=100',
-    {
-      method: 'GET',
-      headers: new Headers({
-        'client-id': clientId,
-        Accept: accept,
-      }),
-    }).then((response) => {
-    const { status } = response;
-    if (status >= 200 && status < 400) return response.json();
-    return false;
-  }).then(data => data)
-    .catch((err) => {
-      console.log(err);
-    });
-
-  // fetchRequest().then(data => {console.log(data)})
+  const fetchRequest = (url) => {
+    fetch(`${path}${url}`,
+      {
+        method: 'GET',
+        headers: new Headers({
+          'client-id': clientId,
+          Accept: accept,
+        }),
+      }).then((response) => {
+      const { status } = response;
+      if (status >= 200 && status < 400) return response.json();
+      return false;
+    }).then(data => data)
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   // 負責整理打包資料的 function
   const pickStreamsInfoFromResponse = (data, dataLength) => {
@@ -93,7 +78,6 @@ window.onload = () => {
     const streamsNum = data.streams.length;
     const streams = pickStreamsInfoFromResponse(data, streamsNum);
     gamesInfo[gameName].offset += streamsNum < 20 ? streamsNum : 20;
-
     // DOM
     const mainNode = document.querySelector('.streams__container');
     const gameTitle = document.querySelector('.streams__name');
@@ -122,35 +106,46 @@ window.onload = () => {
   };
 
   // 只在網頁第一次開啟時執行, 抓 100 個遊戲實況名稱
-  const onDocumentReady = (data) => {
+  const packageGameData = (data) => {
     for (let i = 0; i < data.top.length; i += 1) {
       const { name } = data.top[i].game;
       navGameList.push(name);
       gamesInfo[name] = { name, offset: 0 };
     }
-
     // 設定初始頁面顯示哪個遊戲
     [nowGame] = [navGameList[0]];
+  };
 
-    // 拿到遊戲列表後再發 5 個 Request, 載入初始頁面的 5 個遊戲實況
-    navGameList.slice(0, 5).forEach((name) => {
-      sendRequest(onGameListReady, `streams/?game=${name.replace('&', '%26')}&limit=20&offset=${gamesInfo[name].offset}`, name);
+  // 載入前 20 個遊戲實況
+  const loadTopStreams = (indexLeft, indexRight) => {
+    navGameList.slice(indexLeft, indexRight).forEach(async (name) => {
+      let gameData;
+      const gameUrl = `streams/?game=${name.replace('&', '%26')}&limit=20&offset=${gamesInfo[name].offset}`;
       appendGamesList(name);
+      // 沒載過的話就發 request 載入, 載過的話就不要載了
+      if (document.getElementById(name)) return;
+      await fetchRequest(gameUrl).then((data) => {
+        gameData = data;
+        return true;
+      });
+      onGameListReady(gameData, name);
     });
   };
 
   // 網頁開啟載入初始 5 個遊戲實況
-  // sendRequest(onDocumentReady, 'games/top?limit=100');
-  const newLoadTopFive = async () => {
+  const loadTopFive = async () => {
     let topGameObj;
-    await fetchRequest().then((data) => {
+    const topGameUrl = 'games/top?limit=100';
+    await fetchRequest(topGameUrl).then((data) => {
       topGameObj = data;
       return true;
     });
-    console.log(topGameObj);
-    onDocumentReady(topGameObj);
+    packageGameData(topGameObj);
+    // 拿到遊戲列表後再發 5 個 Request, 載入初始頁面的 5 個遊戲實況
+    loadTopStreams(0, 5);
   };
-  newLoadTopFive();
+  loadTopFive();
+
   // 載入更多目前顯示的遊戲實況
   const loadMoreNowGameStreams = (data, gameName) => {
     const streamsNum = data.streams.length;
@@ -193,7 +188,6 @@ window.onload = () => {
       if (gameListIndex + 5 >= navGameList.length) return;
       gameListIndex += 5;
     }
-
     window.scrollTo(0, 0);
     const now = document.getElementById('display__games');
     now.innerHTML = `         
@@ -204,11 +198,7 @@ window.onload = () => {
           <div class="arrow__container arrow__right">
             <div class="nav__games__next">
           </div>`;
-    navGameList.slice(gameListIndex, gameListIndex + 5).forEach((name) => {
-      // 沒載過的話就發 request 載入, 載過的話就不要載了
-      if (!document.getElementById(name)) sendRequest(onGameListReady, `streams/?game=${name.replace('&', '%26')}&limit=20&offset=${gamesInfo[name].offset}`, name);
-      appendGamesList(name);
-    });
+    loadTopStreams(gameListIndex, gameListIndex + 5);
   });
 
   // 手機板開關 menu
@@ -220,14 +210,20 @@ window.onload = () => {
 
   // 卷軸捲到底部時載入更多遊戲
   let allowLoading = true;
-  document.addEventListener('scroll', () => {
+  document.addEventListener('scroll', async () => {
     const isNeedLoading = (
       document.documentElement.scrollTop
       + window.screen.height
       - 150
     ) >= document.body.scrollHeight;
     if (isNeedLoading && allowLoading) {
-      sendRequest(loadMoreNowGameStreams, `streams/?game=${nowGame.replace('&', '%26')}&limit=20&offset=${gamesInfo[nowGame].offset}`, nowGame);
+      let gameData;
+      const gameUrl = `streams/?game=${nowGame.replace('&', '%26')}&limit=20&offset=${gamesInfo[nowGame].offset}`;
+      await fetchRequest(gameUrl).then((data) => {
+        gameData = data;
+        return true;
+      });
+      loadMoreNowGameStreams(gameData, nowGame);
       allowLoading = false;
       window.setTimeout(() => {
         allowLoading = true;
