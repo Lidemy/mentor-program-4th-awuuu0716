@@ -7,7 +7,7 @@ window.onload = () => {
   let nowGame = '';
 
   // fetch
-  const fetchRequest = (url) => {
+  const fetchRequest = url => (
     fetch(`${path}${url}`,
       {
         method: 'GET',
@@ -22,9 +22,8 @@ window.onload = () => {
     }).then(data => data)
       .catch((err) => {
         console.log(err);
-      });
-  };
-
+      })
+  );
   // 負責整理打包資料的 function
   const pickStreamsInfoFromResponse = (data, dataLength) => {
     const tempArr = [];
