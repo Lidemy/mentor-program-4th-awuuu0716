@@ -3,7 +3,7 @@ const utils = require('./utils');
 const template = require('./template');
 
 window.commentsPluginData = {};
-const commentsPluginData = window;
+const { commentsPluginData } = window;
 
 const init = (options) => {
   const { siteKey } = options;
