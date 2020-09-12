@@ -2,7 +2,8 @@ const $ = require('jquery');
 const utils = require('./utils');
 const template = require('./template');
 
-const commentsPluginData = {};
+window.commentsPluginData = {};
+const commentsPluginData = window;
 
 const init = (options) => {
   const { siteKey } = options;
@@ -37,4 +38,4 @@ const init = (options) => {
   mountCommentPlugin();
 };
 
-export default init;
+export { init as default };
