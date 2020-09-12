@@ -1,22 +1,22 @@
-/* eslint-disable */
+const $ = require('jquery');
 const utils = require('./utils');
 const template = require('./template');
-const $ = require('jquery');
-window.commentsPluginData = {};
+
+const commentsPluginData = {};
 
 const init = (options) => {
-  let siteKey = options.siteKey
-  let offset = 0;
-  let allowClickLoadMore = true;
+  const { siteKey } = options;
+  const offset = 0;
+  const allowClickLoadMore = true;
+  const containerElement = $(options.container);
   let commentsData;
-  let containerElement = $(options.container);
   commentsPluginData[siteKey] = {
     siteKey,
     offset,
     commentsData,
     allowClickLoadMore,
-    containerElement
-  }
+    containerElement,
+  };
 
   const addEventHandler = () => {
     // 使用者 submit 按鈕
@@ -25,16 +25,16 @@ const init = (options) => {
     utils.clickLoveHandler(siteKey);
     // LoadMore 按鈕
     utils.loadMoreBtnHandler(siteKey);
-  }
+  };
 
   const mountCommentPlugin = () => {
     addEventHandler();
     utils.loadComments(siteKey, offset);
-  }
+  };
 
   containerElement.append(template.mainTemplate(siteKey));
 
-  mountCommentPlugin()
-}
+  mountCommentPlugin();
+};
 
-export {init}
+export default init;
