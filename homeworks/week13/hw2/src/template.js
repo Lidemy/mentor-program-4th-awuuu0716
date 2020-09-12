@@ -1,5 +1,4 @@
-/* eslint-disable */
-const mainTemplate = (siteKey) => `
+const mainTemplate = siteKey => `
   <form class="container mt-5 mb-3 add-comment-form">
     <div class="form-group row col-12 col-lg-6">
       <label for="inputComments">暱稱：</label>
@@ -20,7 +19,7 @@ const mainTemplate = (siteKey) => `
     <div class="row row-cols-3 comments__container-${siteKey}"></div>
     <button type="button" class="btn btn-primary btn-loadmore-${siteKey} m-2">Load More</button>
   </div>
-`
+`;
 
 const commentTemplate = (data, dataProcessor) => `
 <div class="card comment__wrapper col-lg-4 col-sm-6 col-12" style="height: 24rem;">
@@ -30,10 +29,10 @@ const commentTemplate = (data, dataProcessor) => `
     <p class="card-text overflow-auto h-75">${dataProcessor(data.comment)}</p>
     <a href="#" class="card-link love" id="${data.id}">❤ ${data.love}</a>
   </div>
-</div>`
+</div>`;
 
 
 module.exports = {
   mainTemplate,
   commentTemplate,
-}
+};
