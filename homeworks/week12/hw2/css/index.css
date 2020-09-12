@@ -1,0 +1,16 @@
+.edit-success {
+  position: absolute;
+  opacity: 1;
+  top:65%;
+  right:1%;
+  color:#007bff;
+}
+
+.task__done {
+  text-decoration: line-through;
+  color:#8f8f8f;
+}
+
+.flex {
+  display: flex;
+}
