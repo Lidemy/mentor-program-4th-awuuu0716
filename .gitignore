@@ -2,3 +2,8 @@ node_modules/
 ckeditor/
 conn.php
 .DS_STORE
+webpack.config.js
+utils.php
+.gitignore
+package-lock.json
+package.json
