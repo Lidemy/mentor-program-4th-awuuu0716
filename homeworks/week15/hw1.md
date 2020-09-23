@@ -185,7 +185,7 @@ const init = (options) => {
 export { init as default };
 ```
 我在留言板 plugin 中嘗試將各種功能寫進 utils、HTML 模板寫在 template，最後在引入這隻主要的 JS 檔，不過有一點比較不滿意的是這支 JS 仍然需要將 siteKey 或 offset 之類的參數傳給其他元件，
-出了問題要追蹤資料感覺會有點小麻煩，如果可以的話希望有個地方能統一管理狀態，這邊就單純呼叫函式就好。
+出了問題要追蹤資料感覺會有點小麻煩，如果可以的話希望有個地方能統一管理狀態，這邊就單純呼叫函式就好。把各個模組引入這個檔案後再用 webpack 打包，就能得到一個具有留言版功能的插件。
 
 * P1 你知道如何使用 Promise
 
@@ -306,7 +306,7 @@ exports.default = series(compileCSS, compileJS)
 // 這樣才能單獨執行某個任務 npx gulp compileCSS
 exports.compileCSS = compileCSS
 ```
-gulp 得安裝許多插劍會有點小麻煩，不過都不算困難所以還好。
+gulp 得安裝許多插件會有點小麻煩，不過都不算困難所以還好。
 
 * P3 你知道 CSS 優化的一些小技巧
 1. 壓縮，利用 webpack 或是 gulp-clean-css 之類的插件來壓縮 CSS 檔案大小，簡單暴力又有效。
