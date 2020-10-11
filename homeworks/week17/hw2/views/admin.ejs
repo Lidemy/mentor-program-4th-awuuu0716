@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include('template/head')%>
+  <script src="../js/admin.js"></script>
+  <link rel="stylesheet" href="../css/index.css">
+</head>
+
+<body>
+  <%- include('template/navbar')%>
+  <div class="container mt-3 shadow-sm p-3 mb-5 bg-white rounded">
+    <form action="../addPrize" method="POST">
+      <h1>新增獎項</h1>
+      <div class="form-group">
+        <label>獎項名稱</label>
+        <input type="text" name="prizeName" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>獎項敘述</label>
+        <input type="text" name="description" class="form-control"></input>
+      </div>
+      <div class="form-group">
+        <label>獎項圖片網址</label>
+        <input type="text" name="imgUrl" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>獎項機率</label>
+        <input type="text" name="chance" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-primary">送出</button>
+    </form>
+  </div>
+
+  <div class="container container__prizes mt-3 shadow-sm p-3 mb-5 bg-white rounded">
+    <h1>獎項列表：</h1>
+    <ul class="list-group list-group-horizontal mb-1 row">
+      <li class="list-group-item col-2">獎品名稱</li>
+      <li class="list-group-item col-3">獎品敘述</li>
+      <li class="list-group-item col-4">獎品圖片網址</li>
+      <li class="list-group-item col-1">機率</li>
+      <li class="list-group-item col-2">操作</li>
+    </ul>
+    <% prizes.forEach(prize => { %>
+    <ul class="list-group list-group-horizontal mb-1 row container__prize">
+      <li class="list-group-item col-2 list__prizeId" hidden><%= prize.id %></li>
+      <li class="list-group-item col-2 list__prizeName"><%= prize.prizeName %></li>
+      <li class="list-group-item col-3 list__description"><%= prize.description %></li>
+      <li class="list-group-item col-4 list__imgUrl" data-url="<%= prize.imgUrl %>">
+        <button type="button" class="btn btn-info btn__img" data-toggle="modal" data-target="#imgModal">獎項圖片</button>
+      </li>
+      <li class="list-group-item col-1 list__chance"><%= prize.chance %></li>
+      <li class="list-group-item col-2">
+        <button type="button" class="btn btn-primary btn__edit" data-toggle="modal" data-target="#editModal">編輯</button>
+        <form action="../deletePrize" style="display: inline-block;" method="POST">
+          <input type="text" name="id" value="<%= prize.id %>" hidden>
+          <button type="submit" class="btn btn-danger">刪除</button>
+        </form>
+      </li>
+    </ul>
+    <% }) %>
+  </div>
+
+  <!-- editModal -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="prizeTitle">修改獎項</h5>
+        </div>
+        <div class="modal-body">
+          <form class="form__edit-prize" action="../editPrize" method="POST">
+            <div class="form-group">
+              <label>獎項名稱</label>
+              <input type="text" name="prizeName" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>獎項敘述</label>
+              <input type="text" name="description" class="form-control"></input>
+            </div>
+            <div class="form-group">
+              <label>獎項圖片網址</label>
+              <input type="text" name="imgUrl" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>獎項機率</label>
+              <input type="text" name="chance" class="form-control">
+            </div>
+            <input type="text" name="id" class="form-control" hidden>
+            <button type="submit" class="btn btn-primary">送出</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- imgModal -->
+  <div class="modal fade" id="imgModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="prizeTitle">獎項圖片</h5>
+        </div>
+        <div class="modal-body">
+          <img src="" id="prizeImg">
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

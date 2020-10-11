@@ -2,8 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const flash = require('connect-flash');
-const articleController = require('./controllers/article');
-const adminController = require('./controllers/admin');
+
+const prizeController = require('./controllers/prizeController');
+const adminController = require('./controllers/adminController');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -27,21 +28,18 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post('/addArticle', articleController.addArticle, redirectBack);
-app.post('/editArticle', articleController.edit, redirectBack);
-app.post('/admin/delete', adminController.deleteArticle, redirectBack);
-app.post('/signup', adminController.signUp, redirectBack);
-app.post('/login', adminController.login, redirectBack);
+app.post('/addPrize', adminController.addPrize, redirectBack);
+app.post('/signup', adminController.signUp);
+app.post('/login', adminController.login);
+app.post('/editPrize', adminController.editPrize, redirectBack)
+app.post('/deletePrize', adminController.deletePrize, redirectBack)
 
-app.get('/', articleController.getAll);
-app.get('/addArticle', articleController.renderAddPage, redirectBack);
-app.get('/article/:id', articleController.get);
-app.get('/edit/:id', articleController.renderEditPage, redirectBack);
-app.get('/admin', adminController.renderAdminPage, redirectBack);
+app.get('/', prizeController.renderHomePage);
+app.get('/draw', prizeController.draw);
+app.get('/signup', adminController.renderSignUpPage);
 app.get('/login', adminController.renderLoginPage);
-app.get('/signup', adminController.renderSignupPage, redirectBack);
 app.get('/logout', adminController.logout, redirectBack);
-app.get('/category', articleController.renderCategoryPage);
+app.get('/admin', adminController.renderAdminPage, redirectBack);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

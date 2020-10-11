@@ -68,6 +68,7 @@ const articleController = {
       title,
       content,
       tags,
+      deleted:0
     }).then(() => {
       res.redirect('/');
     });

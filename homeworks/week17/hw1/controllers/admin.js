@@ -8,14 +8,14 @@ const saltRounds = 10;
 const adminController = {
   signUp: (req, res) => {
     const {
-      username,
+      userName,
       password,
     } = req.body;
 
     bcrypt.hash(password, saltRounds, (err, hash) => {
       if (err) return;
       Users.create({
-        username,
+        userName,
         password: hash,
       }).then(() => {
         res.redirect('/');
@@ -72,7 +72,6 @@ const adminController = {
     res.render('login');
   },
   renderSignupPage: (req, res, next) => {
-    if (req.session.username !== 'admin') return next();
     res.render('signUp');
   },
   renderAdminPage: (req, res, next) => {
