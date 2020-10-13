@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('template/head')%>
+</head>
+
+<body>
+  <%- include('template/navbar')%>
+  <div class="container-wrapper">
+    <div class="container">
+      <div class="admin-posts">
+  
+        <% articles.forEach(article => { %>
+        <div class="admin-post">
+          <div class="admin-post__title">
+  
+            <% if (article.deleted) { %>
+            <s>
+              <%= article.title %>
+            </s>
+            <% } else { %>
+            <%= article.title %>
+            <% } %>
+          </div>
+          <div class="admin-post__info">
+            <div class="admin-post__created-at">
+              <%= article.createdAt%>
+            </div>
+            <a class="admin-post__btn" href="../edit/<%= article.id %>">
+              編輯
+            </a>
+            <form action="/admin/delete" method="POST">
+              <input type="hidden" name="csrftoken" value="" />
+              <input type="hidden" name="id" value="<%= article.id %>">
+              <% if (article.deleted) { %>
+              <input type="submit" value="復原" class="admin-post__btn">
+              <% } else { %>
+              <input type="submit" value="刪除" class="admin-post__btn">
+              <% } %>
+            </form>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

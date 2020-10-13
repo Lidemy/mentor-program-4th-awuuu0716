@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('template/head')%>
+</head>
+<body>
+  <%- include('template/navbar')%>
+
+  <div class="container-wrapper">
+    <div class="posts">
+      <% articles.forEach(article => { %>
+        <% if (!article.deleted) { %>
+          <article class="post">
+            <div class="post__header">
+              <div class="post__header-title">
+                <a href="/article/<%= article.id %>">
+                  <%= article.title %>
+                </a>
+              </div>
+              <div class="post__actions">
+                <% if (username) { %>
+                  <a class="post__action" href="edit/<%= article.id %>">編輯</a>
+                <% } %>
+              </div>
+            </div>
+            <div class="post__info">
+              <div><%= article.createdAt %></div>
+              <div>Tags: <%= article.tags %></div>
+          
+            </div>
+            <div class="post__content">
+              <%= article.content %>
+            </div>
+            <a class="btn-read-more" href="/article/<%= article.id %>">READ MORE</a>
+          </article>
+        <% } %>
+      <% }) %>
+    </div>
+  </div>
+
+</body>
+</html>

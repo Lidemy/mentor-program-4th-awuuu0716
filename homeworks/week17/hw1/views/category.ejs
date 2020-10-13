@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('template/head')%>
+  <script src="../js/category.js" type="module"></script>
+</head>
+
+<body>
+  <%- include('template/navbar')%>
+  <div class="tags__wrapper">
+    文章標籤：
+  </div>
+
+  <div class="container-wrapper container-wrapper__no-banner">
+  
+    <div class="container no-margin-top">
+      <div class="admin-posts">
+  
+        <% articles.forEach(article => { %>
+        <div class="admin-post" data-tags="<%= article.tags %>">
+          <div class="admin-post__title">
+            <a href="/article/<%= article.id %>">
+              <%= article.title %>
+            </a>
+          </div>
+          <div class="post__tags">
+            Tags:
+            <%= article.tags %>
+          </div>
+          <div class="admin-post__info">
+            <div class="admin-post__created-at">
+              <%= article.createdAt %>
+            </div>
+          </div>
+        </div>
+  
+        <% }) %>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

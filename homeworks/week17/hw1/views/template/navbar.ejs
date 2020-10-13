@@ -1,0 +1,22 @@
+<nav class="navbar">
+  <div class="wrapper navbar__wrapper">
+    <div class="navbar__site-name">
+      <a href='/'>Awu's Blog</a>
+    </div>
+    <ul class="navbar__list">
+      <div>
+        <li><a href="/">首頁</a></li>
+        <li><a href="/category">分類專區</a></li>
+      </div>
+      <div>
+        <% if(username) { %>
+          <li><a href="/addArticle">新增文章</a></li>
+          <li><a href="/admin">管理後台</a></li>
+          <li><a href="/logout">登出</a></li>
+        <% } else { %>
+          <li><a href="/login">登入</a></li>
+        <% } %>
+      </div>
+    </ul>
+  </div>
+</nav>
