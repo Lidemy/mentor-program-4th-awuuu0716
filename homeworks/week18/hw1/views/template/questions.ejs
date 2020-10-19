@@ -1,0 +1,72 @@
+<div class="question__wrapper">
+  <div ></div>
+    <% questions.forEach(questionInfo => {
+      const {
+        question,
+        answer,
+        question_number,
+        id,
+      } = questionInfo
+    %>
+      <div class="question__card" 
+        data-question="<%= question %>" 
+        data-number="<%= question_number %>" 
+        data-id="<%= id %>" 
+        data-answer="<%= answer %>"
+      >
+        <div class="question__head">
+          <p class="question__content">
+            Q<%= question_number %>：<%= question %>
+          </p>
+          <div class="question__options">
+            <a href="#" class="question__options-edit">編輯</a>
+            <a href="questions/delete/<%= id %>" class="question__options-delete">刪除</a>
+          </div>
+        </div>
+        <div class="question__answer">
+          Answer：<%= answer %>
+        </div>
+
+      </div>
+    <% }) %>
+    <div class="question__card">
+      <div class="question__options">
+        <a href="#" class="question__options-add">新增問答</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal__wrapper" hidden>
+  <div class="modal__container">
+    <div class="modal__title">新增商品</div>
+    <form class="modal__form" action="newquestion" method="POST">
+    <input name="id" hidden>
+      <div class="modal__input-wrapper">
+        <div class="modal__input-title">
+          問題編號：
+        </div>
+        <input class="modal__input" type="number" name="question_number" maxlength="10" required>
+      </div>
+      <div class="modal__input-wrapper">
+        <div class="modal__input-title">
+          問題：
+        </div>
+        <input class="modal__input" type="text" name="question" maxlength="30" required>
+      </div>
+      <div class="modal__input-wrapper">
+        <div class="modal__input-title">
+          回答：
+        </div>
+        <textarea class="modal__input" type="number" name="answer" required>
+        </textarea>
+      </div>
+
+      <div class="modal__input-wrapper">
+        <input class="modal__btn-submit" type="submit" value="送出">
+        <button class="modal__btn-cancel">取消</button>
+      </div>
+    </form>
+  </div>
+</div>

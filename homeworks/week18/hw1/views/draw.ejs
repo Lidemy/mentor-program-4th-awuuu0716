@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('template/head')%>
+  <script src="../js/questions.js"></script>
+</head>
+
+<body>
+  <%- include('template/navbar')%>
+  <div class="lottery__result-info">
+    <h1><%= result.prize_name %></h1>
+    <p><%= result.description %></p>
+    <a href="/draw" class="lottery__button">再抽一次</a>
+  </div>
+  <div class="lottery lottery__result" style="background-image: url('<%= result.imgUrl %>');">
+  </div>  
+
+  <%- include('template/footer')%>
+</body>
+
+</html>

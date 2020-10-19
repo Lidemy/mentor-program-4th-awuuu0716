@@ -1,0 +1,59 @@
+<div class="order__menu-wrapper">
+  <% products.forEach(product => {
+    const {
+      product_name,
+      product_price,
+      product_url,
+      id
+    } = product
+  %>
+  <div class="order__menu-card" data-name="<%= product_name %>" data-price="<%= product_price %>" data-pic="<%= product_url %>" data-id="<%= id %>"  >
+    <div class="order__menu-img">
+      <img src="<%= product_url %>" alt="">
+    </div>
+    <div class="order__menu-info">
+      <%= product_name %>｜$<%= product_price %>
+    </div>
+    <div class="order__menu-addcart">
+      <a href="#" class="order__btn-edit">編輯</a>
+      <a href="products/delete/<%= id %>" class="order__btn-delete">刪除</a>
+    </div>
+  </div>
+  <% }) %>
+  <div class="order__menu-card">
+    <div class="order__menu-addcart">
+      <a class="new-product" href="#">新增品項</a>
+    </div>
+  </div>
+</div>
+
+<div class="modal__wrapper" hidden>
+  <div class="modal__container">
+    <div class="modal__title">新增商品</div>
+    <form class="modal__form" action="admin/products/newproduct" method="POST">
+      <input name="id" hidden>
+      <div class="modal__input-wrapper">
+        <div class="modal__input-title">
+          商品名稱：
+        </div>
+        <input class="modal__input" type="text" name="product_name" maxlength="10" required>
+      </div>
+      <div class="modal__input-wrapper">
+        <div class="modal__input-title">
+          商品價格：
+        </div>
+        <input class="modal__input" type="number" name="product_price" maxlength="4" required>
+      </div>
+      <div class="modal__input-wrapper">
+        <div class="modal__input-title">
+          商品圖片：
+        </div>
+        <input class="modal__input" type="text" name="product_url" required>
+      </div>
+      <div class="modal__input-wrapper">
+        <input class="modal__btn-submit" type="submit" value="送出">
+        <button class="modal__btn-cancel">取消</button>
+      </div>
+    </form>
+  </div>
+</div>

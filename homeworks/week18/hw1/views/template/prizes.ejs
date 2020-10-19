@@ -1,0 +1,77 @@
+<div class="prizes__wrapper">
+  <% prizes.forEach(product => {
+      const {
+        prize_name,
+        description,
+        imgUrl,
+        chance,
+        id
+      } = product
+    %>
+  <div class="prizes__card" 
+    data-name="<%= prize_name %>"
+    data-description="<%= description %>"
+    data-imgurl="<%= imgUrl %>"
+    data-chance="<%= chance %>"
+    data-id="<%= id %>"
+  >
+    <div class="prizes__img">
+      <img src="<%= imgUrl %>" alt="">
+    </div>
+    <div class="prizes__info">
+      <%= prize_name %>｜<%= chance %> %
+    </div>
+    <div class="prizes__desc">
+      <%= description %>
+    </div>
+    <div class="prizes__options">
+      <a href="#" class="prizes__btn-edit">編輯</a>
+      <a href="prizes/delete/<%= id %>" class="prizes__btn-delete">刪除</a>
+    </div>
+  </div>
+  <% }) %>
+
+  <div class="prizes__card">
+    <div class="prizes__options">
+      <a class="new-prize" href="#">新增獎品</a>
+    </div>
+  </div>
+</div>
+
+<div class="modal__wrapper" hidden>
+  <div class="modal__container">
+    <div class="modal__title">新增獎品</div>
+    <form class="modal__form" action="admin/products/newproduct" method="POST">
+      <input name="id" hidden>
+      <div class="modal__input-wrapper">
+        <div class="modal__input-title">
+          獎品名稱：
+        </div>
+        <input class="modal__input" type="text" name="prize_name" maxlength="10" required>
+      </div>
+      <div class="modal__input-wrapper">
+        <div class="modal__input-title">
+          獎品敘述：
+        </div>
+        <textarea class="modal__input" type="number" name="description" rows="4" required>
+        </textarea>
+      </div>
+      <div class="modal__input-wrapper">
+        <div class="modal__input-title">
+          獎品機率：
+        </div>
+        <input class="modal__input" type="text" name="chance" required>
+      </div>
+      <div class="modal__input-wrapper">
+        <div class="modal__input-title">
+          圖片網址：
+        </div>
+        <input class="modal__input" type="text" name="imgUrl" required>
+      </div>
+      <div class="modal__input-wrapper">
+        <input class="modal__btn-submit" type="submit" value="送出">
+        <button class="modal__btn-cancel">取消</button>
+      </div>
+    </form>
+  </div>
+</div>

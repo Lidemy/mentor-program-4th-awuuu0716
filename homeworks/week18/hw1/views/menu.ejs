@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('template/head')%>
+</head>
+<body>
+  <%- include('template/navbar')%>
+
+  <%- include('template/banner')%>
+
+  <div class="wrapper">
+    <section class="section">
+      <h2 class="section__title">
+        熱銷搶購中
+      </h2>
+      <div class="section__images-ad">
+        <div class="img__container">
+          <img class="img__sold" src="../img/ad-01.jpg" alt="">
+        </div>
+        <div class="img__container">
+          <img class="img__sold" src="../img/ad-02.jpg" alt="">
+        </div>
+        <div class="img__container">
+          <img class="img__sold" src="../img/ad-03.jpg" alt="">
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="wrapper">
+    <div class="detail__container">
+      <div class="detail__image">
+        <img class="img__ordering" src="../img/order-ad.jpg" alt="A user is ordering.">
+      </div>
+      <div class="detail__description">
+        <h2>在家也能輕鬆<br>咬一口我們的鮮甜清爽
+        </h2>
+        <p>
+          您再也不必受限於時間或地點，隨時隨地透過我們24小時的線上購物選購，咬一口廚房堅持以細選食材、輕盈口感，呈現食材本身的原滋原味。
+          <br>
+          <br>
+          我們將咬一口的經典菜色研發製成相應當季的包裝食品及各式精美的伴手禮盒。將剛出爐的新鮮迅速送達家人手中，也適合與更多喜愛咬一口的親朋好友分享難得的健康滋味。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrapper">
+    <div class="icon__title">
+      <p>立 即 輕 鬆 選 購</p>
+      <div>
+        <div class="icon__arrow-down"></div>
+      </div>
+    </div>
+    <div class="order__menu-wrapper">
+      <% products.forEach(product => {
+          const {
+            product_name,
+            product_price,
+            product_url,
+            id
+          } = product
+      %>
+        <div class="order__menu-card">
+          <div class="order__menu-img">
+            <img src="<%= product_url %>" alt="">
+          </div>
+          <div class="order__menu-info">
+            <%= product_name %>｜$<%= product_price %>
+          </div>
+          <div class="order__menu-addcart">
+            <a href="#" class="order__btn-addcart">加入購物車</a>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <div class="wrapper">
+    <div class="icon__title">
+      <p>
+        還 是 想 要 親 身 體 會 我 們 的 服 務 ？
+      </p>
+      <div>
+        <div class="icon__arrow-down"></div>
+      </div>
+    </div>
+    <section class="section">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.002890183707!2d121.5623502150063!3d25.03397598397251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abb6da9c9e1f%3A0x1206bcf082fd10a6!2zMTEw5Y-w5YyX5biC5L-h576p5Y2A5L-h576p6Lev5LqU5q61N-iZnw!5e0!3m2!1szh-TW!2stw!4v1594718483804!5m2!1szh-TW!2stw"
+        width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
+        tabindex="0"></iframe>
+    </section>
+  </div>
+
+  <%- include('template/footer')%>
+</body>
+</html>
