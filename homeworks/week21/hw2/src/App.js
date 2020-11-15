@@ -12,7 +12,8 @@ const App = () => {
   const [player, setPlayer] = useState('black');
   const [lastPlace, setLastPlace] = useState([]);
   const [winner, setWinner] = useState('');
-  const [history, setHistory] = useState(initHistory());
+  // 順手加上 lazy initial state 好了
+  const [history, setHistory] = useState(() => initHistory());
 
   useEffect(() => {
     handleMatchResult();
