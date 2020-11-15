@@ -7,7 +7,8 @@ import ChessPlaybook from './ChessPlaybook';
 import { initBoard, initHistory } from './utils/utils';
 
 const App = () => {
-  const [board, setBoard] = useState(initBoard());
+  // initBoard 有點貴，這裡使用 Lazy initial state 避免之後 re-render 執行 initBoard
+  const [board, setBoard] = useState(() => initBoard());
   const [player, setPlayer] = useState('black');
   const [lastPlace, setLastPlace] = useState([]);
   const [winner, setWinner] = useState('');
@@ -19,7 +20,7 @@ const App = () => {
 
   const handleMatchResult = () => {
     if (lastPlace.length === 0) return;
-    const lastColor = board[lastPlace[0]][lastPlace[1]].chess
+    const lastColor = board[lastPlace[0]][lastPlace[1]].chess;
     const diretions = [
       { index: [1, 0], line: 'horizontal' },
       { index: [1, -1], line: 'slash' },
