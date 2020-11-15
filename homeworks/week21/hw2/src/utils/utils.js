@@ -25,10 +25,10 @@ export const initBoard = () => {
 
 export const initHistory = () => [
   {
-    board: [],
-    player: '',
-    lastPlace: [],
-    winner: '',
+    pastBoard: [],
+    pastPlayer: '',
+    pastLastPlace: [],
+    pastWinner: '',
     playbook: [],
   },
 ];
